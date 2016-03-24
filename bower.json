@@ -10,6 +10,7 @@
   "homepage": "https://github.com/Brightspace/navigation-ui/",
   "ignore": [
     "/.*",
+    "package.json",
     "/test/",
     "/demo/"
   ],
@@ -19,7 +20,8 @@
   },
   "devDependencies": {
     "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",
-    "web-component-tester": "*"
+    "web-component-tester": "*",
+    "webcomponentsjs": "^0.7.21"
   },
   "private": true
 }

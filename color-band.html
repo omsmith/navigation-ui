@@ -1,5 +1,5 @@
 <link rel="import" href="../polymer/polymer.html">
-<dom-module id="color-band">
+<dom-module id="navigation-color-band">
 	<style>
 		:host {
 			border-top: 4px solid #999999;
@@ -12,11 +12,13 @@
 </dom-module>
 <script>
 	Polymer({
-		is: 'color-band',
+		is: 'navigation-color-band',
 		properties: {
 			color: {
 				type: String,
-				observer: '_colorChanged'
+				observer: '_colorChanged',
+				reflectToAttribute: true,
+				value: '#999999'
 			}
 		},
 		_colorChanged: function(newValue, oldValue) {

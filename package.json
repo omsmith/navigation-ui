@@ -1,0 +1,19 @@
+{
+  "name": "brightspace-navigation",
+  "private": true,
+  "scripts": {
+    "postinstall": "bower install",
+    "test": "polylint && wct --skip-plugin sauce"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Brightspace/navigation-ui.git"
+  },
+  "author": "D2L Corporation",
+  "license": "Apache 2.0",
+  "devDependencies": {
+    "bower": "^1.7.7",
+    "polylint": "^2.10.1",
+    "web-component-tester": "^4.2.2"
+  }
+}
