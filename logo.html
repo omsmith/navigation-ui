@@ -1,0 +1,34 @@
+<link rel="import" href="../polymer/polymer.html">
+<dom-module id="navigation-logo">
+	<style>
+		:host {
+			background-repeat: no-repeat;
+			background-position: 30px 12px;
+			display: block;
+			height: 90px;
+			text-indent: -10000px;
+		}
+	</style>
+	<template>
+		{{text}}
+	</template>
+</dom-module>
+<script>
+	Polymer({
+		is: 'navigation-logo',
+		properties: {
+			src: {
+				type: String,
+				observer: '_updateSrc'
+			},
+			text: {
+				type: String
+			}
+		},
+		_updateSrc: function() {
+			if (this.src) {
+				this.style.backgroundImage = 'url(' + this.src + ')';
+			}
+		}
+	});
+</script>

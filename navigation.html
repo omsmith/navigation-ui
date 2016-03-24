@@ -1,0 +1,82 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="color-band.html">
+<link rel="import" href="links.html">
+<link rel="import" href="logo.html">
+<link rel="import" href="../iron-ajax/iron-ajax.html">
+
+<dom-module id="brightspace-navigation">
+
+	<style>
+		:host {
+			background-color: #fff;
+			border-bottom: 1px solid #e6eaf0;
+			display: block;
+			position: relative;
+		}
+		navigation-logo, navigation-links {
+			opacity: 0;
+			transition: opacity 1000ms;
+		}
+		:host[loaded] navigation-logo,
+		:host[loaded] navigation-links {
+			opacity: 1;
+		}
+		hr {
+			border-bottom: none;
+			border-top: 1px solid #e6eaf0;
+			margin: 0;
+		}
+	</style>
+
+	<template>
+		<iron-ajax
+			url="{{endpoint}}"
+			handle-as="json"
+			loading="{loading}"
+			last-response="{{response}}"
+			on-response="handleResponse"></iron-ajax>
+		<nav>
+			<color-band color="[[response.color]]"></color-band>
+			<navigation-logo
+				src="[[response.logo]]"
+				text="[[response.orgUnitName]]"></navigation-logo>
+			<hr />
+			<dom-if if="{!loading}">
+				<navigation-links links="[[response.links]]"></navigation-links>
+			</dom-if>
+		</nav>
+	</template>
+
+</dom-module>
+
+<script>
+
+	Polymer({
+
+		is: 'brightspace-navigation',
+
+		properties: {
+			endpoint: {
+				type: String
+			},
+			loading: {
+				type: Boolean,
+				value: true
+			}
+		},
+
+		ready: function() {
+			// TODO: just to similuate slowness, this should be removed
+			// and "auto" attribute should be added to <iron-ajax>
+			setTimeout(function() {
+				this.$$('iron-ajax').generateRequest();
+			}.bind(this), 300);
+		},
+
+		handleResponse: function() {
+			this.setAttribute('loaded', '');
+		}
+
+	});
+
+</script>

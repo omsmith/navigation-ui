@@ -1,0 +1,25 @@
+{
+  "name": "brightspace-navigation",
+  "authors": [
+    "D2L Corporation"
+  ],
+  "description": "Polymer web component for the main navigation in Brightspace",
+  "keywords": [],
+  "main": "navigation.html",
+  "license": "Apache-2.0",
+  "homepage": "https://github.com/Brightspace/navigation-ui/",
+  "ignore": [
+    "/.*",
+    "/test/",
+    "/demo/"
+  ],
+  "dependencies": {
+    "polymer": "Polymer/polymer#^1.0.0",
+    "iron-ajax": "PolymerElements/iron-ajax#^1.2.0"
+  },
+  "devDependencies": {
+    "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",
+    "web-component-tester": "*"
+  },
+  "private": true
+}

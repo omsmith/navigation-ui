@@ -1,0 +1,13 @@
+@import url(https://s.brightspace.com/lib/fonts/0.2.0/fonts.css);
+
+html {
+	font-size: 20px;
+}
+
+body {
+	background-color: #f9fafb;
+	color: #565a5c;
+	font-family: 'Lato', sans-serif;
+	font-weight: 300;
+	margin: 0;
+}

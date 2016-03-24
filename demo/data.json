@@ -1,0 +1,23 @@
+{
+	"color": "#003b71",
+	"logo": "logo.png",
+	"orgUnitName": "College University",
+	"links": [
+		{
+			"text": "Library"
+		},
+		{
+			"text": "ePortfolio"
+		},
+		{
+			"text": "Courses"
+		},
+		{
+			"text": "Discussions"
+		},
+		{
+			"text": "Departments",
+			"links": []
+		}
+	]
+}
