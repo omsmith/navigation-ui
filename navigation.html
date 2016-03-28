@@ -1,4 +1,5 @@
 <link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="centerer.html">
 <link rel="import" href="color-band.html">
 <link rel="import" href="links.html">
 <link rel="import" href="logo.html">
@@ -37,13 +38,15 @@
 			on-response="handleResponse"></iron-ajax>
 		<nav>
 			<navigation-color-band color="[[response.color]]"></navigation-color-band>
-			<navigation-logo
-				src="[[response.logo]]"
-				text="[[response.orgUnitName]]"></navigation-logo>
+			<navigation-centerer>
+				<navigation-logo
+					src="[[response.logo]]"
+					text="[[response.orgUnitName]]"></navigation-logo>
+			</navigation-centerer>
 			<hr />
-			<dom-if if="{!loading}">
+			<navigation-centerer>
 				<navigation-links links="[[response.links]]"></navigation-links>
-			</dom-if>
+			</navigation-centerer>
 		</nav>
 	</template>
 
