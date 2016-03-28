@@ -1,7 +1,8 @@
 language: node_js
 node_js: stable
 script:
-- polylint
+- npm run test:lint:js
+- npm run test:lint:wc
 - wct --skip-plugin local
 addons:
   sauce_connect:

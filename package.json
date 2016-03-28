@@ -3,7 +3,9 @@
   "private": true,
   "scripts": {
     "postinstall": "bower install",
-    "test": "polylint && wct --skip-plugin sauce"
+    "test": "npm run test:lint:js && npm run test:lint:wc && wct --skip-plugin sauce",
+    "test:lint:js": "eslint *.html",
+    "test:lint:wc": "polylint"
   },
   "repository": {
     "type": "git",
@@ -13,6 +15,8 @@
   "license": "Apache 2.0",
   "devDependencies": {
     "bower": "^1.7.7",
+    "eslint": "^2.5.3",
+    "eslint-plugin-html": "^1.4.0",
     "polylint": "^2.10.1",
     "web-component-tester": "^4.2.2"
   }
