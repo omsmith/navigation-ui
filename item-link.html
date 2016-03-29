@@ -1,0 +1,33 @@
+<link rel="import" href="../polymer/polymer.html">
+<dom-module id="navigation-item-link">
+	<style>
+		:host {
+			display: inline-block;
+			padding: 20px 30px;
+		}
+		:host > a, :host > a:link, :host > a:visited {
+			color: #565a5c;
+			text-decoration: none;
+		}
+		:host > a:hover, :host > a:focus {
+			color: #e87543;
+			text-decoration: underline;
+			outline: none;
+		}
+	</style>
+	<template>
+		<a href$="{{href}}">{{text}}</a>
+	</template>
+</dom-module>
+<script>
+	Polymer({
+		is: 'navigation-item-link',
+		properties: {
+			href: String,
+			text: String
+		},
+		hostAttributes: {
+			role: 'listitem'
+		}
+	});
+</script>

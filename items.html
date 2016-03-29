@@ -1,0 +1,49 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="item-link.html">
+<dom-module id="navigation-items">
+	<style>
+		:host {
+			display: block;
+			min-height: 70px;
+		}
+		li {
+			display: inline-block;
+			padding: 20px 30px;
+		}
+		li:hover {
+			color: #e87543;
+			cursor: pointer;
+		}
+	</style>
+	<template>
+	</template>
+</dom-module>
+<script>
+	Polymer({
+		is: 'navigation-items',
+		properties: {
+			items: {
+				type: Array,
+				observer: '_updateItems'
+			}
+		},
+		hostAttributes: {
+			role: 'list'
+		},
+		_updateItems: function() {
+			var root = this.root;
+			this.items.forEach(function(item) {
+				if (item.class.indexOf('link') > 0) {
+					var linkElem = document.createElement('navigation-item-link');
+					item.links.forEach(function(l) {
+						if (l.rel.indexOf('self') > -1) {
+							linkElem.setAttribute('href', l.href);
+						}
+					});
+					linkElem.setAttribute('text', item.properties.text);
+					Polymer.dom(root).appendChild(linkElem);
+				}
+			});
+		}
+	});
+</script>
