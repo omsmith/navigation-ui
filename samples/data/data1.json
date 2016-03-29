@@ -1,0 +1,115 @@
+{
+	"class": ["navigation"],
+	"properties": {
+		"text": "College University",
+		"color": "#003b71"
+	},
+	"entities": [
+		{
+			"class": ["image"],
+			"properties": {
+				"alt": "My Home"
+			},
+			"links": [
+				{
+					"rel": ["alternate"],
+					"href": "assets/logo.png"
+				},
+				{
+					"rel": ["/rel/home"],
+					"href": "/home/"
+				}
+			]
+		},
+		{
+			"class": ["item", "link"],
+			"properties": {
+				"text": "Calendar"
+			},
+			"links": [
+				{
+					"rel": ["self"],
+					"href": "/calendar/"
+				}
+			]
+		},
+		{
+			"class": ["item", "link"],
+			"properties": {
+				"text": "Checklist"
+			},
+			"links": [
+				{
+					"rel": ["self"],
+					"href": "/checklist/"
+				}
+			]
+		},
+		{
+			"class": ["item", "link"],
+			"properties": {
+				"text": "Content"
+			},
+			"links": [
+				{
+					"rel": ["self"],
+					"href": "/content/"
+				}
+			]
+		},
+		{
+			"class": ["item", "link"],
+			"properties": {
+				"text": "Discussions"
+			},
+			"links": [
+				{
+					"rel": ["self"],
+					"href": "/discussions/"
+				}
+			]
+		},
+		{
+			"class": ["item", "link"],
+			"properties": {
+				"text": "Assignments"
+			},
+			"links": [
+				{
+					"rel": ["self"],
+					"href": "/dropbox/"
+				}
+			]
+		},
+		{
+			"class": ["item", "link"],
+			"properties": {
+				"text": "Announcements"
+			},
+			"links": [
+				{
+					"rel": ["self"],
+					"href": "/news/"
+				}
+			]
+		},
+		{
+			"class": ["item", "link"],
+			"properties": {
+				"text": "Quizzes"
+			},
+			"links": [
+				{
+					"rel": ["self"],
+					"href": "/quizzes/"
+				}
+			]
+		}
+	],
+	"links": [
+		{
+			"rel": ["self"],
+			"href": "/api/hm/navigation/6606"
+		}
+	]
+}

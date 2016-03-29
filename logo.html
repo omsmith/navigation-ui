@@ -10,25 +10,20 @@
 		}
 	</style>
 	<template>
-		{{text}}
+		[[data.text]]
 	</template>
 </dom-module>
 <script>
 	Polymer({
 		is: 'navigation-logo',
 		properties: {
-			src: {
-				type: String,
-				observer: '_updateSrc'
-			},
-			text: {
-				type: String
+			data: {
+				type: Object,
+				observer: '_updateData'
 			}
 		},
-		_updateSrc: function() {
-			if (this.src) {
-				this.style.backgroundImage = 'url(' + this.src + ')';
-			}
+		_updateData: function() {
+			this.style.backgroundImage = 'url(' + this.data.src + ')';
 		}
 	});
 </script>
