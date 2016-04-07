@@ -2,15 +2,19 @@
 <dom-module id="navigation-logo">
 	<style>
 		:host {
+			display: block;
+		}
+		:host > a {
 			background-repeat: no-repeat;
 			background-position: 30px 12px;
-			display: block;
+			display: inline-block;
 			height: 90px;
 			text-indent: -10000px;
+			width: 261px;
 		}
 	</style>
 	<template>
-		[[data.text]]
+		<a href$="[[data.href]]">[[data.text]]</a>
 	</template>
 </dom-module>
 <script>
@@ -23,7 +27,7 @@
 			}
 		},
 		_updateData: function() {
-			this.style.backgroundImage = 'url(' + this.data.src + ')';
+			this.$$('a').style.backgroundImage = 'url(' + this.data.src + ')';
 		}
 	});
 </script>

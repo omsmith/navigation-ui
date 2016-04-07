@@ -1,18 +1,11 @@
 <link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="item-group.html">
 <link rel="import" href="item-link.html">
 <dom-module id="navigation-items">
 	<style>
 		:host {
 			display: block;
 			min-height: 70px;
-		}
-		li {
-			display: inline-block;
-			padding: 20px 30px;
-		}
-		li:hover {
-			color: #e87543;
-			cursor: pointer;
 		}
 	</style>
 	<template>
@@ -31,19 +24,41 @@
 			role: 'list'
 		},
 		_updateItems: function() {
-			var root = this.root;
 			this.items.forEach(function(item) {
-				if (item.class.indexOf('link') > 0) {
-					var linkElem = document.createElement('navigation-item-link');
-					item.links.forEach(function(l) {
-						if (l.rel.indexOf('self') > -1) {
-							linkElem.setAttribute('href', l.href);
-						}
-					});
-					linkElem.setAttribute('text', item.properties.text);
-					Polymer.dom(root).appendChild(linkElem);
+				var elem = this._createItemElem(item);
+				if (elem) {
+					Polymer.dom(this.root).appendChild(elem);
 				}
-			});
+			}.bind(this));
+		},
+		_createItemElem: function(item) {
+
+			var elem;
+			if (item.class.indexOf('link') > 0) {
+				elem = document.createElement('navigation-item-link');
+				item.links.forEach(function(l) {
+					if (l.rel.indexOf('self') > -1) {
+						elem.setAttribute('href', l.href);
+					}
+				});
+			} else if (item.class.indexOf('group') > 0) {
+				elem = document.createElement('navigation-item-group');
+				item.entities.forEach(function(childItem) {
+					var childElem = this._createItemElem(childItem);
+					if (childElem) {
+						Polymer.dom(elem).appendChild(childElem);
+					}
+				}.bind(this))
+			}
+
+			if (!elem) {
+				return null;
+			}
+
+			elem.setAttribute('text', item.properties.text);
+
+			return elem;
+
 		}
 	});
 </script>
