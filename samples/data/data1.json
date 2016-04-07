@@ -29,7 +29,7 @@
 			"links": [
 				{
 					"rel": ["self"],
-					"href": "/calendar/"
+					"href": "/d2l/le/calendar/6606"
 				}
 			]
 		},
@@ -41,7 +41,7 @@
 			"links": [
 				{
 					"rel": ["self"],
-					"href": "/checklist/"
+					"href": "/d2l/lms/checklist/checklists.d2l?ou=6606"
 				}
 			]
 		},
@@ -53,7 +53,7 @@
 			"links": [
 				{
 					"rel": ["self"],
-					"href": "/content/"
+					"href": "/d2l/le/content/6609/Home"
 				}
 			]
 		},
@@ -65,7 +65,7 @@
 			"links": [
 				{
 					"rel": ["self"],
-					"href": "/discussions/"
+					"href": "/d2l/le/6606/discussions/List"
 				}
 			]
 		},
@@ -77,31 +77,39 @@
 			"links": [
 				{
 					"rel": ["self"],
-					"href": "/dropbox/"
+					"href": "/d2l/lms/dropbox/dropbox.d2l?ou=6606"
 				}
 			]
 		},
 		{
-			"class": ["item", "link"],
+			"class": ["item", "group"],
 			"properties": {
-				"text": "Announcements"
+				"text": "Menu"
 			},
-			"links": [
+			"entities": [
 				{
-					"rel": ["self"],
-					"href": "/news/"
-				}
-			]
-		},
-		{
-			"class": ["item", "link"],
-			"properties": {
-				"text": "Quizzes"
-			},
-			"links": [
+					"class": ["item", "link"],
+					"properties": {
+						"text": "Announcements"
+					},
+					"links": [
+						{
+							"rel": ["self"],
+							"href": "/d2l/lms/news/main.d2l?ou=6606"
+						}
+					]
+				},
 				{
-					"rel": ["self"],
-					"href": "/quizzes/"
+					"class": ["item", "link"],
+					"properties": {
+						"text": "Quizzes"
+					},
+					"links": [
+						{
+							"rel": ["self"],
+							"href": "/d2l/lms/quizzing/admin/quizzes_manage.d2l?ou=6606"
+						}
+					]
 				}
 			]
 		}
