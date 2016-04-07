@@ -1,7 +1,7 @@
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="item-group.html">
 <link rel="import" href="item-link.html">
-<dom-module id="navigation-items">
+<dom-module id="d2l-navigation-items">
 	<style>
 		:host {
 			display: block;
@@ -13,7 +13,7 @@
 </dom-module>
 <script>
 	Polymer({
-		is: 'navigation-items',
+		is: 'd2l-navigation-items',
 		properties: {
 			items: {
 				type: Array,
@@ -35,14 +35,14 @@
 
 			var elem;
 			if (item.class.indexOf('link') > 0) {
-				elem = document.createElement('navigation-item-link');
+				elem = document.createElement('d2l-navigation-item-link');
 				item.links.forEach(function(l) {
 					if (l.rel.indexOf('self') > -1) {
 						elem.setAttribute('href', l.href);
 					}
 				});
 			} else if (item.class.indexOf('group') > 0) {
-				elem = document.createElement('navigation-item-group');
+				elem = document.createElement('d2l-navigation-item-group');
 				item.entities.forEach(function(childItem) {
 					var childElem = this._createItemElem(childItem);
 					if (childElem) {

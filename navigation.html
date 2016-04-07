@@ -5,7 +5,7 @@
 <link rel="import" href="logo.html">
 <link rel="import" href="../iron-ajax/iron-ajax.html">
 
-<dom-module id="brightspace-navigation">
+<dom-module id="d2l-navigation">
 
 	<style>
 		:host {
@@ -14,12 +14,12 @@
 			display: block;
 			position: relative;
 		}
-		navigation-logo, navigation-items {
+		d2l-navigation-logo, d2l-navigation-items {
 			opacity: 0;
 			transition: opacity 1000ms;
 		}
-		:host[loaded] navigation-logo,
-		:host[loaded] navigation-items {
+		:host[loaded] d2l-navigation-logo,
+		:host[loaded] d2l-navigation-items {
 			opacity: 1;
 		}
 		hr {
@@ -37,14 +37,14 @@
 			last-response="{{response}}"
 			on-response="handleResponse"></iron-ajax>
 		<nav>
-			<navigation-color-band color="[[response.properties.color]]"></navigation-color-band>
-			<navigation-centerer>
-				<navigation-logo data="[[logo]]"></navigation-logo>
-			</navigation-centerer>
+			<d2l-navigation-color-band color="[[response.properties.color]]"></d2l-navigation-color-band>
+			<d2l-navigation-centerer>
+				<d2l-navigation-logo data="[[logo]]"></d2l-navigation-logo>
+			</d2l-navigation-centerer>
 			<hr />
-			<navigation-centerer>
-				<navigation-items items="[[items]]"></navigation-items>
-			</navigation-centerer>
+			<d2l-navigation-centerer>
+				<d2l-navigation-items items="[[items]]"></d2l-navigation-items>
+			</d2l-navigation-centerer>
 		</nav>
 	</template>
 
@@ -54,7 +54,7 @@
 
 	Polymer({
 
-		is: 'brightspace-navigation',
+		is: 'd2l-navigation',
 
 		properties: {
 			endpoint: {
