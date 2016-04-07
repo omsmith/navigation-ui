@@ -82,13 +82,15 @@
 
 		handleResponse: function() {
 
-			var logoSrc = '';
+			var logoSrc, logoHref = '';
 			var items = [];
 			this.response.entities.forEach(function(e) {
 				if (e.class.indexOf('image') > -1) {
 					e.links.forEach(function(l) {
 						if (l.rel.indexOf('alternate') > -1) {
 							logoSrc = l.href;
+						} else if( l.rel.indexOf('/rel/home') > -1) {
+							logoHref = l.href;
 						}
 					});
 				} else if (e.class.indexOf('item') > -1) {
@@ -98,6 +100,7 @@
 
 			this.items = items;
 			this.logo = {
+				href: logoHref,
 				text: this.response.properties.text,
 				src: logoSrc
 			};
