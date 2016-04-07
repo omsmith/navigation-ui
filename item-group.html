@@ -1,0 +1,36 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="icons.html">
+<dom-module id="navigation-item-group">
+	<style>
+		:host {
+			display: inline-block;
+			padding: 20px 30px;
+		}
+		:host > a, :host > a:link, :host > a:visited {
+			color: #565a5c;
+			text-decoration: none;
+		}
+		:host > a:hover, :host > a:focus {
+			color: #e87543;
+			text-decoration: underline;
+			outline: none;
+		}
+	</style>
+	<template>
+		<a>
+			{{text}}
+			<iron-icon icon="navigation:arrow-drop-down"></iron-icon>
+		</a>
+	</template>
+</dom-module>
+<script>
+	Polymer({
+		is: 'navigation-item-group',
+		properties: {
+			text: String
+		},
+		hostAttributes: {
+			role: 'listitem'
+		}
+	});
+</script>
