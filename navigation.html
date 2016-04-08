@@ -89,7 +89,7 @@
 					e.links.forEach(function(l) {
 						if (l.rel.indexOf('alternate') > -1) {
 							logoSrc = l.href;
-						} else if( l.rel.indexOf('/rel/home') > -1) {
+						} else if( l.rel.indexOf('http://api.brightspace.com/rel/home') > -1) {
 							logoHref = l.href;
 						}
 					});
