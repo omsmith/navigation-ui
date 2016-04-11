@@ -5,7 +5,7 @@
 	<style>
 		:host {
 			display: block;
-			min-height: 70px;
+			height: calc(1rem + 40px);
 		}
 	</style>
 	<template>
@@ -33,32 +33,45 @@
 		},
 		_createItemElem: function(item) {
 
+			var data = this._getItemData(item);
+
 			var elem;
-			if (item.class.indexOf('link') > 0) {
-				elem = document.createElement('d2l-navigation-item-link');
-				item.links.forEach(function(l) {
-					if (l.rel.indexOf('self') > -1) {
-						elem.setAttribute('href', l.href);
-					}
-				});
-			} else if (item.class.indexOf('group') > 0) {
+			if (data.items) {
 				elem = document.createElement('d2l-navigation-item-group');
-				item.entities.forEach(function(childItem) {
-					var childElem = this._createItemElem(childItem);
-					if (childElem) {
-						Polymer.dom(elem).appendChild(childElem);
-					}
-				}.bind(this))
+				elem.items = data.items;
+			} else {
+				elem = document.createElement('d2l-navigation-item-link');
+				elem.setAttribute('href', data.href);
 			}
 
-			if (!elem) {
-				return null;
-			}
-
-			elem.setAttribute('text', item.properties.text);
-
+			elem.setAttribute('text', data.text);
 			return elem;
 
+		},
+		_getItemData: function(item) {
+			var data = {
+				href: '',
+				text: item.properties.text
+			};
+			if (item.class.indexOf('group') > 0) {
+				var items = [];
+				item.entities.forEach(function(e) {
+					var child = this._getItemData(e);
+					if (child) {
+						items.push(child);
+					}
+				}.bind(this));
+				if (items.length > 0) {
+					data.items = items;
+				}
+			} else {
+				item.links.forEach(function(l) {
+					if (l.rel.indexOf('self') > -1) {
+						data.href = l.href;
+					}
+				});
+			}
+			return data;
 		}
 	});
 </script>
