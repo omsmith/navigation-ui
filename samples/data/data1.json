@@ -16,7 +16,7 @@
 					"href": "assets/logo.png"
 				},
 				{
-					"rel": ["/rel/home"],
+					"rel": ["http://api.brightspace.com/rel/home"],
 					"href": "/home/"
 				}
 			]
