@@ -6,12 +6,26 @@
 		<title>d2l-navigation Sample</title>
 		<script src="../../webcomponentsjs/webcomponents-lite.js"></script>
 		<link rel="import" href="../navigation.html">
+		<link rel="import" href="../centerer.html">
 		<link rel="stylesheet" href="sample.css">
 	</head>
 	<body unresolved>
 		<d2l-navigation endpoint="data/data1.json"></d2l-navigation>
-		<main style="padding:30px;">
-			Document body.
-		</main>
+		<d2l-navigation-centerer>
+			<main>
+				<label>
+					Navigation delay (ms)<br />
+					<input type="text" id="delay" value="0" />
+				</label>
+				<button id="apply">Apply</button>
+			</main>
+		</d2l-navigation-centerer>
+		<script>
+		document.getElementById('apply').addEventListener('click', function() {
+			var nav = document.querySelector('d2l-navigation');
+			nav.setAttribute('delay', parseInt(document.getElementById('delay').value));
+			nav.load();
+		});
+		</script>
 	</body>
 </html>

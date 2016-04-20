@@ -24,10 +24,14 @@
 			role: 'list'
 		},
 		_updateItems: function() {
+			var root = Polymer.dom(this.root);
+			while(root.firstChild) {
+				root.removeChild(root.firstChild);
+			}
 			this.items.forEach(function(item) {
 				var elem = this._createItemElem(item);
 				if (elem) {
-					Polymer.dom(this.root).appendChild(elem);
+					root.appendChild(elem);
 				}
 			}.bind(this));
 		},
