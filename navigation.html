@@ -1,9 +1,9 @@
 <link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../iron-ajax/iron-ajax.html">
 <link rel="import" href="centerer.html">
-<link rel="import" href="color-band.html">
+<link rel="import" href="page-load-progress.html">
 <link rel="import" href="items.html">
 <link rel="import" href="logo.html">
-<link rel="import" href="../iron-ajax/iron-ajax.html">
 
 <dom-module id="d2l-navigation">
 
@@ -15,12 +15,11 @@
 			line-height: 1;
 			position: relative;
 		}
-		d2l-navigation-logo, d2l-navigation-items {
+		:host > nav {
 			opacity: 0;
-			transition: opacity 1000ms;
+			transition: opacity 500ms;
 		}
-		:host[loaded] d2l-navigation-logo,
-		:host[loaded] d2l-navigation-items {
+		:host[loaded] > nav {
 			opacity: 1;
 		}
 		hr {
@@ -34,11 +33,11 @@
 		<iron-ajax
 			url="{{endpoint}}"
 			handle-as="json"
-			loading="{loading}"
 			last-response="{{response}}"
 			on-response="handleResponse"></iron-ajax>
+		<d2l-navigation-page-load-progress
+			color="[[response.properties.color]]"></d2l-navigation-page-load-progress>
 		<nav>
-			<d2l-navigation-color-band color="[[response.properties.color]]"></d2l-navigation-color-band>
 			<d2l-navigation-centerer>
 				<d2l-navigation-logo data="[[logo]]"></d2l-navigation-logo>
 			</d2l-navigation-centerer>
@@ -54,16 +53,18 @@
 <script>
 
 	Polymer({
-
 		is: 'd2l-navigation',
-
 		properties: {
+			delay: {
+				type: Number,
+				value: 200
+			},
 			endpoint: {
 				type: String
 			},
 			loading: {
 				type: Boolean,
-				value: true
+				value: false
 			},
 			items: {
 				type: Array
@@ -72,15 +73,9 @@
 				type: Object
 			}
 		},
-
 		ready: function() {
-			// TODO: just to similuate slowness, this should be removed
-			// and "auto" attribute should be added to <iron-ajax>
-			setTimeout(function() {
-				this.$$('iron-ajax').generateRequest();
-			}.bind(this), 300);
+			this.load();
 		},
-
 		handleResponse: function() {
 
 			var logoSrc, logoHref = '';
@@ -106,10 +101,23 @@
 				src: logoSrc
 			};
 
-			this.setAttribute('loaded', '');
+			var delay = Math.min(200, this.delay);
+			this.async(function() {
+				this.setAttribute('loaded', '');
+				this.$$('d2l-navigation-page-load-progress').finish();
+				this.loading = false;
+			}.bind(this), delay)
 
+		},
+		load: function() {
+			if (this.loading) {
+				return;
+			}
+			this.loading = true;
+			this.$$('iron-ajax').generateRequest();
+			this.$$('d2l-navigation-page-load-progress').start();
+			this.removeAttribute('loaded');
 		}
-
 	});
 
 </script>
