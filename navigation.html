@@ -10,14 +10,14 @@
 	<style>
 		:host {
 			background-color: #fff;
-			border-bottom: 1px solid #e6eaf0;
 			display: block;
 			line-height: 1;
 			position: relative;
 		}
 		:host > nav {
+			border-bottom: 1px solid #e6eaf0;
 			opacity: 0;
-			transition: opacity 500ms;
+			transition: opacity 200ms;
 		}
 		:host[loaded] > nav {
 			opacity: 1;
@@ -101,10 +101,11 @@
 				src: logoSrc
 			};
 
-			var delay = Math.min(200, this.delay);
+			var delay = Math.max(200, this.delay);
 			this.async(function() {
 				this.setAttribute('loaded', '');
 				this.$$('d2l-navigation-page-load-progress').finish();
+				this.fire('d2l-navigation-ready');
 				this.loading = false;
 			}.bind(this), delay)
 
