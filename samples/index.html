@@ -11,12 +11,12 @@
 		<link rel="stylesheet" href="sample.css">
 	</head>
 	<body class="d2l-page-loading">
-		<d2l-navigation endpoint="data/data1.json"></d2l-navigation>
+		<d2l-navigation endpoint="data/data1.json" class="d2l-page-loading-skip"></d2l-navigation>
 		<d2l-navigation-centerer>
 			<main>
 				<label>
 					Navigation delay (ms)<br />
-					<input type="text" id="delay" value="0" />
+					<input type="text" id="delay" value="200" />
 				</label>
 				<button id="apply">Apply</button>
 			</main>
@@ -25,6 +25,7 @@
 		document.getElementById('apply').addEventListener('click', function() {
 			var nav = document.querySelector('d2l-navigation');
 			nav.setAttribute('delay', parseInt(document.getElementById('delay').value));
+			document.body.classList.add('d2l-page-loading');
 			nav.load();
 		});
 		</script>

@@ -25,7 +25,7 @@ body.d2l-page-loading > *:not(.d2l-page-loading-skip) {
 		}
 		document.body.addEventListener('d2l-navigation-ready', navIsReady);
 		var navs = document.getElementsByTagName('d2l-navigation');
-		if (navs.length === 0 || navs[0].hasAttribute('loaded')) {
+		if (navs.length === 0 || !navs[0].hasAttribute('loading')) {
 			navIsReady();
 		}
 		pageReady = true;
@@ -33,9 +33,6 @@ body.d2l-page-loading > *:not(.d2l-page-loading-skip) {
 	}
 
 	function navIsReady() {
-		if (navReady) {
-			return;
-		}
 		navReady = true;
 		check();
 	}
