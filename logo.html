@@ -15,20 +15,22 @@
 		}
 	</style>
 	<template>
-		<a href$="[[data.href]]">[[data.text]]</a>
+		<a href$="[[href]]">[[text]]</a>
 	</template>
 </dom-module>
 <script>
 	Polymer({
 		is: 'd2l-navigation-logo',
 		properties: {
-			data: {
-				type: Object,
-				observer: '_updateData'
-			}
+			href: String,
+			src:  {
+				type: String,
+				observer: '_srcChanged'
+			},
+			text: String
 		},
-		_updateData: function() {
-			this.$$('a').style.backgroundImage = 'url(' + this.data.src + ')';
+		_srcChanged: function() {
+			this.$$('a').style.backgroundImage = 'url(' + this.src + ')';
 		}
 	});
 </script>

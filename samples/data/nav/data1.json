@@ -1,26 +1,9 @@
 {
 	"class": ["navigation"],
 	"properties": {
-		"text": "College University",
-		"color": "#003b71"
+		"text": "College University"
 	},
 	"entities": [
-		{
-			"class": ["image"],
-			"properties": {
-				"alt": "My Home"
-			},
-			"links": [
-				{
-					"rel": ["alternate"],
-					"href": "assets/logo.png"
-				},
-				{
-					"rel": ["http://api.brightspace.com/rel/home"],
-					"href": "/home/"
-				}
-			]
-		},
 		{
 			"class": ["item", "link"],
 			"properties": {
@@ -117,7 +100,11 @@
 	"links": [
 		{
 			"rel": ["self"],
-			"href": "/api/hm/navigation/6606"
+			"href": "data/nav/data1.json"
+		},
+		{
+			"rel": ["http://api.brightspace.com/rel/theme"],
+			"href": "data/theme/data1.json"
 		}
 	]
 }
