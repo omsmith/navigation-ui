@@ -19,7 +19,10 @@
 	<template>
 		<nav>
 			<d2l-navigation-centerer>
-				<d2l-navigation-logo data="[[logo]]"></d2l-navigation-logo>
+				<d2l-navigation-logo
+					href$="[[logoHref]]"
+					src="[[logoSrc]]"
+					text="[[text]]"></d2l-navigation-logo>
 			</d2l-navigation-centerer>
 			<hr />
 			<d2l-navigation-centerer>
@@ -32,12 +35,10 @@
 	Polymer({
 		is: 'd2l-navigation-resolved',
 		properties: {
-			items: {
-				type: Array
-			},
-			logo: {
-				type: Object
-			}
+			items: Array,
+			logoHref: String,
+			logoSrc:  String,
+			text: String
 		}
 	});
 </script>

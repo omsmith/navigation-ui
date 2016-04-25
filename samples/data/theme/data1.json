@@ -1,0 +1,42 @@
+{
+	"class": [
+		"theme"
+	],
+	"properties": {
+		"BackgroundColor": "#003b71",
+		"IconStyle": "TextOnly"
+	},
+	"entities": [
+		{
+			"class": [
+				"image",
+				"file"
+			],
+			"properties": {
+				"alt": "My Home"
+			},
+			"links": [
+				{
+					"rel": [
+						"alternate"
+					],
+					"href": "assets/logo.png"
+				},
+				{
+					"rel": [
+						"http://api.brightspace.com/rel/home"
+					],
+					"href": "/home/"
+				}
+			]
+		}
+	],
+	"links": [
+		{
+			"rel": [
+				"self"
+			],
+			"href": "data/theme/data1.json"
+		}
+	]
+}

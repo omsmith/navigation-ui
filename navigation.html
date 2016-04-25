@@ -19,15 +19,18 @@
 	</style>
 	<template>
 		<iron-ajax
+			id="nav"
 			url="{{endpoint}}"
 			handle-as="json"
 			last-response="{{response}}"
-			on-response="handleResponse"></iron-ajax>
+			on-response="handleNavResponse"></iron-ajax>
 		<d2l-navigation-page-load-progress
-			color="[[response.properties.color]]"></d2l-navigation-page-load-progress>
+			color="[[themeColor]]"></d2l-navigation-page-load-progress>
 		<d2l-navigation-resolved
-			logo="[[logo]]"
-			items="[[items]]"></d2l-navigation-resolved>
+			logo-src="[[logoSrc]]"
+			logo-href="[[logoHref]]"
+			items="[[items]]"
+			text="[[text]]"></d2l-navigation-resolved>
 	</template>
 </dom-module>
 <script>
@@ -38,61 +41,79 @@
 				type: Number,
 				value: 200
 			},
-			endpoint: {
-				type: String
-			},
+			endpoint: String,
+			logoSrc: String,
+			logoHref: String,
 			loading: {
 				reflectToAttribute: true,
 				type: Boolean,
 				value: false
 			},
-			items: {
-				type: Array
-			},
-			logo: {
-				type: Object
+			items: Array,
+			response: Object,
+			text: String,
+			themeColor: String,
+			themeRequest: Object
+		},
+		updateLoading: function() {
+			if (this.themeRequest && this.themeRequest.status === 200 && !this.$.nav.loading) {
+				var delay = Math.max(200, this.delay);
+				this.async(function() {
+					this.$$('d2l-navigation-page-load-progress').finish();
+					this.fire('d2l-navigation-ready');
+					this.loading = false;
+				}.bind(this), delay);
 			}
 		},
 		ready: function() {
 			this.load();
 		},
-		handleResponse: function() {
+		handleNavResponse: function() {
 
-			var logoSrc, logoHref = '';
+			this.response.links.forEach(function(l) {
+				if (l.rel.indexOf('http://api.brightspace.com/rel/theme') > -1) {
+					this.themeRequest = document.createElement('iron-request');
+					this.themeRequest
+						.send({url: l.href, handleAs: 'json'})
+						.then(function(res) {
+							this.handleThemeResponse(res.response);
+						}.bind(this));
+				}
+			}.bind(this));
+
 			var items = [];
 			this.response.entities.forEach(function(e) {
-				if (e.class.indexOf('image') > -1) {
-					e.links.forEach(function(l) {
-						if (l.rel.indexOf('alternate') > -1) {
-							logoSrc = l.href;
-						} else if( l.rel.indexOf('http://api.brightspace.com/rel/home') > -1) {
-							logoHref = l.href;
-						}
-					});
-				} else if (e.class.indexOf('item') > -1) {
+				if (e.class.indexOf('item') > -1) {
 					items.push(e);
 				}
 			});
-
 			this.items = items;
-			this.logo = {
-				href: logoHref,
-				text: this.response.properties.text,
-				src: logoSrc
-			};
 
-			var delay = Math.max(200, this.delay);
-			this.async(function() {
-				this.$$('d2l-navigation-page-load-progress').finish();
-				this.fire('d2l-navigation-ready');
-				this.loading = false;
-			}.bind(this), delay);
+			this.text = this.response.properties.text;
 
+			this.updateLoading();
+
+		},
+		handleThemeResponse: function(res) {
+			res.entities.forEach(function(e) {
+				if (e.class.indexOf('image') > -1) {
+					e.links.forEach(function(l) {
+						if (l.rel.indexOf('alternate') > -1) {
+							this.logoSrc = l.href;
+						} else if( l.rel.indexOf('http://api.brightspace.com/rel/home') > -1) {
+							this.logoHref = l.href;
+						}
+					}.bind(this));
+				}
+			}.bind(this));
+			this.themeColor = res.properties.BackgroundColor;
+			this.updateLoading();
 		},
 		load: function() {
 			if (this.loading) {
 				return;
 			}
+			this.themeRequest = null;
 			this.loading = true;
 			this.$$('iron-ajax').generateRequest();
 			this.$$('d2l-navigation-page-load-progress').start();
