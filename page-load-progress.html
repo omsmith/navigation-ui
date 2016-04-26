@@ -6,12 +6,12 @@
 			background-color: var(--vui-color-woolonardo);
 			display: block;
 		}
-		:host > div {
+		.d2l-navigation-page-load-progress-bar {
 			background-color: var(--vui-color-pressicus);
 			transition: background-color 300ms;
 			width: 0;
 		}
-		:host, :host > div {
+		:host, .d2l-navigation-page-load-progress-bar {
 			height: 4px;
 		}
 		.d2l-navigation-page-load-progress-fast {
@@ -22,7 +22,7 @@
 		}
 	</style>
 	<template>
-		<div></div>
+		<div class="d2l-navigation-page-load-progress-bar"></div>
 	</template>
 </dom-module>
 <script>
