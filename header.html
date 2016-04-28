@@ -1,0 +1,65 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../vui-colors/colors.html">
+<link rel="import" href="button-highlight.html">
+<link rel="import" href="centerer.html">
+<link rel="import" href="logo.html">
+<dom-module id="d2l-navigation-header">
+	<style include="vui-colors">
+		:host {
+			border-bottom: 1px solid var(--vui-color-gypsum);
+			display: block;
+		}
+		.d2l-navigation-header-row {
+			display: table;
+			height: 90px;
+		}
+		.d2l-navigation-header-cell {
+			display: table-cell;
+			vertical-align: middle;
+		}
+		.d2l-navigation-header-open {
+			display: none;
+		}
+		@media(max-width: 575px) {
+			.d2l-navigation-header-open {
+				display: inline-block;
+			}
+			d2l-navigation-logo {
+				display: none;
+			}
+		}
+	</style>
+	<template>
+		<d2l-navigation-centerer>
+			<div class="d2l-navigation-header-row">
+				<div class="d2l-navigation-header-cell">
+					<button
+						is="d2l-navigation-button-highlight"
+						on-tap="openMenu"
+						class="d2l-navigation-header-open"
+						icon="navigation-30:hamburger">Open</button>
+				</div>
+				<div class="d2l-navigation-header-cell">
+					<d2l-navigation-logo
+						href$="[[logoHref]]"
+						src="[[logoSrc]]"
+						text="[[text]]"></d2l-navigation-logo>
+				</div>
+			</div>
+		</d2l-navigation-centerer>
+	</template>
+</dom-module>
+<script>
+	Polymer({
+		is: 'd2l-navigation-header',
+		properties: {
+			logoHref: String,
+			logoSrc:  String,
+			text: String
+		},
+		openMenu: function() {
+			var opener = this.$$('.d2l-navigation-header-open');
+			this.fire('d2l-navigation-open-menu', {opener: opener});
+		}
+	});
+</script>

@@ -1,0 +1,46 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../iron-icon/iron-icon.html">
+<link rel="import" href="../vui-colors/colors.html">
+<dom-module id="d2l-navigation-button">
+	<style include="vui-colors">
+		:host {
+			background-color: var(--vui-color-white);
+			border: 1px solid transparent;
+			border-radius: 0.4rem;
+			color: var(--vui-color-tungsten);
+			cursor: pointer;
+			margin: 0;
+			padding: 12px;
+		}
+		:host(:hover), :host(:focus) {
+			border-color: var(--vui-color-pressicus);
+			color: var(--vui-color-celestine);
+			outline-style: none;
+		}
+		.d2l-navigation-button-text {
+			position:absolute;
+			left:-10000px;
+			top: auto;
+			width: 1px;
+			height: 1px;
+			overflow:hidden;
+		}
+		iron-icon {
+			height: 16px;
+			width: 16px;
+		}
+	</style>
+	<template>
+		<iron-icon icon="[[icon]]"></iron-icon>
+		<span class="d2l-navigation-button-text"><content></content></span>
+	</template>
+</dom-module>
+<script>
+	Polymer({
+		is: 'd2l-navigation-button',
+		extends: 'button',
+		properties: {
+			icon: String
+		}
+	});
+</script>

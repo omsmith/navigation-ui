@@ -7,7 +7,7 @@
 	<style>
 		:host {
 			display: inline-block;
-			padding: 12px 22px;
+			padding: 12px 22px 12px 0;
 		}
 		:host  a, :host a:link, :host a:visited {
 			color: #565a5c;
@@ -29,7 +29,7 @@
 			vertical-offset="40">
 			<a class="dropdown-trigger" tabindex="0">
 				{{text}}
-				<iron-icon icon="navigation:arrow-drop-down"></iron-icon>
+				<iron-icon icon="navigation-24:arrow-drop-down"></iron-icon>
 			</a>
 			<paper-menu id="menu" class="dropdown-content">
 				<template is="dom-repeat" items="{{items}}">

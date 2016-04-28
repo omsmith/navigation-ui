@@ -1,44 +1,55 @@
 <link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../vui-colors/colors.html">
 <link rel="import" href="centerer.html">
+<link rel="import" href="header.html">
 <link rel="import" href="items.html">
-<link rel="import" href="logo.html">
+<link rel="import" href="mobile/menu.html">
 <dom-module id="d2l-navigation-resolved">
-	<style>
+	<style include="vui-colors">
 		:host {
 			display: block;
 		}
 		nav {
-			border-bottom: 1px solid #e6eaf0;
+			border-bottom: 1px solid var(--vui-color-gypsum);
 		}
-		hr {
-			border-bottom: none;
-			border-top: 1px solid #e6eaf0;
-			margin: 0;
+		@media(max-width: 575px) {
+			nav {
+				border-bottom: none;
+			}
+			.d2l-navigation-row2 {
+				display: none;
+			}
 		}
 	</style>
 	<template>
 		<nav>
-			<d2l-navigation-centerer>
-				<d2l-navigation-logo
-					href$="[[logoHref]]"
-					src="[[logoSrc]]"
-					text="[[text]]"></d2l-navigation-logo>
-			</d2l-navigation-centerer>
-			<hr />
-			<d2l-navigation-centerer>
+			<d2l-navigation-header
+				logo-href="[[logoHref]]"
+				logo-src="[[logoSrc]]"
+				text="[[text]]"></d2l-navigation-header>
+			<d2l-navigation-centerer class="d2l-navigation-row2">
 				<d2l-navigation-items items="[[items]]"></d2l-navigation-items>
 			</d2l-navigation-centerer>
 		</nav>
+		<d2l-navigation-mobile-menu
+			band-color="[[bandColor]]"></d2l-navigation-mobile-menu>
 	</template>
 </dom-module>
 <script>
 	Polymer({
 		is: 'd2l-navigation-resolved',
 		properties: {
+			bandColor: String,
 			items: Array,
 			logoHref: String,
 			logoSrc:  String,
 			text: String
+		},
+		listeners: {
+			'd2l-navigation-open-menu': 'openMenu'
+		},
+		openMenu: function(e) {
+			this.$$('d2l-navigation-mobile-menu').open(e.detail.opener);
 		}
 	});
 </script>
