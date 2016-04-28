@@ -1,0 +1,50 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+		<title>slide-out-menu Sample</title>
+		<script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+		<link rel="import" href="../centerer.html">
+		<link rel="import" href="../slide-out-menu.html">
+		<link rel="import" href="rtl-switcher.html">
+		<link rel="stylesheet" href="sample.css">
+	</head>
+	<body unresolved>
+		<d2l-navigation-slide-out-menu id="menu" band-color="#003b71">
+			<div style="padding:10px;">
+				<button id="close" style="float:right;">Close</button>
+				<div style="clear:both"></div>
+				<p>
+					Stuff in the menu.
+				</p>
+			</div>
+		</d2l-navigation-slide-out-menu>
+		<d2l-navigation-centerer>
+			<button id="open" style="position:fixed;top:20px;">Open</button>
+		</d2l-navigation-centerer>
+		<d2l-navigation-centerer>
+			<div style="padding: 50px 0;">
+				<d2l-rtl-switcher></d2l-rtl-switcher>
+			</div>
+			<p style="padding-top:50px;padding-bottom:500px;">
+				text to make the page scroll
+			</p>
+			<p style="padding-bottom:500px;">
+				text to make the page scroll
+			</p>
+			<p style="padding-bottom:500px;">
+				text to make the page scroll
+			</p>
+		</d2l-navigation-centerer>
+		<script>
+		var menu = document.getElementById('menu');
+		document.getElementById('open').addEventListener('click', function() {
+			menu.open(this);
+		});
+		document.getElementById('close').addEventListener('click', function() {
+			menu.close();
+		});
+		</script>
+	</body>
+</html>

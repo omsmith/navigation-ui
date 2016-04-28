@@ -1,0 +1,134 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../vui-colors/colors.html">
+<dom-module id="d2l-navigation-slide-out-menu">
+	<style include="vui-colors">
+		:host {
+			display: block;
+		}
+		.d2l-navigation-slide-out-menu-content {
+			background-color: var(--vui-color-white);
+			display: none;
+			height: 100%;
+			left: 0;
+			overflow-y: scroll;
+			position: fixed;
+			top: 0;
+			transform: translateX(-300px);
+			transition: transform 300ms;
+			width: 300px;
+			z-index: 200;
+		}
+		:host([dir='rtl']) .d2l-navigation-slide-out-menu-content {
+			right: 0;
+			transform: translateX(100%);
+		}
+		:host([state='transition']) .d2l-navigation-slide-out-menu-content,
+		:host([state='opened']) .d2l-navigation-slide-out-menu-content {
+			display: block;
+		}
+		:host([state='opened']) .d2l-navigation-slide-out-menu-content {
+			transform: translateX(0);
+		}
+		.d2l-navigation-slide-out-menu-mask {
+			background-color: var(--vui-color-ferrite);
+			height: 0;
+			left: 0;
+			opacity: 0;
+			overflow: hidden;
+			position: fixed;
+			transition: opacity 300ms, width 0s 0.3s, height 0s 0.3s;
+			top: 0;
+			width: 0;
+			z-index: 100;
+		}
+		:host([state='opened']) .d2l-navigation-slide-out-menu-mask {
+			height: 100%;
+			opacity: 0.8;
+			transition: opacity 300ms;
+			width: 100%;
+		}
+	</style>
+	<template>
+		<div class="d2l-navigation-slide-out-menu-mask"></div>
+		<div class="d2l-navigation-slide-out-menu-content">
+			<content></content>
+		</div>
+	</template>
+</dom-module>
+<script>
+	Polymer({
+		is: 'd2l-navigation-slide-out-menu',
+		properties: {
+			state: {
+				type: String,
+				value: 'closed',
+				reflectToAttribute: true
+			},
+			_opener: Object
+		},
+		open: function(opener) {
+
+			if (this.state !== 'closed') {
+				return;
+			}
+			this.state = 'transition';
+
+			var dir = window.getComputedStyle(document.body).direction;
+			this.setAttribute('dir', dir);
+
+			document.body.style.overflow = 'hidden';
+			this._opener = opener;
+			this.async(function() { this.state = 'opened'; }.bind(this), 0);
+
+			var focusElems = this.getFocusableNodes();
+			if (focusElems.length > 0) {
+				focusElems[0].focus();
+			}
+
+		},
+		close: function() {
+
+			if (this.state !== 'opened') {
+				return;
+			}
+			this.state = 'transition';
+
+			document.body.style.overflow = 'visible';
+			this.async(function() { this.state = 'closed'; }.bind(this), 350);
+
+			if (this._opener) {
+				this._opener.focus();
+				this._opener = null;
+			}
+
+		},
+		getFocusableNodes: function() {
+			var FOCUSABLE_WITH_DISABLED = [
+				'a[href]',
+				'[tabindex]'
+			];
+			// Elements that cannot be focused if they have [disabled] attribute.
+			var FOCUSABLE_WITHOUT_DISABLED = [
+				'input',
+				'select',
+				'textarea',
+				'button'
+			];
+			// Discard elements with tabindex=-1 (makes them not focusable).
+			var selector = FOCUSABLE_WITH_DISABLED.join(':not([tabindex="-1"]),') +
+				':not([tabindex="-1"]),' +
+				FOCUSABLE_WITHOUT_DISABLED.join(':not([disabled]):not([tabindex="-1"]),') +
+				':not([disabled]):not([tabindex="-1"])';
+			var focusables = Polymer.dom(this).querySelectorAll(selector);
+			return focusables.sort(function (a, b) {
+				if (a.tabIndex === b.tabIndex) {
+					return 0;
+				}
+				if (a.tabIndex === 0 || a.tabIndex > b.tabIndex) {
+					return 1;
+				}
+				return -1;
+			});
+		}
+	});
+</script>

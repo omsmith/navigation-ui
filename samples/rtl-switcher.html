@@ -1,0 +1,27 @@
+<link rel="import" href="../../polymer/polymer.html">
+<dom-module id="d2l-rtl-switcher">
+	<style>
+		:host {
+			display: block;
+			margin-bottom: 20px;
+		}
+	</style>
+	<template>
+		<label>
+			Direction<br />
+			<select on-change="handleChange">
+				<option value="ltr" selected>LTR</option>
+				<option value="rtl">RTL</option>
+			</select>
+		</label>
+	</template>
+</dom-module>
+<script>
+	Polymer({
+		is: 'd2l-rtl-switcher',
+		handleChange: function(e) {
+			var dir = e.target.options[e.target.selectedIndex].value;
+			document.body.setAttribute('dir', dir);
+		}
+	});
+</script>
