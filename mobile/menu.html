@@ -1,5 +1,6 @@
 <link rel="import" href="../../polymer/polymer.html">
 <link rel="import" href="../../vui-colors/colors.html">
+<link rel="import" href="../button.html">
 <link rel="import" href="../slide-out-menu.html">
 <link rel="import" href="../icons.html">
 <dom-module id="d2l-navigation-mobile-menu">
@@ -20,10 +21,16 @@
 			position: absolute;
 			top: 50%;
 		}
+		:host-context([dir='rtl']) .d2l-navigation-mobile-menu-header-text {
+			right: 30px;
+		}
 		.d2l-navigation-mobile-menu-close {
 			position: absolute;
 			right: 30px;
 			top: 24px;
+		}
+		:host-context([dir='rtl']) .d2l-navigation-mobile-menu-close {
+			left: 24px;
 		}
 	</style>
 	<template>

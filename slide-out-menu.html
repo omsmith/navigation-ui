@@ -18,7 +18,7 @@
 			width: 300px;
 			z-index: 200;
 		}
-		:host([dir='rtl']) .d2l-navigation-slide-out-menu-content {
+		:host-context([dir='rtl']) .d2l-navigation-slide-out-menu-content {
 			right: 0;
 			transform: translateX(100%);
 		}
@@ -72,9 +72,6 @@
 				return;
 			}
 			this.state = 'transition';
-
-			var dir = window.getComputedStyle(document.body).direction;
-			this.setAttribute('dir', dir);
 
 			document.body.style.overflow = 'hidden';
 			this._opener = opener;
