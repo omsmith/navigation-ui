@@ -1,0 +1,69 @@
+<link rel="import" href="../../polymer/polymer.html">
+<link rel="import" href="../../vui-colors/colors.html">
+<link rel="import" href="../slide-out-menu.html">
+<link rel="import" href="../icons.html">
+<dom-module id="d2l-navigation-mobile-menu">
+	<style include="vui-colors">
+		:host {
+			display: block;
+		}
+		.d2l-navigation-mobile-menu-header {
+			border-top: 4px solid var(--vui-color-pressicus);
+			border-bottom: 1px solid var(--vui-color-gypsum);
+			height: 90px;
+			position: relative;
+		}
+		.d2l-navigation-mobile-menu-header-text {
+			font-size: 0.7rem;
+			left: 24px;
+			transform: translateY(-50%);
+			position: absolute;
+			top: 50%;
+		}
+		.d2l-navigation-mobile-menu-close {
+			position: absolute;
+			right: 30px;
+			top: 24px;
+		}
+	</style>
+	<template>
+		<d2l-navigation-slide-out-menu>
+			<div class="d2l-navigation-mobile-menu-header">
+				<span class="d2l-navigation-mobile-menu-header-text">MENU</span>
+				<button
+					is="d2l-navigation-button"
+					class="d2l-navigation-mobile-menu-close"
+					icon="navigation-30:close"
+					on-tap="close">Close</button>
+			</div>
+		</d2l-navigation-slide-out-menu>
+	</template>
+</dom-module>
+<script>
+	Polymer({
+		is: 'd2l-navigation-mobile-menu',
+		properties: {
+			bandColor: {
+				type: String,
+				value: '#b9c2d0',
+				observer: '_bandColorChanged'
+			}
+		},
+		listeners: {
+			'd2l-navigation-close-menu': 'close'
+		},
+		ready: function() {
+			this._bandColorChanged();
+		},
+		close: function() {
+			this.$$('d2l-navigation-slide-out-menu').close();
+		},
+		open: function(opener) {
+			this.$$('d2l-navigation-slide-out-menu').open(opener);
+		},
+		_bandColorChanged: function() {
+			this.$$('.d2l-navigation-mobile-menu-header')
+				.style.borderTopColor = this.bandColor;
+		}
+	});
+</script>

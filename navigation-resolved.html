@@ -1,44 +1,84 @@
 <link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../vui-colors/colors.html">
+<link rel="import" href="button.html">
 <link rel="import" href="centerer.html">
 <link rel="import" href="items.html">
 <link rel="import" href="logo.html">
+<link rel="import" href="mobile/menu.html">
 <dom-module id="d2l-navigation-resolved">
-	<style>
+	<style include="vui-colors">
 		:host {
 			display: block;
 		}
 		nav {
-			border-bottom: 1px solid #e6eaf0;
+			border-bottom: 1px solid var(--vui-color-gypsum);
 		}
 		hr {
 			border-bottom: none;
-			border-top: 1px solid #e6eaf0;
+			border-top: 1px solid var(--vui-color-gypsum);
 			margin: 0;
+		}
+		.d2l-navigation-row {
+			display: table;
+			height: 90px;
+		}
+		.d2l-navigation-cell {
+			display: table-cell;
+			vertical-align: middle;
+		}
+		.d2l-navigation-open {
+			display: none;
+		}
+		@media(max-width: 575px) {
+			.d2l-navigation-open {
+				display: inline-block;
+			}
+			d2l-navigation-logo {
+				display: none;
+			}
 		}
 	</style>
 	<template>
 		<nav>
 			<d2l-navigation-centerer>
-				<d2l-navigation-logo
-					href$="[[logoHref]]"
-					src="[[logoSrc]]"
-					text="[[text]]"></d2l-navigation-logo>
+				<div class="d2l-navigation-row">
+					<div class="d2l-navigation-cell">
+						<button
+							is="d2l-navigation-button"
+							on-tap="openMenu"
+							class="d2l-navigation-open"
+							icon="navigation-30:hamburger">Open</button>
+					</div>
+					<div class="d2l-navigation-cell">
+						<d2l-navigation-logo
+							href$="[[logoHref]]"
+							src="[[logoSrc]]"
+							text="[[text]]"></d2l-navigation-logo>
+					</div>
+				</div>
 			</d2l-navigation-centerer>
 			<hr />
 			<d2l-navigation-centerer>
 				<d2l-navigation-items items="[[items]]"></d2l-navigation-items>
 			</d2l-navigation-centerer>
 		</nav>
+		<d2l-navigation-mobile-menu
+			band-color="[[bandColor]]"></d2l-navigation-mobile-menu>
 	</template>
 </dom-module>
 <script>
 	Polymer({
 		is: 'd2l-navigation-resolved',
 		properties: {
+			bandColor: String,
 			items: Array,
 			logoHref: String,
 			logoSrc:  String,
 			text: String
+		},
+		openMenu: function() {
+			var openButton = this.$$('.d2l-navigation-open');
+			this.$$('d2l-navigation-mobile-menu').open(openButton);
 		}
 	});
 </script>
