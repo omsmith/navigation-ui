@@ -2,20 +2,22 @@
 <dom-module id="d2l-navigation-logo">
 	<style>
 		:host {
-			display: block;
-			height: 90px;
+			display: inline-block;
 		}
 		:host > a {
 			background-repeat: no-repeat;
-			background-position: 30px 12px;
+			background-position: 0 center;
 			display: inline-block;
-			height: 90px;
-			text-indent: -10000px;
-			width: 261px;
+			padding: 13px 0;
+		}
+		:host img {
+			height: 62px;
 		}
 	</style>
 	<template>
-		<a href$="[[href]]">[[text]]</a>
+		<a href$="[[href]]" title="[[text]]">
+			<img src$="[[src]]" alt="[[text]]" />
+		</a>
 	</template>
 </dom-module>
 <script>
@@ -23,14 +25,8 @@
 		is: 'd2l-navigation-logo',
 		properties: {
 			href: String,
-			src:  {
-				type: String,
-				observer: '_srcChanged'
-			},
+			src:  String,
 			text: String
-		},
-		_srcChanged: function() {
-			this.$$('a').style.backgroundImage = 'url(' + this.src + ')';
 		}
 	});
 </script>
