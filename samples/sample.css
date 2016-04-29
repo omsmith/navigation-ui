@@ -13,6 +13,14 @@ body {
 	margin: 0;
 }
 
+body > * {
+	transition: opacity ease-in .2s;
+}
+
+body.loading > *:not(.loading-skip) {
+	opacity: 0;
+}
+
 main {
 	padding: 1.5rem 0;
 }
