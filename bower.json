@@ -7,7 +7,7 @@
   "keywords": [],
   "main": "navigation.html",
   "license": "Apache-2.0",
-  "homepage": "https://github.com/Brightspace/ui-navigation/",
+  "homepage": "https://github.com/Brightspace/d2l-navigation-ui/",
   "ignore": [
     "/.*",
     "package.json",
