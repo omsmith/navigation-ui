@@ -7,12 +7,11 @@
 		<script src="../../webcomponentsjs/webcomponents-lite.js"></script>
 		<link rel="import" href="../navigation.html">
 		<link rel="import" href="../centerer.html">
-		<link rel="import" href="../page-loading.html">
 		<link rel="import" href="rtl-switcher.html">
 		<link rel="stylesheet" href="sample.css">
 	</head>
-	<body class="d2l-page-loading">
-		<d2l-navigation endpoint="data/nav/data1.json" class="d2l-page-loading-skip"></d2l-navigation>
+	<body class="loading">
+		<d2l-navigation endpoint="data/nav/data1.json" class="loading-skip"></d2l-navigation>
 		<d2l-navigation-centerer>
 			<main>
 				<div style="margin-bottom:20px;">
@@ -26,10 +25,37 @@
 			</main>
 		</d2l-navigation-centerer>
 		<script>
+		(function() {
+			'use strict';
+
+			var pageReady, navReady = false;
+
+			function check() {
+				if (pageReady && navReady) {
+					document.body.classList.remove('loading');
+				}
+			}
+
+			function navIsReady() {
+				navReady = true;
+				check();
+			}
+
+			addEventListener('WebComponentsReady', function() {
+				document.body.addEventListener('d2l-navigation-ready', navIsReady);
+				var navs = document.getElementsByTagName('d2l-navigation');
+				if (navs.length === 0 || !navs[0].hasAttribute('loading')) {
+					navIsReady();
+				}
+				pageReady = true;
+				check();
+			});
+
+		})();
 		document.getElementById('apply').addEventListener('click', function() {
 			var nav = document.querySelector('d2l-navigation');
 			nav.setAttribute('delay', parseInt(document.getElementById('delay').value));
-			document.body.classList.add('d2l-page-loading');
+			document.body.classList.add('loading');
 			nav.load();
 		});
 		</script>
