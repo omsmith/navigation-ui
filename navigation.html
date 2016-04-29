@@ -1,6 +1,6 @@
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../iron-ajax/iron-ajax.html">
-<link rel="import" href="page-load-progress.html">
+<link rel="import" href="../d2l-page-load-progress/d2l-page-load-progress.html">
 <link rel="import" href="navigation-resolved.html">
 <dom-module id="d2l-navigation">
 	<style>
@@ -24,8 +24,7 @@
 			handle-as="json"
 			last-response="{{response}}"
 			on-response="handleNavResponse"></iron-ajax>
-		<d2l-navigation-page-load-progress
-			color="[[themeColor]]"></d2l-navigation-page-load-progress>
+		<d2l-page-load-progress color="[[themeColor]]"></d2l-page-load-progress>
 		<d2l-navigation-resolved
 			band-color="[[themeColor]]"
 			logo-src="[[logoSrc]]"
@@ -60,7 +59,7 @@
 			if (this.themeRequest && this.themeRequest.status === 200 && !this.$.nav.loading) {
 				var delay = Math.max(200, this.delay);
 				this.async(function() {
-					this.$$('d2l-navigation-page-load-progress').finish();
+					this.$$('d2l-page-load-progress').finish();
 					this.fire('d2l-navigation-ready');
 					this.loading = false;
 				}.bind(this), delay);
@@ -117,7 +116,7 @@
 			this.themeRequest = null;
 			this.loading = true;
 			this.$$('iron-ajax').generateRequest();
-			this.$$('d2l-navigation-page-load-progress').start();
+			this.$$('d2l-page-load-progress').start();
 		}
 	});
 </script>

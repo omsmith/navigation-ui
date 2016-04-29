@@ -1,0 +1,61 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>d2l-navigation-item-link tests</title>
+		<meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+		<script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+		<script src="../../web-component-tester/browser.js"></script>
+		<link rel="import" href="../item-link.html">
+	</head>
+	<body>
+
+		<test-fixture id="Default">
+			<template>
+				<d2l-navigation-item-link
+					href="http://www.google.ca"
+					text="Hello World"></d2l-navigation-item-link>
+			</template>
+		</test-fixture>
+
+		<script>
+			describe('Default', function() {
+
+				var itemLink;
+
+				beforeEach(function() {
+					itemLink = fixture('Default');
+				});
+
+				it('should set "href" property when attribute is set', function() {
+					expect(itemLink.href).to.eql('http://www.google.ca');
+				});
+
+				it('should set "text" property when attribute is set', function() {
+					expect(itemLink.text).to.eql('Hello World');
+				});
+
+				it('should update "href" property when attribute is changed', function() {
+					itemLink.setAttribute('href', 'http://www.d2l.com');
+					expect(itemLink.href).to.eql('http://www.d2l.com');
+				});
+
+				it('should update "text" property when attribute is changed', function() {
+					itemLink.setAttribute('text', 'Foo Bar');
+					expect(itemLink.text).to.eql('Foo Bar');
+				});
+
+				it('should update "href" attribute when property is changed', function() {
+					itemLink.href = 'http://www.d2l.com';
+					expect(itemLink.getAttribute('href')).to.eql('http://www.d2l.com');
+				});
+
+				it('should update "text" attribute when property is changed', function() {
+					itemLink.text = 'Foo Bar';
+					expect(itemLink.getAttribute('text')).to.eql('Foo Bar');
+				});
+
+			});
+		</script>
+	</body>
+</html>

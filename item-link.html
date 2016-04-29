@@ -23,8 +23,14 @@
 	Polymer({
 		is: 'd2l-navigation-item-link',
 		properties: {
-			href: String,
-			text: String
+			href: {
+				type: String,
+				reflectToAttribute: true
+			},
+			text: {
+				type: String,
+				reflectToAttribute: true
+			}
 		},
 		hostAttributes: {
 			role: 'listitem'
