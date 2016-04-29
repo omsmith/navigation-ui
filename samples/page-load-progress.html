@@ -28,17 +28,19 @@
 			</main>
 		</d2l-navigation-centerer>
 		<script>
-		var progress = document.getElementById('progress');
-		document.getElementById('start').addEventListener('click', function() {
+		addEventListener('WebComponentsReady', function() {
+			var progress = document.getElementById('progress');
+			document.getElementById('start').addEventListener('click', function() {
+				progress.start();
+			});
+			document.getElementById('finish').addEventListener('click', function() {
+				progress.finish();
+			});
+			document.getElementById('color').addEventListener('change', function() {
+				progress.setAttribute('color', this.value);
+			});
 			progress.start();
 		});
-		document.getElementById('finish').addEventListener('click', function() {
-			progress.finish();
-		});
-		document.getElementById('color').addEventListener('change', function() {
-			progress.setAttribute('color', this.value);
-		});
-		progress.start();
 		</script>
 	</body>
 </html>
