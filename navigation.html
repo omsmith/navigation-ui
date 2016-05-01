@@ -24,7 +24,9 @@
 			handle-as="json"
 			last-response="{{response}}"
 			on-response="handleNavResponse"></iron-ajax>
-		<d2l-page-load-progress color="[[themeColor]]"></d2l-page-load-progress>
+		<d2l-page-load-progress
+			autostart
+			color="[[themeColor]]"></d2l-page-load-progress>
 		<d2l-navigation-resolved
 			band-color="[[themeColor]]"
 			logo-src="[[logoSrc]]"
@@ -66,7 +68,7 @@
 			}
 		},
 		ready: function() {
-			this.load();
+			this.load(true);
 		},
 		handleNavResponse: function() {
 
@@ -109,14 +111,16 @@
 			this.themeColor = res.properties.BackgroundColor;
 			this.updateLoading();
 		},
-		load: function() {
+		load: function(firstLoad) {
 			if (this.loading) {
 				return;
 			}
 			this.themeRequest = null;
 			this.loading = true;
 			this.$$('iron-ajax').generateRequest();
-			this.$$('d2l-page-load-progress').start();
+			if (!firstLoad) {
+				this.$$('d2l-page-load-progress').start();
+			}
 		}
 	});
 </script>
