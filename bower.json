@@ -15,6 +15,7 @@
     "/demo/"
   ],
   "dependencies": {
+    "d2l-page-load-progress": "^0.0.3",
     "polymer": "Polymer/polymer#^1.0.0",
     "iron-ajax": "PolymerElements/iron-ajax#^1.2.0",
     "iron-icon": "PolymerElements/iron-icon#^1.0.0",
@@ -25,7 +26,6 @@
     "vui-colors": "^1.0.1"
   },
   "devDependencies": {
-    "d2l-page-load-progress": "^0.0.1",
     "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",
     "web-component-tester": "*",
     "webcomponentsjs": "^0.7.21"
