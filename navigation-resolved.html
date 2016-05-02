@@ -1,21 +1,20 @@
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../vui-colors/colors.html">
+<link rel="import" href="mobile/menu.html">
 <link rel="import" href="centerer.html">
 <link rel="import" href="header.html">
 <link rel="import" href="items.html">
-<link rel="import" href="mobile/menu.html">
 <dom-module id="d2l-navigation-resolved">
 	<style include="vui-colors">
 		:host {
 			display: block;
 		}
-		nav {
+		.d2l-navigation-row2 {
 			border-bottom: 1px solid var(--vui-color-gypsum);
+			height: calc(1rem + 40px);
+			overflow: hidden;
 		}
 		@media(max-width: 575px) {
-			nav {
-				border-bottom: none;
-			}
 			.d2l-navigation-row2 {
 				display: none;
 			}
@@ -27,12 +26,15 @@
 				logo-href="[[logoHref]]"
 				logo-src="[[logoSrc]]"
 				text="[[text]]"></d2l-navigation-header>
-			<d2l-navigation-centerer class="d2l-navigation-row2">
-				<d2l-navigation-items items="[[items]]"></d2l-navigation-items>
-			</d2l-navigation-centerer>
+			<div class="d2l-navigation-row2">
+				<d2l-navigation-centerer>
+					<d2l-navigation-items items="[[items]]"></d2l-navigation-items>
+				</d2l-navigation-centerer>
+			</div>
+			<d2l-navigation-mobile-menu
+				band-color="[[bandColor]]"
+				items="[[items]]"></d2l-navigation-mobile-menu>
 		</nav>
-		<d2l-navigation-mobile-menu
-			band-color="[[bandColor]]"></d2l-navigation-mobile-menu>
 	</template>
 </dom-module>
 <script>
