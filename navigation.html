@@ -29,10 +29,8 @@
 			color="[[themeColor]]"></d2l-page-load-progress>
 		<d2l-navigation-resolved
 			band-color="[[themeColor]]"
-			logo-src="[[logoSrc]]"
-			logo-href="[[logoHref]]"
-			items="[[items]]"
-			text="[[text]]"></d2l-navigation-resolved>
+			logo="[[logo]]"
+			items="[[items]]"></d2l-navigation-resolved>
 	</template>
 </dom-module>
 <script>
@@ -44,8 +42,7 @@
 				value: 200
 			},
 			endpoint: String,
-			logoSrc: String,
-			logoHref: String,
+			logo: Object,
 			loading: {
 				reflectToAttribute: true,
 				type: Boolean,
@@ -99,13 +96,19 @@
 		handleThemeResponse: function(res) {
 			res.entities.forEach(function(e) {
 				if (e.class.indexOf('image') > -1) {
+					var logo = {
+						alt: e.properties.alt,
+						href: '',
+						src: ''
+					};
 					e.links.forEach(function(l) {
 						if (l.rel.indexOf('alternate') > -1) {
-							this.logoSrc = l.href;
+							logo.src = l.href;
 						} else if( l.rel.indexOf('http://api.brightspace.com/rel/home') > -1) {
-							this.logoHref = l.href;
+							logo.href = l.href;
 						}
 					}.bind(this));
+					this.logo = logo;
 				}
 			}.bind(this));
 			this.themeColor = res.properties.BackgroundColor;
