@@ -18,12 +18,6 @@
 		}
 	</style>
 	<template>
-		<iron-ajax
-			id="nav"
-			url="{{endpoint}}"
-			handle-as="json"
-			last-response="{{response}}"
-			on-response="handleNavResponse"></iron-ajax>
 		<d2l-page-load-progress
 			autostart
 			color="[[themeColor]]"></d2l-page-load-progress>
@@ -49,46 +43,58 @@
 				value: false
 			},
 			items: Array,
-			response: Object,
-			text: String,
+			navRequest: Object,
 			themeColor: String,
 			themeRequest: Object
 		},
 		updateLoading: function() {
-			if (this.themeRequest && this.themeRequest.status === 200 && !this.$.nav.loading) {
+
+			var finish = function() {
 				var delay = Math.max(200, this.delay);
 				this.async(function() {
 					this.$$('d2l-page-load-progress').finish();
 					this.fire('d2l-navigation-ready');
 					this.loading = false;
 				}.bind(this), delay);
+			}.bind(this);
+
+			if (this.navRequest && this.navRequest.status === 500
+				|| this.themeRequest && this.themeRequest.status === 500) {
+				return finish();
 			}
+
+			if (this.navRequest && this.navRequest.status === 200 &&
+				this.themeRequest && this.themeRequest.status === 200) {
+				return finish();
+			}
+
 		},
 		ready: function() {
 			this.load(true);
 		},
-		handleNavResponse: function() {
+		handleNavResponse: function(res) {
 
-			this.response.links.forEach(function(l) {
+			res.links.forEach(function(l) {
 				if (l.rel.indexOf('http://api.brightspace.com/rel/theme') > -1) {
 					this.themeRequest = document.createElement('iron-request');
 					this.themeRequest
 						.send({url: l.href, handleAs: 'json'})
 						.then(function(res) {
 							this.handleThemeResponse(res.response);
+						}.bind(this))
+						.catch(function() {
+							this.updateLoading();
 						}.bind(this));
 				}
 			}.bind(this));
 
 			var items = [];
-			this.response.entities.forEach(function(e) {
+			res.entities.forEach(function(e) {
 				if (e.class.indexOf('item') > -1) {
 					items.push(e);
 				}
 			});
 			this.items = items;
-
-			this.text = this.response.properties.text;
 
 			this.updateLoading();
 
@@ -120,7 +126,15 @@
 			}
 			this.themeRequest = null;
 			this.loading = true;
-			this.$$('iron-ajax').generateRequest();
+			this.navRequest = document.createElement('iron-request');
+			this.navRequest
+				.send({url: this.endpoint, handleAs: 'json'})
+				.then(function(res) {
+					this.handleNavResponse(res.response);
+				}.bind(this))
+				.catch(function() {
+					this.updateLoading();
+				}.bind(this))
 			if (!firstLoad) {
 				this.$$('d2l-page-load-progress').start();
 			}
