@@ -22,10 +22,7 @@
 	</style>
 	<template>
 		<nav>
-			<d2l-navigation-header
-				logo-href="[[logoHref]]"
-				logo-src="[[logoSrc]]"
-				text="[[text]]"></d2l-navigation-header>
+			<d2l-navigation-header logo="[[logo]]"></d2l-navigation-header>
 			<div class="d2l-navigation-row2">
 				<d2l-navigation-centerer>
 					<d2l-navigation-items items="[[items]]"></d2l-navigation-items>
@@ -33,7 +30,8 @@
 			</div>
 			<d2l-navigation-mobile-menu
 				band-color="[[bandColor]]"
-				items="[[items]]"></d2l-navigation-mobile-menu>
+				items="[[items]]"
+				logo="[[logo]]"></d2l-navigation-mobile-menu>
 		</nav>
 	</template>
 </dom-module>
@@ -43,9 +41,7 @@
 		properties: {
 			bandColor: String,
 			items: Array,
-			logoHref: String,
-			logoSrc:  String,
-			text: String
+			logo: Object
 		},
 		listeners: {
 			'd2l-navigation-open-menu': 'openMenu'

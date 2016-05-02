@@ -40,10 +40,7 @@
 						icon="navigation-30:hamburger">Open</button>
 				</div>
 				<div class="d2l-navigation-header-cell">
-					<d2l-navigation-logo
-						href$="[[logoHref]]"
-						src="[[logoSrc]]"
-						text="[[text]]"></d2l-navigation-logo>
+					<d2l-navigation-logo data="[[logo]]"></d2l-navigation-logo>
 				</div>
 			</div>
 		</d2l-navigation-centerer>
@@ -53,9 +50,7 @@
 	Polymer({
 		is: 'd2l-navigation-header',
 		properties: {
-			logoHref: String,
-			logoSrc:  String,
-			text: String
+			logo: Object
 		},
 		openMenu: function() {
 			var opener = this.$$('.d2l-navigation-header-open');

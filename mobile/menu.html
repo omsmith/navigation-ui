@@ -3,6 +3,8 @@
 <link rel="import" href="../button.html">
 <link rel="import" href="../slide-out-menu.html">
 <link rel="import" href="../icons.html">
+<link rel="import" href="../items.html">
+<link rel="import" href="../logo.html">
 <dom-module id="d2l-navigation-mobile-menu">
 	<style include="vui-colors">
 		:host {
@@ -43,6 +45,7 @@
 					icon="navigation-30:close"
 					on-tap="close">Close</button>
 			</div>
+			<d2l-navigation-logo data="[[logo]]"></d2l-navigation-logo>
 			<d2l-navigation-items items="[[items]]"></d2l-navigation-items>
 		</d2l-navigation-slide-out-menu>
 	</template>
@@ -56,7 +59,8 @@
 				value: '#b9c2d0',
 				observer: '_bandColorChanged'
 			},
-			items: Object
+			items: Object,
+			logo: Object
 		},
 		listeners: {
 			'd2l-navigation-close-menu': 'close'
