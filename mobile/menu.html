@@ -16,21 +16,21 @@
 		}
 		.d2l-navigation-mobile-menu-header-text {
 			font-size: 0.7rem;
-			left: 24px;
+			left: 20px;
 			transform: translateY(-50%);
 			position: absolute;
 			top: 50%;
 		}
 		:host-context([dir='rtl']) .d2l-navigation-mobile-menu-header-text {
-			right: 30px;
+			right: 20px;
 		}
 		.d2l-navigation-mobile-menu-close {
 			position: absolute;
-			right: 30px;
+			right: 20px;
 			top: 24px;
 		}
 		:host-context([dir='rtl']) .d2l-navigation-mobile-menu-close {
-			left: 24px;
+			left: 20px;
 		}
 	</style>
 	<template>
@@ -43,6 +43,7 @@
 					icon="navigation-30:close"
 					on-tap="close">Close</button>
 			</div>
+			<d2l-navigation-items items="[[items]]"></d2l-navigation-items>
 		</d2l-navigation-slide-out-menu>
 	</template>
 </dom-module>
@@ -54,7 +55,8 @@
 				type: String,
 				value: '#b9c2d0',
 				observer: '_bandColorChanged'
-			}
+			},
+			items: Object
 		},
 		listeners: {
 			'd2l-navigation-close-menu': 'close'

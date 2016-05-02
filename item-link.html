@@ -1,16 +1,22 @@
 <link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../vui-colors/colors.html">
 <dom-module id="d2l-navigation-item-link">
-	<style>
+	<style include="vui-colors">
 		:host {
 			display: inline-block;
 			padding: 20px 30px 20px 0;
 		}
+		:host-context(d2l-navigation-slide-out-menu) {
+			border-bottom: 1px solid var(--vui-color-gypsum);
+			display: block;
+			padding: 20px;
+		}
 		:host > a, :host > a:link, :host > a:visited {
-			color: #565a5c;
+			color: var(--vui-color-ferrite);
 			text-decoration: none;
 		}
 		:host > a:hover, :host > a:focus {
-			color: #e87543;
+			color: var(--vui-color-carnelian);
 			text-decoration: underline;
 			outline: none;
 		}
