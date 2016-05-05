@@ -23,8 +23,10 @@
 			color="[[themeColor]]"></d2l-page-load-progress>
 		<d2l-navigation-resolved
 			band-color="[[themeColor]]"
+			items="[[items]]"
 			logo="[[logo]]"
-			items="[[items]]"></d2l-navigation-resolved>
+			org-unit-name="[[orgUnitName]]"
+			is-org="[[isOrg]]"></d2l-navigation-resolved>
 	</template>
 </dom-module>
 <script>
@@ -36,6 +38,7 @@
 				value: 200
 			},
 			endpoint: String,
+			isOrg: Boolean,
 			logo: Object,
 			loading: {
 				reflectToAttribute: true,
@@ -44,6 +47,7 @@
 			},
 			items: Array,
 			navRequest: Object,
+			orgUnitName: String,
 			themeColor: String,
 			themeRequest: Object
 		},

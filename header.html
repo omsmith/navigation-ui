@@ -18,7 +18,8 @@
 			vertical-align: middle;
 		}
 		@media(max-width: 575px) {
-			d2l-navigation-logo {
+			d2l-navigation-logo,
+			.d2l-navigation-header-course-name {
 				display: none;
 			}
 		}
@@ -30,7 +31,14 @@
 					<d2l-navigation-button-open-menu></d2l-navigation-button-open-menu>
 				</div>
 				<div class="d2l-navigation-header-cell">
-					<d2l-navigation-logo data="[[logo]]"></d2l-navigation-logo>
+					<template is="dom-if" if="{{isOrg}}">
+						<d2l-navigation-logo data="[[logo]]"></d2l-navigation-logo>
+					</template>
+					<template is="dom-if" if="{{!isOrg}}">
+						<div class="d2l-navigation-header-course-name">
+							[[orgUnitName]]
+						</div>
+					</template>
 				</div>
 			</div>
 		</d2l-navigation-centerer>
@@ -40,7 +48,9 @@
 	Polymer({
 		is: 'd2l-navigation-header',
 		properties: {
-			logo: Object
+			isOrg: Boolean,
+			logo: Object,
+			orgUnitName: String
 		}
 	});
 </script>

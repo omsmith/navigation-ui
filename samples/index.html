@@ -11,9 +11,22 @@
 		<link rel="stylesheet" href="sample.css">
 	</head>
 	<body class="loading" unresolved>
-		<d2l-navigation endpoint="data/nav/data1.json" class="loading-skip"></d2l-navigation>
+		<d2l-navigation
+			org-unit-name="College University"
+			is-org="is-org"
+			endpoint="data/nav/data1.json"
+			class="loading-skip"></d2l-navigation>
 		<d2l-navigation-centerer>
 			<main>
+				<div style="margin-bottom:20px;">
+					<label>
+						Type<br />
+						<select id="type">
+							<option value="org" selected>Organization</option>
+							<option value="course">Course</option>
+						</select>
+					</label>
+				</div>
 				<div style="margin-bottom:20px;">
 					<label>
 						Navigation delay (ms)<br />
@@ -52,6 +65,17 @@
 			});
 
 		})();
+		document.getElementById('type').addEventListener('change', function(e) {
+			var type = e.target.options[e.target.selectedIndex].value;
+			var nav = document.querySelector('d2l-navigation');
+			if (type === 'org') {
+				nav.setAttribute('org-unit-name', 'College University');
+				nav.setAttribute('is-org', 'is-org');
+			} else if (type === 'course') {
+				nav.setAttribute('org-unit-name', 'NURS-1280 - Introduction to a Long Course Name');
+				nav.removeAttribute('is-org');
+			}
+		})
 		document.getElementById('apply').addEventListener('click', function() {
 			var nav = document.querySelector('d2l-navigation');
 			nav.setAttribute('delay', parseInt(document.getElementById('delay').value));
