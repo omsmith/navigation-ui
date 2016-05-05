@@ -1,0 +1,34 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="button-highlight.html">
+<link rel="import" href="icons.html">
+<dom-module id="d2l-navigation-button-open-menu">
+	<style>
+	:host {
+		display: none;
+	}
+	@media(max-width: 575px) {
+		:host {
+			display: inline-block;
+		}
+	}
+	</style>
+	<template>
+		<button
+			is="d2l-navigation-button-highlight"
+			on-tap="openMenu"
+			class="d2l-navigation-header-open"
+			icon="navigation-30:hamburger">Open</button>
+	</template>
+</dom-module>
+<script>
+	Polymer({
+		is: 'd2l-navigation-button-open-menu',
+		properties: {
+			icon: String
+		},
+		openMenu: function() {
+			var opener = this.$$('button');
+			this.fire('d2l-navigation-open-menu', {opener: opener});
+		}
+	});
+</script>
