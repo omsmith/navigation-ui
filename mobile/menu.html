@@ -19,6 +19,7 @@
 		.d2l-navigation-mobile-menu-header-text {
 			font-size: 0.7rem;
 			left: 20px;
+			text-transform: uppercase;
 			transform: translateY(-50%);
 			position: absolute;
 			top: 50%;
@@ -34,18 +35,32 @@
 		:host-context([dir='rtl']) .d2l-navigation-mobile-menu-close {
 			left: 20px;
 		}
+		.d2l-navigation-mobile-menu-course-name {
+			border-bottom: 1px solid var(--vui-color-gypsum);
+			overflow: hidden;
+			padding: 20px;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+		}
 	</style>
 	<template>
 		<d2l-navigation-slide-out-menu>
 			<div class="d2l-navigation-mobile-menu-header">
-				<span class="d2l-navigation-mobile-menu-header-text">MENU</span>
+				<span class="d2l-navigation-mobile-menu-header-text">[[headerText]]</span>
 				<button
 					is="d2l-navigation-button"
 					class="d2l-navigation-mobile-menu-close"
 					icon="navigation-30:close"
 					on-tap="close">Close</button>
 			</div>
-			<d2l-navigation-logo data="[[logo]]"></d2l-navigation-logo>
+			<template is="dom-if" if="{{isOrg}}">
+				<d2l-navigation-logo data="[[logo]]"></d2l-navigation-logo>
+			</template>
+			<template is="dom-if" if="{{!isOrg}}">
+				<div class="d2l-navigation-mobile-menu-course-name">
+					[[orgUnitName]]
+				</div>
+			</template>
 			<d2l-navigation-items items="[[items]]"></d2l-navigation-items>
 		</d2l-navigation-slide-out-menu>
 	</template>
@@ -59,8 +74,14 @@
 				value: '#b9c2d0',
 				observer: '_bandColorChanged'
 			},
+			headerText: {
+				type: String,
+				computed: 'computeHeaderText(isOrg)'
+			},
 			items: Object,
-			logo: Object
+			isOrg: Boolean,
+			logo: Object,
+			orgUnitName: String
 		},
 		listeners: {
 			'd2l-navigation-close-menu': 'close'
@@ -70,6 +91,9 @@
 		},
 		close: function() {
 			this.$$('d2l-navigation-slide-out-menu').close();
+		},
+		computeHeaderText: function(isOrg) {
+			return isOrg ? 'menu' : 'home';
 		},
 		open: function(opener) {
 			this.$$('d2l-navigation-slide-out-menu').open(opener);

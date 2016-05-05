@@ -22,7 +22,10 @@
 	</style>
 	<template>
 		<nav>
-			<d2l-navigation-header logo="[[logo]]"></d2l-navigation-header>
+			<d2l-navigation-header
+				is-org="[[isOrg]]"
+				logo="[[logo]]"
+				org-unit-name="[[orgUnitName]]"></d2l-navigation-header>
 			<div class="d2l-navigation-row2">
 				<d2l-navigation-centerer>
 					<d2l-navigation-items items="[[items]]"></d2l-navigation-items>
@@ -30,8 +33,10 @@
 			</div>
 			<d2l-navigation-mobile-menu
 				band-color="[[bandColor]]"
+				is-org="[[isOrg]]"
 				items="[[items]]"
-				logo="[[logo]]"></d2l-navigation-mobile-menu>
+				logo="[[logo]]"
+				org-unit-name="[[orgUnitName]]"></d2l-navigation-mobile-menu>
 		</nav>
 	</template>
 </dom-module>
@@ -40,8 +45,10 @@
 		is: 'd2l-navigation-resolved',
 		properties: {
 			bandColor: String,
+			isOrg: Boolean,
 			items: Array,
-			logo: Object
+			logo: Object,
+			orgUnitName: String
 		},
 		listeners: {
 			'd2l-navigation-open-menu': 'openMenu'

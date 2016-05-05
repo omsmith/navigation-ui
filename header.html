@@ -1,6 +1,6 @@
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../vui-colors/colors.html">
-<link rel="import" href="button-highlight.html">
+<link rel="import" href="button-open-menu.html">
 <link rel="import" href="centerer.html">
 <link rel="import" href="logo.html">
 <dom-module id="d2l-navigation-header">
@@ -17,14 +17,9 @@
 			display: table-cell;
 			vertical-align: middle;
 		}
-		.d2l-navigation-header-open {
-			display: none;
-		}
 		@media(max-width: 575px) {
-			.d2l-navigation-header-open {
-				display: inline-block;
-			}
-			d2l-navigation-logo {
+			d2l-navigation-logo,
+			.d2l-navigation-header-course-name {
 				display: none;
 			}
 		}
@@ -33,14 +28,17 @@
 		<d2l-navigation-centerer>
 			<div class="d2l-navigation-header-row">
 				<div class="d2l-navigation-header-cell">
-					<button
-						is="d2l-navigation-button-highlight"
-						on-tap="openMenu"
-						class="d2l-navigation-header-open"
-						icon="navigation-30:hamburger">Open</button>
+					<d2l-navigation-button-open-menu></d2l-navigation-button-open-menu>
 				</div>
 				<div class="d2l-navigation-header-cell">
-					<d2l-navigation-logo data="[[logo]]"></d2l-navigation-logo>
+					<template is="dom-if" if="{{isOrg}}">
+						<d2l-navigation-logo data="[[logo]]"></d2l-navigation-logo>
+					</template>
+					<template is="dom-if" if="{{!isOrg}}">
+						<div class="d2l-navigation-header-course-name">
+							[[orgUnitName]]
+						</div>
+					</template>
 				</div>
 			</div>
 		</d2l-navigation-centerer>
@@ -50,11 +48,9 @@
 	Polymer({
 		is: 'd2l-navigation-header',
 		properties: {
-			logo: Object
-		},
-		openMenu: function() {
-			var opener = this.$$('.d2l-navigation-header-open');
-			this.fire('d2l-navigation-open-menu', {opener: opener});
+			isOrg: Boolean,
+			logo: Object,
+			orgUnitName: String
 		}
 	});
 </script>
