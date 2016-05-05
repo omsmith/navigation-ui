@@ -10,7 +10,7 @@
 			display: none;
 			height: 100%;
 			left: 0;
-			overflow-y: scroll;
+			overflow-y: auto;
 			position: fixed;
 			top: 0;
 			transform: translateX(-300px);
@@ -74,6 +74,8 @@
 			this.state = 'transition';
 
 			document.body.style.overflow = 'hidden';
+			document.body.style.position = 'fixed';
+			document.body.style.width = '100%';
 			this._opener = opener;
 			this.async(function() { this.state = 'opened'; }.bind(this), 0);
 
@@ -90,7 +92,9 @@
 			}
 			this.state = 'transition';
 
-			document.body.style.overflow = 'visible';
+			document.body.style.overflow = 'auto';
+			document.body.style.position = 'static';
+			document.body.style.width = 'auto';
 			this.async(function() { this.state = 'closed'; }.bind(this), 350);
 
 			if (this._opener) {
