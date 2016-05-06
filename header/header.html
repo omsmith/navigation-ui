@@ -30,7 +30,8 @@
 			flex: 0 1 auto;
 		}
 		d2l-navigation-header-org,
-		d2l-navigation-header-course {
+		d2l-navigation-header-course,
+		.d2l-navigation-header-actions {
 			width: calc(50% - 15px);
 		}
 		.d2l-navigation-header-gutter {
@@ -38,9 +39,6 @@
 			-webkit-flex: 0 0 auto;
 			flex: 0 0 auto;
 			width: 30px;
-		}
-		.d2l-navigation-header-actions {
-			width: calc(50% - 15px);
 		}
 
 		/* hide elements */
@@ -74,6 +72,7 @@
 				<d2l-navigation-header-open-button></d2l-navigation-header-open-button>
 				<d2l-navigation-header-org my-home="[[myHome]]" logo="[[logo]]"></d2l-navigation-header-org>
 				<d2l-navigation-header-course
+					my-home="[[myHome]]"
 					org-unit-home="[[orgUnitHome]]"
 					org-unit-name="[[orgUnitName]]"></d2l-navigation-header-course>
 				<div class="d2l-navigation-header-gutter"></div>
