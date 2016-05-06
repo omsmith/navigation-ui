@@ -12,9 +12,7 @@
 
 		<test-fixture id="Default">
 			<template>
-				<d2l-navigation-item-link
-					href="http://www.google.ca"
-					text="Hello World"></d2l-navigation-item-link>
+				<d2l-navigation-item-link></d2l-navigation-item-link>
 			</template>
 		</test-fixture>
 
@@ -25,6 +23,21 @@
 
 				beforeEach(function() {
 					itemLink = fixture('Default');
+					itemLink.setAttribute(
+						'item',
+						JSON.stringify({
+							"class": ["item", "link"],
+							"properties": {
+								"text": "Hello World"
+							},
+							"links": [
+								{
+									"rel": ["self"],
+									"href": "http://www.google.ca"
+								}
+							]
+						})
+					);
 				});
 
 				it('should set "href" property when attribute is set', function() {
@@ -33,26 +46,6 @@
 
 				it('should set "text" property when attribute is set', function() {
 					expect(itemLink.text).to.eql('Hello World');
-				});
-
-				it('should update "href" property when attribute is changed', function() {
-					itemLink.setAttribute('href', 'http://www.d2l.com');
-					expect(itemLink.href).to.eql('http://www.d2l.com');
-				});
-
-				it('should update "text" property when attribute is changed', function() {
-					itemLink.setAttribute('text', 'Foo Bar');
-					expect(itemLink.text).to.eql('Foo Bar');
-				});
-
-				it('should update "href" attribute when property is changed', function() {
-					itemLink.href = 'http://www.d2l.com';
-					expect(itemLink.getAttribute('href')).to.eql('http://www.d2l.com');
-				});
-
-				it('should update "text" attribute when property is changed', function() {
-					itemLink.text = 'Foo Bar';
-					expect(itemLink.getAttribute('text')).to.eql('Foo Bar');
 				});
 
 			});

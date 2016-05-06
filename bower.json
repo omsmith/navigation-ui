@@ -20,9 +20,6 @@
     "iron-ajax": "PolymerElements/iron-ajax#^1.2.0",
     "iron-icon": "PolymerElements/iron-icon#^1.0.0",
     "iron-iconset-svg": "PolymerElements/iron-iconset-svg#^1.0.0",
-    "paper-item": "PolymerElements/paper-item#^1.1.0",
-    "paper-menu": "PolymerElements/paper-menu#^1.2.0",
-    "paper-menu-button": "PolymerElements/paper-menu-button#1.1.0",
     "vui-colors": "^1.0.1"
   },
   "devDependencies": {

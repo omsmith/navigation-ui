@@ -1,5 +1,4 @@
 <link rel="import" href="../polymer/polymer.html">
-<link rel="import" href="item-group.html">
 <link rel="import" href="item-link.html">
 <dom-module id="d2l-navigation-items">
 	<style>
@@ -8,73 +7,19 @@
 		}
 	</style>
 	<template>
+		<template is="dom-repeat" items="{{items}}">
+			<d2l-navigation-item-link item="{{item}}"></d2l-navigation-item-link>
+		</template>
 	</template>
 </dom-module>
 <script>
 	Polymer({
 		is: 'd2l-navigation-items',
 		properties: {
-			items: {
-				type: Array,
-				observer: '_updateItems'
-			}
+			items: Array
 		},
 		hostAttributes: {
 			role: 'list'
-		},
-		_updateItems: function() {
-			var root = Polymer.dom(this.root);
-			while(root.firstChild) {
-				root.removeChild(root.firstChild);
-			}
-			this.items.forEach(function(item) {
-				var elem = this._createItemElem(item);
-				if (elem) {
-					root.appendChild(elem);
-				}
-			}.bind(this));
-		},
-		_createItemElem: function(item) {
-
-			var data = this._getItemData(item);
-
-			var elem;
-			if (data.items) {
-				elem = document.createElement('d2l-navigation-item-group');
-				elem.items = data.items;
-			} else {
-				elem = document.createElement('d2l-navigation-item-link');
-				elem.setAttribute('href', data.href);
-			}
-
-			elem.setAttribute('text', data.text);
-			return elem;
-
-		},
-		_getItemData: function(item) {
-			var data = {
-				href: '',
-				text: item.properties.text
-			};
-			if (item.class.indexOf('group') > 0) {
-				var items = [];
-				item.entities.forEach(function(e) {
-					var child = this._getItemData(e);
-					if (child) {
-						items.push(child);
-					}
-				}.bind(this));
-				if (items.length > 0) {
-					data.items = items;
-				}
-			} else {
-				item.links.forEach(function(l) {
-					if (l.rel.indexOf('self') > -1) {
-						data.href = l.href;
-					}
-				});
-			}
-			return data;
 		}
 	});
 </script>
