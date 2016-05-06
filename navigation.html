@@ -45,7 +45,10 @@
 				type: Boolean,
 				value: false
 			},
-			items: Array,
+			items: {
+				type: Array,
+				value: []
+			},
 			navRequest: Object,
 			orgUnitName: String,
 			showIncomplete: Boolean,
@@ -93,13 +96,11 @@
 				}
 			}.bind(this));
 
-			var items = [];
 			res.entities.forEach(function(e) {
-				if (e.class.indexOf('item') > -1) {
-					items.push(e);
+				if (e.class.indexOf('item') > -1 && e.class.indexOf('group') < 0) {
+					this.push('items', e);
 				}
-			});
-			this.items = items;
+			}.bind(this));
 
 			this.updateLoading();
 

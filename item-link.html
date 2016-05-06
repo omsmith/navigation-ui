@@ -22,24 +22,45 @@
 		}
 	</style>
 	<template>
-		<a href$="{{href}}">{{text}}</a>
+		<a href$="{{href}}" on-tap="onClick">{{text}}</a>
 	</template>
 </dom-module>
 <script>
 	Polymer({
 		is: 'd2l-navigation-item-link',
 		properties: {
+			item: Object,
 			href: {
 				type: String,
-				reflectToAttribute: true
+				computed: 'getHref(item)'
 			},
 			text: {
 				type: String,
-				reflectToAttribute: true
+				computed: 'getText(item)'
 			}
 		},
 		hostAttributes: {
 			role: 'listitem'
+		},
+		getHref: function(item) {
+			var href = undefined;
+			if (item.class.indexOf('item') > -1) {
+				if (item.class.indexOf('link') > -1) {
+					item.links.forEach(function(l) {
+						if (l.rel.indexOf('self') > -1) {
+							href = l.href;
+						}
+					});
+				}
+			}
+			return href;
+		},
+		getText: function(item) {
+			if (this.item.class.indexOf('item') > -1) {
+				return item.properties.text;
+			} else if (this.item.class.indexOf('action') > -1) {
+				return this.item.title;
+			}
 		}
 	});
 </script>
