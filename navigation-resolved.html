@@ -14,6 +14,13 @@
 			height: calc(1rem + 40px);
 			overflow: hidden;
 		}
+		.d2l-navigation-row2-centerer {
+			margin: 0 auto;
+			max-width: 1230px;
+		}
+		.d2l-navigation-row2-padding {
+			padding: 0 15px;
+		}
 		@media(max-width: 575px) {
 			.d2l-navigation-row2 {
 				display: none;
@@ -29,9 +36,11 @@
 				org-unit-home="[[orgUnitHome]]"
 				org-unit-name="[[orgUnitName]]"></d2l-navigation-header>
 			<div class="d2l-navigation-row2">
-				<d2l-navigation-centerer>
-					<d2l-navigation-items items="[[items]]"></d2l-navigation-items>
-				</d2l-navigation-centerer>
+				<div class="d2l-navigation-row2-centerer">
+					<div class="d2l-navigation-row2-padding">
+						<d2l-navigation-items items="[[items]]"></d2l-navigation-items>
+					</div>
+				</div>
 			</div>
 			<d2l-navigation-mobile-menu
 				band-color="[[bandColor]]"
