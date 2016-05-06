@@ -23,6 +23,7 @@
 			flex: 0 1 auto; /* IE10 defaults to 0 0 auto */
 			overflow: hidden;
 			text-overflow: ellipsis;
+			width: 100%;
 			white-space: nowrap;
 		}
 		a,
@@ -38,6 +39,9 @@
 			outline: none;
 		}
 		.d2l-navigation-mobile-course-arrow {
+			-webkit-align-self: flex-end;
+			-ms-flex-item-align: end;
+			align-self: flex-end;
 			color: var(--vui-color-tungsten);
 			-ms-flex: 0 0 auto;
 			-webkit-flex: 0 0 auto;
