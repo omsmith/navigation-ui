@@ -1,0 +1,84 @@
+<link rel="import" href="../../polymer/polymer.html">
+<link rel="import" href="../../iron-icon/iron-icon.html">
+<link rel="import" href="../icons.html">
+<dom-module id="d2l-navigation-header-course">
+	<style>
+		:host {
+			-webkit-align-items: center;
+			-ms-flex-align: center;
+			align-items: center;
+			display: -ms-flexbox;
+			display: -webkit-flex;
+			display: flex;
+			width: 100%;
+		}
+		.d2l-navigation-header-course-home,
+		.d2l-navigation-header-course-menu,
+		.d2l-navigation-header-course-div1,
+		.d2l-navigation-header-course-div2 {
+			-ms-flex: 0 0 auto;
+			-webkit-flex: 0 0 auto;
+			flex: 0 0 auto;
+		}
+		.d2l-navigation-header-course-home,
+		.d2l-navigation-header-course-menu {
+			color: var(--vui-color-tungsten);
+		}
+		.d2l-navigation-header-course-home {
+			height: 30px;
+			width: 30px;
+		}
+		/* dividers */
+		.d2l-navigation-header-course-div1,
+		.d2l-navigation-header-course-div2 {
+			color: var(--vui-color-titanius);
+			height: 24px;
+			width: 24px;
+		}
+		.d2l-navigation-header-course-div1 {
+			margin: 0 9px;
+		}
+		.d2l-navigation-header-course-name {
+			font-size: 1.2rem;
+			-ms-flex: 0 1 auto;
+			-webkit-flex: 0 1 auto;
+			flex: 0 1 auto; /* IE10 defaults to 0 0 auto */
+			overflow: hidden;
+			line-height: 1.5rem;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+		}
+		.d2l-navigation-header-course-div2 {
+			margin: 0 3px;
+		}
+		.d2l-navigation-header-course-menu {
+			height: 18px;
+			width: 18px;
+		}
+	</style>
+	<template>
+		<iron-icon
+			icon="navigation-t3:home"
+			class="d2l-navigation-header-course-home"></iron-icon>
+		<iron-icon
+			icon="navigation-t2:divider"
+			class="d2l-navigation-header-course-div1"></iron-icon>
+		<div class="d2l-navigation-header-course-name">
+			[[orgUnitName]]
+		</div>
+		<iron-icon
+			icon="navigation-t2:divider-small"
+			class="d2l-navigation-header-course-div2"></iron-icon>
+		<iron-icon
+			icon="navigation-t1:drop-down"
+			class="d2l-navigation-header-course-menu"></iron-icon>
+	</template>
+</dom-module>
+<script>
+	Polymer({
+		is: 'd2l-navigation-header-course',
+		properties: {
+			orgUnitName: String
+		}
+	});
+</script>

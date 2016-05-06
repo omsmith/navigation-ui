@@ -1,0 +1,95 @@
+<link rel="import" href="../../polymer/polymer.html">
+<link rel="import" href="../../iron-icon/iron-icon.html">
+<link rel="import" href="../../vui-colors/colors.html">
+<link rel="import" href="../centerer.html">
+<link rel="import" href="course.html">
+<link rel="import" href="open-button.html">
+<link rel="import" href="org.html">
+<dom-module id="d2l-navigation-header">
+	<style include="vui-colors">
+		:host {
+			border-bottom: 1px solid var(--vui-color-gypsum);
+			display: block;
+		}
+		.d2l-navigation-header-container {
+			-webkit-align-items: center;
+			-ms-flex-align: center;
+			align-items: center;
+			display: -ms-flexbox;
+			display: -webkit-flex;
+			display: flex;
+			height: 90px;
+		}
+		/* IE10 defaults to 0 0 auto */
+		d2l-navigation-header-open-button,
+		d2l-navigation-header-org,
+		d2l-navigation-header-course,
+		.d2l-navigation-header-actions {
+			-ms-flex: 0 1 auto;
+			-webkit-flex: 0 1 auto;
+			flex: 0 1 auto;
+		}
+		d2l-navigation-header-org,
+		d2l-navigation-header-course {
+			width: calc(50% - 15px);
+		}
+		.d2l-navigation-header-gutter {
+			-ms-flex: 0 0 auto;
+			-webkit-flex: 0 0 auto;
+			flex: 0 0 auto;
+			width: 30px;
+		}
+		.d2l-navigation-header-actions {
+			width: calc(50% - 15px);
+		}
+
+		/* hide elements */
+		d2l-navigation-header-open-button,
+		d2l-navigation-header-org,
+		:host([is-org]) d2l-navigation-header-course {
+			display: none;
+		}
+
+		/* show org elements */
+		:host([is-org]) d2l-navigation-header-org {
+			display: block;
+		}
+
+		@media(max-width: 575px) {
+			/* hide non-mobile elements */
+			:host([is-org]) d2l-navigation-header-org,
+			d2l-navigation-header-course,
+			.d2l-navigation-header-gutter,
+			.d2l-navigation-header-actions {
+				display: none;
+			}
+			d2l-navigation-header-open-button {
+				display: inline-block;
+			}
+		}
+	</style>
+	<template>
+		<d2l-navigation-centerer>
+			<div class="d2l-navigation-header-container">
+				<d2l-navigation-header-open-button></d2l-navigation-header-open-button>
+				<d2l-navigation-header-org logo="[[logo]]"></d2l-navigation-header-org>
+				<d2l-navigation-header-course org-unit-name="[[orgUnitName]]"></d2l-navigation-header-course>
+				<div class="d2l-navigation-header-gutter"></div>
+				<div class="d2l-navigation-header-actions"></div>
+			</div>
+		</d2l-navigation-centerer>
+	</template>
+</dom-module>
+<script>
+	Polymer({
+		is: 'd2l-navigation-header',
+		properties: {
+			isOrg: {
+				type: Boolean,
+				reflectToAttribute: true
+			},
+			logo: Object,
+			orgUnitName: String
+		}
+	});
+</script>

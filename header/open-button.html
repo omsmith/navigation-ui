@@ -1,15 +1,10 @@
-<link rel="import" href="../polymer/polymer.html">
-<link rel="import" href="button-highlight.html">
-<link rel="import" href="icons.html">
-<dom-module id="d2l-navigation-button-open-menu">
+<link rel="import" href="../../polymer/polymer.html">
+<link rel="import" href="../button-highlight.html">
+<link rel="import" href="../icons.html">
+<dom-module id="d2l-navigation-header-open-button">
 	<style>
 	:host {
-		display: none;
-	}
-	@media(max-width: 575px) {
-		:host {
-			display: inline-block;
-		}
+		display: inline-block;
 	}
 	</style>
 	<template>
@@ -17,12 +12,12 @@
 			is="d2l-navigation-button-highlight"
 			on-tap="openMenu"
 			class="d2l-navigation-header-open"
-			icon="navigation-30:hamburger">Open</button>
+			icon="navigation-t3:hamburger">Open</button>
 	</template>
 </dom-module>
 <script>
 	Polymer({
-		is: 'd2l-navigation-button-open-menu',
+		is: 'd2l-navigation-header-open-button',
 		properties: {
 			icon: String
 		},
