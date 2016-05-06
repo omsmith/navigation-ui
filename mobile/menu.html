@@ -13,37 +13,53 @@
 			display: block;
 		}
 		.d2l-navigation-mobile-menu-header {
+			-webkit-align-items: center;
+			-ms-flex-align: center;
+			align-items: center;
 			border-top: 4px solid var(--vui-color-pressicus);
 			border-bottom: 1px solid var(--vui-color-gypsum);
+			display: -ms-flexbox;
+			display: -webkit-flex;
+			display: flex;
 			height: 90px;
-			position: relative;
+			padding: 0 20px;
 		}
-		.d2l-navigation-mobile-menu-header-text {
-			font-size: 0.7rem;
-			left: 20px;
+		.d2l-navigation-mobile-menu-org-text,
+		:host-context([is-org]) .d2l-navigation-mobile-menu-home {
+			display: none;
+		}
+		:host-context([is-org]) .d2l-navigation-mobile-menu-org-text {
+			display: block;
+		}
+		.d2l-navigation-mobile-menu-org-text,
+		.d2l-navigation-mobile-menu-home {
+			font-size: 0.8rem;
+			-ms-flex: 0 1 auto;
+			-webkit-flex: 0 1 auto;
+			flex: 0 1 auto; /* IE10 defaults to 0 0 auto */
 			text-transform: uppercase;
-			transform: translateY(-50%);
-			position: absolute;
-			top: 50%;
-		}
-		:host-context([dir='rtl']) .d2l-navigation-mobile-menu-header-text {
-			right: 20px;
+			width: 100%;
 		}
 		.d2l-navigation-mobile-menu-close {
-			position: absolute;
-			right: 20px;
-			top: 24px;
-		}
-		:host-context([dir='rtl']) .d2l-navigation-mobile-menu-close {
-			left: 20px;
+			-ms-flex: 0 0 auto;
+			-webkit-flex: 0 0 auto;
+			flex: 0 0 auto;
 		}
 	</style>
 	<template>
 		<d2l-navigation-slide-out-menu>
 			<div class="d2l-navigation-mobile-menu-header">
-				<span class="d2l-navigation-mobile-menu-header-text">[[headerText]]</span>
+				<div class="d2l-navigation-mobile-menu-org-text">menu</div>
+				<div class="d2l-navigation-mobile-menu-home">
+					<button
+						is="d2l-navigation-button"
+						icon="navigation-t3:home"
+						on-tap="handleMyHome">home</button>
+				</div>
 				<button
 					is="d2l-navigation-button"
+					hide-text
+					has-outline
 					class="d2l-navigation-mobile-menu-close"
 					icon="navigation-t3:close"
 					on-tap="close">Close</button>
@@ -69,10 +85,6 @@
 				value: '#b9c2d0',
 				observer: '_bandColorChanged'
 			},
-			headerText: {
-				type: String,
-				computed: 'computeHeaderText(isOrg)'
-			},
 			items: Object,
 			isOrg: Boolean,
 			logo: String,
@@ -89,15 +101,15 @@
 		close: function() {
 			this.$$('d2l-navigation-slide-out-menu').close();
 		},
-		computeHeaderText: function(isOrg) {
-			return isOrg ? 'menu' : 'home';
-		},
 		open: function(opener) {
 			this.$$('d2l-navigation-slide-out-menu').open(opener);
 		},
 		_bandColorChanged: function() {
 			this.$$('.d2l-navigation-mobile-menu-header')
 				.style.borderTopColor = this.bandColor;
+		},
+		handleMyHome: function() {
+			document.location.href = this.myHome;
 		}
 	});
 </script>
