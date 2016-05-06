@@ -1,8 +1,9 @@
 <link rel="import" href="../../polymer/polymer.html">
 <link rel="import" href="../../iron-icon/iron-icon.html">
+<link rel="import" href="../../vui-colors/colors.html">
 <link rel="import" href="../icons.html">
 <dom-module id="d2l-navigation-header-course">
-	<style>
+	<style include="vui-colors">
 		:host {
 			-webkit-align-items: center;
 			-ms-flex-align: center;
@@ -48,6 +49,18 @@
 			text-overflow: ellipsis;
 			white-space: nowrap;
 		}
+		.d2l-navigation-header-course-name,
+		.d2l-navigation-header-course-name:link,
+		.d2l-navigation-header-course-name:visited {
+			color: var(--vui-color-ferrite);
+			text-decoration: none;
+		}
+		.d2l-navigation-header-course-name:hover,
+		.d2l-navigation-header-course-name:focus {
+			color: var(--vui-color-carnelian);
+			text-decoration: underline;
+			outline: none;
+		}
 		.d2l-navigation-header-course-div2 {
 			margin: 0 3px;
 		}
@@ -71,9 +84,9 @@
 		<iron-icon
 			icon="navigation-t2:divider"
 			class="d2l-navigation-header-course-div1"></iron-icon>
-		<div class="d2l-navigation-header-course-name">
+		<a href$="[[orgUnitHome]]" class="d2l-navigation-header-course-name">
 			[[orgUnitName]]
-		</div>
+		</a>
 		<iron-icon
 			icon="navigation-t2:divider-small"
 			class="d2l-navigation-header-course-div2"></iron-icon>
@@ -86,6 +99,7 @@
 	Polymer({
 		is: 'd2l-navigation-header-course',
 		properties: {
+			orgUnitHome: String,
 			orgUnitName: String
 		}
 	});

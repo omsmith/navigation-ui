@@ -25,6 +25,7 @@
 			<d2l-navigation-header
 				is-org="[[isOrg]]"
 				logo="[[logo]]"
+				org-unit-home="[[orgUnitHome]]"
 				org-unit-name="[[orgUnitName]]"></d2l-navigation-header>
 			<div class="d2l-navigation-row2">
 				<d2l-navigation-centerer>
@@ -36,6 +37,7 @@
 				is-org="[[isOrg]]"
 				items="[[items]]"
 				logo="[[logo]]"
+				org-unit-home="[[orgUnitHome]]"
 				org-unit-name="[[orgUnitName]]"></d2l-navigation-mobile-menu>
 		</nav>
 	</template>
@@ -48,6 +50,7 @@
 			isOrg: Boolean,
 			items: Array,
 			logo: Object,
+			orgUnitHome: String,
 			orgUnitName: String
 		},
 		listeners: {

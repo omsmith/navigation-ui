@@ -73,7 +73,9 @@
 			<div class="d2l-navigation-header-container">
 				<d2l-navigation-header-open-button></d2l-navigation-header-open-button>
 				<d2l-navigation-header-org logo="[[logo]]"></d2l-navigation-header-org>
-				<d2l-navigation-header-course org-unit-name="[[orgUnitName]]"></d2l-navigation-header-course>
+				<d2l-navigation-header-course
+					org-unit-home="[[orgUnitHome]]"
+					org-unit-name="[[orgUnitName]]"></d2l-navigation-header-course>
 				<div class="d2l-navigation-header-gutter"></div>
 				<div class="d2l-navigation-header-actions"></div>
 			</div>
@@ -89,6 +91,7 @@
 				reflectToAttribute: true
 			},
 			logo: Object,
+			orgUnitHome: String,
 			orgUnitName: String
 		}
 	});
