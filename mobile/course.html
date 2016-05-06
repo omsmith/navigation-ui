@@ -1,0 +1,66 @@
+<link rel="import" href="../../polymer/polymer.html">
+<link rel="import" href="../../iron-icon/iron-icon.html">
+<link rel="import" href="../../vui-colors/colors.html">
+<link rel="import" href="../icons.html">
+<dom-module id="d2l-navigation-mobile-course">
+	<style include="vui-colors">
+		:host {
+			display: block;
+		}
+		a {
+			-webkit-align-items: center;
+			-ms-flex-align: center;
+			align-items: center;
+			border-bottom: 1px solid var(--vui-color-gypsum);
+			display: -ms-flexbox;
+			display: -webkit-flex;
+			display: flex;
+			padding: 20px;
+		}
+		a > div {
+			-ms-flex: 0 1 auto;
+			-webkit-flex: 0 1 auto;
+			flex: 0 1 auto; /* IE10 defaults to 0 0 auto */
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+		}
+		a,
+		a:link,
+		a:visited {
+			color: var(--vui-color-ferrite);
+			text-decoration: none;
+		}
+		a:hover,
+		a:focus {
+			color: var(--vui-color-carnelian);
+			text-decoration: underline;
+			outline: none;
+		}
+		.d2l-navigation-mobile-course-arrow {
+			color: var(--vui-color-tungsten);
+			-ms-flex: 0 0 auto;
+			-webkit-flex: 0 0 auto;
+			flex: 0 0 auto;
+			height: 14px;
+			width: 14px;
+		}
+	</style>
+	<template>
+		<a href$="[[orgUnitHome]]">
+			<div>[[orgUnitName]]</div>
+			<iron-icon
+				icon="navigation-t1:arrow-right"
+				class="d2l-navigation-mobile-course-arrow"></iron-icon>
+		</a>
+	</template>
+</dom-module>
+<script>
+	Polymer({
+		is: 'd2l-navigation-mobile-course',
+		properties: {
+			orgUnitHome: String,
+			orgUnitName: String
+		}
+	});
+</script>
