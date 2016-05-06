@@ -15,7 +15,8 @@
 			org-unit-name="College University"
 			is-org="is-org"
 			endpoint="data/nav/data1.json"
-			class="loading-skip"></d2l-navigation>
+			class="loading-skip"
+			show-incomplete></d2l-navigation>
 		<d2l-navigation-centerer>
 			<main>
 				<div style="margin-bottom:20px;">
@@ -25,6 +26,12 @@
 							<option value="org" selected>Organization</option>
 							<option value="course">Course</option>
 						</select>
+					</label>
+				</div>
+				<div style="margin-bottom:20px;">
+					<label>
+						<input type="checkbox" id="incomplete" checked />
+						Show Incomplete Components
 					</label>
 				</div>
 				<div style="margin-bottom:20px;">
@@ -81,6 +88,14 @@
 			nav.setAttribute('delay', parseInt(document.getElementById('delay').value));
 			document.body.classList.add('loading');
 			nav.load();
+		});
+		document.getElementById('incomplete').addEventListener('change', function(e) {
+			var nav = document.querySelector('d2l-navigation');
+			if (e.target.checked) {
+				nav.setAttribute('show-incomplete', 'show-incomplete');
+			} else {
+				nav.removeAttribute('show-incomplete');
+			}
 		});
 		</script>
 	</body>

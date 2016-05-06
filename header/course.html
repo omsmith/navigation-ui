@@ -55,6 +55,14 @@
 			height: 18px;
 			width: 18px;
 		}
+		.d2l-navigation-header-course-div2,
+		.d2l-navigation-header-course-menu {
+			display: none;
+		}
+		:host-context([show-incomplete]) .d2l-navigation-header-course-div2,
+		:host-context([show-incomplete]) .d2l-navigation-header-course-menu {
+			display: block;
+		}
 	</style>
 	<template>
 		<iron-icon
