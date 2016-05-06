@@ -20,8 +20,8 @@
 		}
 	</style>
 	<template>
-		<a href$="[[data.href]]" title$="[[data.alt]]">
-			<img src$="[[data.src]]" alt="[[data.alt]]" />
+		<a href$="[[myHome]]" title="My Home">
+			<img src$="[[src]]" alt="My Home" />
 		</a>
 	</template>
 </dom-module>
@@ -29,7 +29,8 @@
 	Polymer({
 		is: 'd2l-navigation-logo',
 		properties: {
-			data: Object
+			src: String,
+			myHome: String
 		}
 	});
 </script>

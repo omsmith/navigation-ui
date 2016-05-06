@@ -5,19 +5,30 @@
 	<style include="vui-colors">
 		:host {
 			background-color: var(--vui-color-white);
-			border: 1px solid transparent;
-			border-radius: 0.4rem;
+			border: none;
 			color: var(--vui-color-tungsten);
 			cursor: pointer;
 			margin: 0;
-			padding: 12px;
+			padding: 0;
 		}
 		:host(:hover), :host(:focus) {
-			border-color: var(--vui-color-pressicus);
 			color: var(--vui-color-celestine);
 			outline-style: none;
 		}
+		:host([has-outline]) {
+			border: 1px solid transparent;
+			border-radius: 0.4rem;
+			padding: 12px;
+		}
+		:host([has-outline]:hover),
+		:host([has-outline]:focus) {
+			border-color: var(--vui-color-pressicus);
+		}
 		.d2l-navigation-button-text {
+			margin-left: 10px;
+			text-transform: uppercase;
+		}
+		:host([hide-text]) .d2l-navigation-button-text {
 			position:absolute;
 			left:-10000px;
 			top: auto;
@@ -26,6 +37,10 @@
 			overflow:hidden;
 		}
 		iron-icon {
+			height: 30px;
+			width: 30px;
+		}
+		:host([has-outline]) iron-icon {
 			height: 16px;
 			width: 16px;
 		}
@@ -40,7 +55,17 @@
 		is: 'd2l-navigation-button',
 		extends: 'button',
 		properties: {
-			icon: String
+			icon: String,
+			hasOutline: {
+				reflectToAttribute: true,
+				type: Boolean,
+				value: false
+			},
+			hideText: {
+				reflectToAttribute: true,
+				type: Boolean,
+				value: false
+			}
 		}
 	});
 </script>

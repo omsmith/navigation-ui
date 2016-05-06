@@ -1,29 +1,61 @@
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../vui-colors/colors.html">
+<link rel="import" href="icons.html">
 <dom-module id="d2l-navigation-item-link">
 	<style include="vui-colors">
 		:host {
-			cursor: pointer;
 			display: inline-block;
-			padding: 20px 30px 20px 0;
+			padding: 20px 15px;
 		}
 		:host-context(d2l-navigation-slide-out-menu) {
 			border-bottom: 1px solid var(--vui-color-gypsum);
 			display: block;
-			padding: 20px;
+			padding: 0;
 		}
 		:host > a, :host > a:link, :host > a:visited {
+			-webkit-align-items: center;
+			-ms-flex-align: center;
+			align-items: center;
 			color: var(--vui-color-ferrite);
+			cursor: pointer;
+			display: -ms-flexbox;
+			display: -webkit-flex;
+			display: flex;
 			text-decoration: none;
+		}
+		:host-context(d2l-navigation-slide-out-menu) a {
+			padding: 20px;
 		}
 		:host > a:hover, :host > a:focus {
 			color: var(--vui-color-carnelian);
 			text-decoration: underline;
 			outline: none;
 		}
+		.d2l-navigation-item-link-text {
+			-ms-flex: 0 1 auto;
+			-webkit-flex: 0 1 auto;
+			flex: 0 1 auto; /* IE10 defaults to 0 0 auto */
+			width: 100%;
+		}
+		.d2l-navigation-item-link-arrow {
+			display: none;
+			-ms-flex: 0 0 auto;
+			-webkit-flex: 0 0 auto;
+			flex: 0 0 auto;
+			height: 14px;
+			width: 14px;
+		}
+		:host-context(d2l-navigation-slide-out-menu) .d2l-navigation-item-link-arrow {
+			display: block;
+		}
 	</style>
 	<template>
-		<a href$="{{href}}" on-tap="onClick" tabindex="0">{{text}}</a>
+		<a href$="{{href}}" on-tap="onClick" tabindex="0">
+			<div class="d2l-navigation-item-link-text">{{text}}</div>
+			<iron-icon
+				icon="navigation-t1:arrow-right"
+				class="d2l-navigation-item-link-arrow"></iron-icon>
+		</a>
 	</template>
 </dom-module>
 <script>
