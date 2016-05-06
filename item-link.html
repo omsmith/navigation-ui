@@ -3,6 +3,7 @@
 <dom-module id="d2l-navigation-item-link">
 	<style include="vui-colors">
 		:host {
+			cursor: pointer;
 			display: inline-block;
 			padding: 20px 30px 20px 0;
 		}
@@ -22,7 +23,7 @@
 		}
 	</style>
 	<template>
-		<a href$="{{href}}" on-tap="onClick">{{text}}</a>
+		<a href$="{{href}}" on-tap="onClick" tabindex="0">{{text}}</a>
 	</template>
 </dom-module>
 <script>
@@ -61,6 +62,41 @@
 			} else if (this.item.class.indexOf('action') > -1) {
 				return this.item.title;
 			}
+		},
+		onClick: function() {
+
+			if (this.item.class.indexOf('action') < 0) {
+				return;
+			}
+
+			var frm = document.createElement('form');
+			frm.setAttribute('target', '_top');
+			frm.setAttribute('action', this.item.href);
+			frm.setAttribute('method', this.item.method);
+			frm.setAttribute('enctype', this.item.type)
+
+			this.item.fields.forEach(function(f) {
+				if (f.type === 'hidden') {
+					var hidden = document.createElement('input');
+					hidden.setAttribute('type', 'hidden');
+					hidden.setAttribute('name', f.name)
+					hidden.setAttribute('value', f.value);
+					frm.appendChild(hidden);
+				}
+			})
+
+			document.body.appendChild(frm);
+			frm.submit();
+
+			// special handling for logout
+			if (this.item.class.indexOf('logout') > -1) {
+				try {
+					window.localStorage.setItem('Session.Expired', '1');
+				} catch(e) {
+					// no access to local storage, whateves
+				}
+			}
+
 		}
 	});
 </script>

@@ -106,5 +106,22 @@
 			"rel": ["http://api.brightspace.com/rel/theme"],
 			"href": "data/theme/data1.json"
 		}
+	],
+	"actions": [
+		{
+			"name": "logout",
+			"title": "Log Out",
+			"method": "POST",
+			"class": ["action","logout"],
+			"href": "/logout",
+			"type": "application/x-www-form-urlencoded",
+			"fields": [
+				{
+					"name": "d2l_referrer",
+					"type": "hidden",
+					"value": "pGfkE2pldzvC3ZD7iJetcZ0rOcxq376w"
+				}
+			]
+		}
 	]
 }

@@ -102,6 +102,12 @@
 				}
 			}.bind(this));
 
+			res.actions.forEach(function(a) {
+				if (a.name === 'logout') {
+					this.push('items', a);
+				}
+			}.bind(this));
+
 			this.updateLoading();
 
 		},
@@ -140,7 +146,7 @@
 				}.bind(this))
 				.catch(function() {
 					this.updateLoading();
-				}.bind(this))
+				}.bind(this));
 			if (!firstLoad) {
 				this.$$('d2l-page-load-progress').start();
 			}
