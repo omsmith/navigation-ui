@@ -25,6 +25,7 @@
 			<d2l-navigation-header
 				is-org="[[isOrg]]"
 				logo="[[logo]]"
+				my-home="[[myHome]]"
 				org-unit-home="[[orgUnitHome]]"
 				org-unit-name="[[orgUnitName]]"></d2l-navigation-header>
 			<div class="d2l-navigation-row2">
@@ -37,6 +38,7 @@
 				is-org="[[isOrg]]"
 				items="[[items]]"
 				logo="[[logo]]"
+				my-home="[[myHome]]"
 				org-unit-home="[[orgUnitHome]]"
 				org-unit-name="[[orgUnitName]]"></d2l-navigation-mobile-menu>
 		</nav>
@@ -49,7 +51,8 @@
 			bandColor: String,
 			isOrg: Boolean,
 			items: Array,
-			logo: Object,
+			logo: String,
+			myHome: String,
 			orgUnitHome: String,
 			orgUnitName: String
 		},

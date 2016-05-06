@@ -7,14 +7,15 @@
 		}
 	</style>
 	<template>
-		<d2l-navigation-logo data="[[logo]]"></d2l-navigation-logo>
+		<d2l-navigation-logo my-home="[[myHome]]" src="[[logo]]"></d2l-navigation-logo>
 	</template>
 </dom-module>
 <script>
 	Polymer({
 		is: 'd2l-navigation-header-org',
 		properties: {
-			logo: Object
+			logo: String,
+			myHome: String
 		}
 	});
 </script>

@@ -49,7 +49,7 @@
 					on-tap="close">Close</button>
 			</div>
 			<template is="dom-if" if="{{isOrg}}">
-				<d2l-navigation-logo data="[[logo]]"></d2l-navigation-logo>
+				<d2l-navigation-logo my-home="[[myHome]]" src="[[logo]]"></d2l-navigation-logo>
 			</template>
 			<template is="dom-if" if="{{!isOrg}}">
 				<d2l-navigation-mobile-course
@@ -75,7 +75,8 @@
 			},
 			items: Object,
 			isOrg: Boolean,
-			logo: Object,
+			logo: String,
+			myHome: String,
 			orgUnitHome: String,
 			orgUnitName: String
 		},

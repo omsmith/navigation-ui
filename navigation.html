@@ -25,6 +25,7 @@
 			band-color="[[themeColor]]"
 			items="[[items]]"
 			logo="[[logo]]"
+			my-home="[[myHome]]"
 			org-unit-home="[[orgUnitHome]]"
 			org-unit-name="[[orgUnitName]]"
 			is-org="[[isOrg]]"></d2l-navigation-resolved>
@@ -43,7 +44,7 @@
 				type: Boolean,
 				value: false
 			},
-			logo: Object,
+			logo: String,
 			loading: {
 				reflectToAttribute: true,
 				type: Boolean,
@@ -53,6 +54,7 @@
 				type: Array,
 				value: []
 			},
+			myHome: String,
 			navRequest: Object,
 			orgUnitName: String,
 			orgUnitHome: String,
@@ -119,19 +121,11 @@
 		handleThemeResponse: function(res) {
 			res.entities.forEach(function(e) {
 				if (e.class.indexOf('image') > -1) {
-					var logo = {
-						alt: e.properties.alt,
-						href: '',
-						src: ''
-					};
 					e.links.forEach(function(l) {
 						if (l.rel.indexOf('alternate') > -1) {
-							logo.src = l.href;
-						} else if( l.rel.indexOf('http://api.brightspace.com/rel/home') > -1) {
-							logo.href = l.href;
+							this.logo = l.href;
 						}
 					}.bind(this));
-					this.logo = logo;
 				}
 			}.bind(this));
 			this.themeColor = res.properties.BackgroundColor;
