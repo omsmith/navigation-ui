@@ -1,0 +1,79 @@
+<link rel="import" href="../../polymer/polymer.html">
+<link rel="import" href="../../vui-colors/colors.html">
+<link rel="import" href="../button.html">
+<link rel="import" href="../icons.html">
+<dom-module id="d2l-navigation-mobile-header">
+	<style include="vui-colors">
+		:host {
+			-webkit-align-items: center;
+			-ms-flex-align: center;
+			align-items: center;
+			border-top: 4px solid var(--vui-color-pressicus);
+			border-bottom: 1px solid var(--vui-color-gypsum);
+			display: -ms-flexbox;
+			display: -webkit-flex;
+			display: flex;
+			height: 90px;
+			padding: 0 20px;
+		}
+		.d2l-navigation-mobile-menu-org-text,
+		.d2l-navigation-mobile-menu-home {
+			font-size: 0.8rem;
+			-ms-flex: 0 1 auto;
+			-webkit-flex: 0 1 auto;
+			flex: 0 1 auto; /* IE10 defaults to 0 0 auto */
+			text-transform: uppercase;
+			width: 100%;
+		}
+		.d2l-navigation-mobile-menu-close {
+			-ms-flex: 0 0 auto;
+			-webkit-flex: 0 0 auto;
+			flex: 0 0 auto;
+		}
+		.d2l-navigation-mobile-menu-org-text,
+		:host-context([is-org]) .d2l-navigation-mobile-menu-home {
+			display: none;
+		}
+		:host-context([is-org]) .d2l-navigation-mobile-menu-org-text {
+			display: block;
+		}
+	</style>
+	<template>
+		<div class="d2l-navigation-mobile-menu-org-text">menu</div>
+		<div class="d2l-navigation-mobile-menu-home">
+			<button
+				is="d2l-navigation-button"
+				icon="navigation-t3:home"
+				on-tap="handleMyHome">home</button>
+		</div>
+		<button
+			is="d2l-navigation-button"
+			hide-text
+			has-outline
+			class="d2l-navigation-mobile-menu-close"
+			icon="navigation-t3:close"
+			on-tap="close">Close</button>
+	</template>
+</dom-module>
+<script>
+	Polymer({
+		is: 'd2l-navigation-mobile-header',
+		properties: {
+			bandColor: {
+				type: String,
+				value: '#b9c2d0',
+				observer: '_bandColorChanged'
+			},
+			myHome: String
+		},
+		_bandColorChanged: function() {
+			this.style.borderTopColor = this.bandColor;
+		},
+		close: function() {
+			this.fire('d2l-navigation-close-menu');
+		},
+		handleMyHome: function() {
+			document.location.href = this.myHome;
+		}
+	});
+</script>
