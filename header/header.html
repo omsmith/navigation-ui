@@ -25,7 +25,8 @@
 		d2l-navigation-header-open-button,
 		d2l-navigation-header-org,
 		d2l-navigation-header-course,
-		d2l-navigation-header-actions {
+		d2l-navigation-header-actions,
+		.d2l-navigation-header-gutter {
 			-ms-flex: 0 1 auto;
 			-webkit-flex: 0 1 auto;
 			flex: 0 1 auto;
@@ -36,10 +37,8 @@
 			width: calc(50% - 15px);
 		}
 		.d2l-navigation-header-gutter {
-			-ms-flex: 0 0 auto;
-			-webkit-flex: 0 0 auto;
-			flex: 0 0 auto;
-			width: 30px;
+			min-width: 30px;
+			width: 100%;
 		}
 
 		/* hide elements */
@@ -54,12 +53,10 @@
 			display: block;
 		}
 
-		@media(max-width: 575px) {
+		@media(max-width: 740px) {
 			/* hide non-mobile elements */
 			:host-context([is-org]) d2l-navigation-header-org,
-			d2l-navigation-header-course,
-			.d2l-navigation-header-gutter,
-			d2l-navigation-header-actions {
+			d2l-navigation-header-course {
 				display: none;
 			}
 			d2l-navigation-header-open-button {
