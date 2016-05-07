@@ -137,6 +137,7 @@
 			}
 			this.themeRequest = null;
 			this.loading = true;
+			this.splice('items', 0, this.items.length);
 			this.navRequest = document.createElement('iron-request');
 			this.navRequest
 				.send({url: this.endpoint, handleAs: 'json'})
