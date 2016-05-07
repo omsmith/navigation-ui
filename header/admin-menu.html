@@ -1,25 +1,28 @@
 <link rel="import" href="../../polymer/polymer.html">
 <link rel="import" href="../button-highlight.html">
 <link rel="import" href="../icons.html">
-<dom-module id="d2l-navigation-header-open-button">
+<dom-module id="d2l-navigation-admin-menu">
 	<style>
 	:host {
+		display: none;
+		margin-left: 30px;
+	}
+	:host-context([show-incomplete]) {
 		display: inline-block;
+	}
+	:host-context([dir='rtl']) {
+		margin-left: 0;
+		margin-right: 30px;
 	}
 	</style>
 	<template>
 		<button
 			is="d2l-navigation-button-highlight"
-			on-tap="openMenu"
-			icon="navigation-t3:hamburger">Open</button>
+			icon="navigation-t3:gear">Admin</button>
 	</template>
 </dom-module>
 <script>
 	Polymer({
-		is: 'd2l-navigation-header-open-button',
-		openMenu: function() {
-			var opener = this.$$('button');
-			this.fire('d2l-navigation-open-menu', {opener: opener});
-		}
+		is: 'd2l-navigation-admin-menu'
 	});
 </script>

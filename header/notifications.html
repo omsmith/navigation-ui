@@ -1,0 +1,42 @@
+<link rel="import" href="../../polymer/polymer.html">
+<link rel="import" href="../button-highlight.html">
+<link rel="import" href="../icons.html">
+<dom-module id="d2l-navigation-notifications">
+	<style>
+	:host {
+		display: none;
+	}
+	:host-context([show-incomplete]) {
+		display: inline-block;
+	}
+	.d2l-navigation-notifications-discussions {
+		margin: 0 40px;
+	}
+	d2l-navigation-divider {
+		margin-left: 29px;
+		margin-right: 9px;
+	}
+	:host-context([dir='rtl']) d2l-navigation-divider {
+		margin-left: 9px;
+		margin-right: 29px;
+	}
+	</style>
+	<template>
+		<button
+			is="d2l-navigation-button-highlight"
+			icon="navigation-t3:email">Email</button>
+		<button
+			is="d2l-navigation-button-highlight"
+			class="d2l-navigation-notifications-discussions"
+			icon="navigation-t3:discussions">Discussions</button>
+		<button
+			is="d2l-navigation-button-highlight"
+			icon="navigation-t3:alarmbell">Alerts</button>
+		<d2l-navigation-divider></d2l-navigation-divider>
+	</template>
+</dom-module>
+<script>
+	Polymer({
+		is: 'd2l-navigation-notifications'
+	});
+</script>
