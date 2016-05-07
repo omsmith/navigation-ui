@@ -2,6 +2,7 @@
 <link rel="import" href="../../iron-icon/iron-icon.html">
 <link rel="import" href="../../vui-colors/colors.html">
 <link rel="import" href="../centerer.html">
+<link rel="import" href="actions.html">
 <link rel="import" href="course.html">
 <link rel="import" href="open-button.html">
 <link rel="import" href="org.html">
@@ -24,14 +25,14 @@
 		d2l-navigation-header-open-button,
 		d2l-navigation-header-org,
 		d2l-navigation-header-course,
-		.d2l-navigation-header-actions {
+		d2l-navigation-header-actions {
 			-ms-flex: 0 1 auto;
 			-webkit-flex: 0 1 auto;
 			flex: 0 1 auto;
 		}
 		d2l-navigation-header-org,
 		d2l-navigation-header-course,
-		.d2l-navigation-header-actions {
+		d2l-navigation-header-actions {
 			width: calc(50% - 15px);
 		}
 		.d2l-navigation-header-gutter {
@@ -58,7 +59,7 @@
 			:host-context([is-org]) d2l-navigation-header-org,
 			d2l-navigation-header-course,
 			.d2l-navigation-header-gutter,
-			.d2l-navigation-header-actions {
+			d2l-navigation-header-actions {
 				display: none;
 			}
 			d2l-navigation-header-open-button {
@@ -76,7 +77,7 @@
 					org-unit-home="[[orgUnitHome]]"
 					org-unit-name="[[orgUnitName]]"></d2l-navigation-header-course>
 				<div class="d2l-navigation-header-gutter"></div>
-				<div class="d2l-navigation-header-actions"></div>
+				<d2l-navigation-header-actions></d2l-navigation-header-actions>
 			</div>
 		</d2l-navigation-centerer>
 	</template>

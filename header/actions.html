@@ -1,0 +1,45 @@
+<link rel="import" href="../../polymer/polymer.html">
+<link rel="import" href="admin-menu.html">
+<link rel="import" href="help.html">
+<link rel="import" href="notifications.html">
+<link rel="import" href="personal-menu.html">
+<dom-module id="d2l-navigation-header-actions">
+	<style>
+		:host {
+			-webkit-align-items: center;
+			-ms-flex-align: center;
+			align-items: center;
+			display: -ms-flexbox;
+			display: -webkit-flex;
+			display: flex;
+		}
+		d2l-navigation-notifications,
+		d2l-navigation-admin-menu,
+		d2l-navigation-help {
+			-ms-flex: 0 0 auto;
+			-webkit-flex: 0 0 auto;
+			flex: 0 0 auto;
+		}
+		d2l-navigation-personal-menu,
+		.d2l-navigation-header-actions-flex {
+			-ms-flex: 0 1 auto;
+			-webkit-flex: 0 1 auto;
+			flex: 0 1 auto;
+		}
+		.d2l-navigation-header-actions-flex {
+			width: 100%;
+		}
+	</style>
+	<template>
+		<div class="d2l-navigation-header-actions-flex"></div>
+		<d2l-navigation-notifications></d2l-navigation-notifications>
+		<d2l-navigation-personal-menu></d2l-navigation-personal-menu>
+		<d2l-navigation-admin-menu></d2l-navigation-admin-menu>
+		<d2l-navigation-help></d2l-navigation-help>
+	</template>
+</dom-module>
+<script>
+	Polymer({
+		is: 'd2l-navigation-header-actions'
+	});
+</script>

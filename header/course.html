@@ -2,6 +2,7 @@
 <link rel="import" href="../../iron-icon/iron-icon.html">
 <link rel="import" href="../../vui-colors/colors.html">
 <link rel="import" href="../button-highlight.html">
+<link rel="import" href="../divider.html">
 <link rel="import" href="../icons.html">
 <dom-module id="d2l-navigation-header-course">
 	<style include="vui-colors">
@@ -24,13 +25,6 @@
 		}
 		.d2l-navigation-header-course-menu {
 			color: var(--vui-color-tungsten);
-		}
-		/* dividers */
-		.d2l-navigation-header-course-div1,
-		.d2l-navigation-header-course-div2 {
-			color: var(--vui-color-titanius);
-			height: 24px;
-			width: 24px;
 		}
 		.d2l-navigation-header-course-div1 {
 			margin: 0 9px;
@@ -80,15 +74,14 @@
 			icon="navigation-t3:home"
 			on-tap="handleMyHome"
 			class="d2l-navigation-header-course-home"></button>
-		<iron-icon
-			icon="navigation-t2:divider"
-			class="d2l-navigation-header-course-div1"></iron-icon>
+		<d2l-navigation-divider
+			class="d2l-navigation-header-course-div1"></d2l-navigation-divider>
 		<a href$="[[orgUnitHome]]" class="d2l-navigation-header-course-name">
 			[[orgUnitName]]
 		</a>
-		<iron-icon
-			icon="navigation-t2:divider-small"
-			class="d2l-navigation-header-course-div2"></iron-icon>
+		<d2l-navigation-divider
+			small
+			class="d2l-navigation-header-course-div2"></d2l-navigation-divider>
 		<iron-icon
 			icon="navigation-t1:arrow-down"
 			class="d2l-navigation-header-course-menu"></iron-icon>
