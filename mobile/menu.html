@@ -1,77 +1,32 @@
 <link rel="import" href="../../polymer/polymer.html">
 <link rel="import" href="../../iron-icon/iron-icon.html">
-<link rel="import" href="../../vui-colors/colors.html">
-<link rel="import" href="../button.html">
 <link rel="import" href="../slide-out-menu.html">
-<link rel="import" href="../icons.html">
 <link rel="import" href="../items.html">
 <link rel="import" href="../logo.html">
 <link rel="import" href="course.html">
+<link rel="import" href="header.html">
 <dom-module id="d2l-navigation-mobile-menu">
-	<style include="vui-colors">
+	<style>
 		:host {
 			display: block;
 		}
-		.d2l-navigation-mobile-menu-header {
-			-webkit-align-items: center;
-			-ms-flex-align: center;
-			align-items: center;
-			border-top: 4px solid var(--vui-color-pressicus);
-			border-bottom: 1px solid var(--vui-color-gypsum);
-			display: -ms-flexbox;
-			display: -webkit-flex;
-			display: flex;
-			height: 90px;
-			padding: 0 20px;
-		}
-		.d2l-navigation-mobile-menu-org-text,
-		:host-context([is-org]) .d2l-navigation-mobile-menu-home {
+		d2l-navigation-logo,
+		:host-context([is-org]) d2l-navigation-mobile-course {
 			display: none;
 		}
-		:host-context([is-org]) .d2l-navigation-mobile-menu-org-text {
+		:host-context([is-org]) d2l-navigation-logo {
 			display: block;
-		}
-		.d2l-navigation-mobile-menu-org-text,
-		.d2l-navigation-mobile-menu-home {
-			font-size: 0.8rem;
-			-ms-flex: 0 1 auto;
-			-webkit-flex: 0 1 auto;
-			flex: 0 1 auto; /* IE10 defaults to 0 0 auto */
-			text-transform: uppercase;
-			width: 100%;
-		}
-		.d2l-navigation-mobile-menu-close {
-			-ms-flex: 0 0 auto;
-			-webkit-flex: 0 0 auto;
-			flex: 0 0 auto;
 		}
 	</style>
 	<template>
 		<d2l-navigation-slide-out-menu>
-			<div class="d2l-navigation-mobile-menu-header">
-				<div class="d2l-navigation-mobile-menu-org-text">menu</div>
-				<div class="d2l-navigation-mobile-menu-home">
-					<button
-						is="d2l-navigation-button"
-						icon="navigation-t3:home"
-						on-tap="handleMyHome">home</button>
-				</div>
-				<button
-					is="d2l-navigation-button"
-					hide-text
-					has-outline
-					class="d2l-navigation-mobile-menu-close"
-					icon="navigation-t3:close"
-					on-tap="close">Close</button>
-			</div>
-			<template is="dom-if" if="{{isOrg}}">
-				<d2l-navigation-logo my-home="[[myHome]]" src="[[logo]]"></d2l-navigation-logo>
-			</template>
-			<template is="dom-if" if="{{!isOrg}}">
-				<d2l-navigation-mobile-course
-					org-unit-home="[[orgUnitHome]]"
-					org-unit-name="[[orgUnitName]]"></d2l-navigation-mobile-course>
-			</template>
+			<d2l-navigation-mobile-header
+				band-color="[[bandColor]]"
+				my-home="[[myHome]]"></d2l-navigation-mobile-header>
+			<d2l-navigation-logo my-home="[[myHome]]" src="[[logo]]"></d2l-navigation-logo>
+			<d2l-navigation-mobile-course
+				org-unit-home="[[orgUnitHome]]"
+				org-unit-name="[[orgUnitName]]"></d2l-navigation-mobile-course>
 			<d2l-navigation-items items="[[items]]"></d2l-navigation-items>
 		</d2l-navigation-slide-out-menu>
 	</template>
@@ -80,13 +35,8 @@
 	Polymer({
 		is: 'd2l-navigation-mobile-menu',
 		properties: {
-			bandColor: {
-				type: String,
-				value: '#b9c2d0',
-				observer: '_bandColorChanged'
-			},
+			bandColor: String,
 			items: Object,
-			isOrg: Boolean,
 			logo: String,
 			myHome: String,
 			orgUnitHome: String,
@@ -95,21 +45,11 @@
 		listeners: {
 			'd2l-navigation-close-menu': 'close'
 		},
-		ready: function() {
-			this._bandColorChanged();
-		},
 		close: function() {
 			this.$$('d2l-navigation-slide-out-menu').close();
 		},
 		open: function(opener) {
 			this.$$('d2l-navigation-slide-out-menu').open(opener);
-		},
-		_bandColorChanged: function() {
-			this.$$('.d2l-navigation-mobile-menu-header')
-				.style.borderTopColor = this.bandColor;
-		},
-		handleMyHome: function() {
-			document.location.href = this.myHome;
 		}
 	});
 </script>

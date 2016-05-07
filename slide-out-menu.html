@@ -77,12 +77,7 @@
 			document.body.style.position = 'fixed';
 			document.body.style.width = '100%';
 			this._opener = opener;
-			this.async(function() { this.state = 'opened'; }.bind(this), 0);
-
-			var focusElems = this.getFocusableNodes();
-			if (focusElems.length > 0) {
-				focusElems[0].focus();
-			}
+			this.async(function() { this.state = 'opened'; }.bind(this), 50);
 
 		},
 		close: function() {
@@ -102,34 +97,6 @@
 				this._opener = null;
 			}
 
-		},
-		getFocusableNodes: function() {
-			var FOCUSABLE_WITH_DISABLED = [
-				'a[href]',
-				'[tabindex]'
-			];
-			// Elements that cannot be focused if they have [disabled] attribute.
-			var FOCUSABLE_WITHOUT_DISABLED = [
-				'input',
-				'select',
-				'textarea',
-				'button'
-			];
-			// Discard elements with tabindex=-1 (makes them not focusable).
-			var selector = FOCUSABLE_WITH_DISABLED.join(':not([tabindex="-1"]),') +
-				':not([tabindex="-1"]),' +
-				FOCUSABLE_WITHOUT_DISABLED.join(':not([disabled]):not([tabindex="-1"]),') +
-				':not([disabled]):not([tabindex="-1"])';
-			var focusables = Polymer.dom(this).querySelectorAll(selector);
-			return focusables.sort(function (a, b) {
-				if (a.tabIndex === b.tabIndex) {
-					return 0;
-				}
-				if (a.tabIndex === 0 || a.tabIndex > b.tabIndex) {
-					return 1;
-				}
-				return -1;
-			});
 		}
 	});
 </script>

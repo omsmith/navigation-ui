@@ -30,7 +30,6 @@
 	<template>
 		<nav>
 			<d2l-navigation-header
-				is-org="[[isOrg]]"
 				logo="[[logo]]"
 				my-home="[[myHome]]"
 				org-unit-home="[[orgUnitHome]]"
@@ -44,7 +43,6 @@
 			</div>
 			<d2l-navigation-mobile-menu
 				band-color="[[bandColor]]"
-				is-org="[[isOrg]]"
 				items="[[items]]"
 				logo="[[logo]]"
 				my-home="[[myHome]]"
@@ -58,7 +56,6 @@
 		is: 'd2l-navigation-resolved',
 		properties: {
 			bandColor: String,
-			isOrg: Boolean,
 			items: Array,
 			logo: String,
 			myHome: String,

@@ -27,8 +27,7 @@
 			logo="[[logo]]"
 			my-home="[[myHome]]"
 			org-unit-home="[[orgUnitHome]]"
-			org-unit-name="[[orgUnitName]]"
-			is-org="[[isOrg]]"></d2l-navigation-resolved>
+			org-unit-name="[[orgUnitName]]"></d2l-navigation-resolved>
 	</template>
 </dom-module>
 <script>
@@ -41,6 +40,7 @@
 			},
 			endpoint: String,
 			isOrg: {
+				reflectToAttribute: true,
 				type: Boolean,
 				value: false
 			},

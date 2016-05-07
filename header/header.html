@@ -44,18 +44,18 @@
 		/* hide elements */
 		d2l-navigation-header-open-button,
 		d2l-navigation-header-org,
-		:host([is-org]) d2l-navigation-header-course {
+		:host-context([is-org]) d2l-navigation-header-course {
 			display: none;
 		}
 
 		/* show org elements */
-		:host([is-org]) d2l-navigation-header-org {
+		:host-context([is-org]) d2l-navigation-header-org {
 			display: block;
 		}
 
 		@media(max-width: 575px) {
 			/* hide non-mobile elements */
-			:host([is-org]) d2l-navigation-header-org,
+			:host-context([is-org]) d2l-navigation-header-org,
 			d2l-navigation-header-course,
 			.d2l-navigation-header-gutter,
 			.d2l-navigation-header-actions {
@@ -85,10 +85,6 @@
 	Polymer({
 		is: 'd2l-navigation-header',
 		properties: {
-			isOrg: {
-				type: Boolean,
-				reflectToAttribute: true
-			},
 			logo: String,
 			myHome: String,
 			orgUnitHome: String,
