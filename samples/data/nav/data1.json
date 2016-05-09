@@ -105,6 +105,10 @@
 		{
 			"rel": ["http://api.brightspace.com/rel/theme"],
 			"href": "data/theme/data1.json"
+		},
+		{
+			"rel": ["http://api.brightspace.com/rel/my-home"],
+			"href": "/d2l/lp/ouHome/defaultHome.d2l"
 		}
 	],
 	"actions": [
