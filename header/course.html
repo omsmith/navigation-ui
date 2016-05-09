@@ -13,21 +13,16 @@
 			display: -ms-flexbox;
 			display: -webkit-flex;
 			display: flex;
-			width: 100%;
+			overflow: hidden;
 		}
 		.d2l-navigation-header-course-home,
-		.d2l-navigation-header-course-menu,
-		.d2l-navigation-header-course-div1,
-		.d2l-navigation-header-course-div2 {
+		.d2l-navigation-header-course-menu {
 			-ms-flex: 0 0 auto;
 			-webkit-flex: 0 0 auto;
 			flex: 0 0 auto;
 		}
 		.d2l-navigation-header-course-menu {
 			color: var(--vui-color-tungsten);
-		}
-		.d2l-navigation-header-course-div1 {
-			margin: 0 9px;
 		}
 		.d2l-navigation-header-course-name {
 			display: block;
@@ -52,9 +47,6 @@
 			text-decoration: underline;
 			outline: none;
 		}
-		.d2l-navigation-header-course-div2 {
-			margin: 0 3px;
-		}
 		.d2l-navigation-header-course-menu {
 			height: 18px;
 			width: 18px;
@@ -74,14 +66,11 @@
 			icon="navigation-t3:home"
 			on-tap="handleMyHome"
 			class="d2l-navigation-header-course-home"></button>
-		<d2l-navigation-divider
-			class="d2l-navigation-header-course-div1"></d2l-navigation-divider>
+		<d2l-navigation-divider></d2l-navigation-divider>
 		<a href$="[[orgUnitHome]]" class="d2l-navigation-header-course-name">
 			[[orgUnitName]]
 		</a>
-		<d2l-navigation-divider
-			small
-			class="d2l-navigation-header-course-div2"></d2l-navigation-divider>
+		<d2l-navigation-divider small></d2l-navigation-divider>
 		<iron-icon
 			icon="navigation-t1:arrow-down"
 			class="d2l-navigation-header-course-menu"></iron-icon>

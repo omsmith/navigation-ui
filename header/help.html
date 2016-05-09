@@ -10,12 +10,16 @@
 		display: inline-block;
 	}
 	d2l-navigation-divider {
-		margin: 0 19px;
+		margin: 0 10px;
+	}
+	@media(max-width: 980px) {
+		d2l-navigation-divider {
+			margin: 0 0;
+		}
 	}
 	</style>
 	<template>
-		<d2l-navigation-divider></d2l-navigation-divider>
-		<button
+		<d2l-navigation-divider></d2l-navigation-divider><button
 			is="d2l-navigation-button-highlight"
 			icon="navigation-t3:help">Help</button>
 	</template>

@@ -6,10 +6,17 @@
 	<style include="vui-colors">
 		:host {
 			display: inline-block;
+			-ms-flex: 0 0 auto;
+			-webkit-flex: 0 0 auto;
+			flex: 0 0 auto;
+		}
+		:host([small]) iron-icon {
+			margin: 0 3px;
 		}
 		iron-icon {
 			color: var(--vui-color-titanius);
 			height: 24px;
+			margin: 0 9px;
 			width: 24px;
 		}
 	</style>

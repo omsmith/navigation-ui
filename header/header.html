@@ -2,6 +2,7 @@
 <link rel="import" href="../../iron-icon/iron-icon.html">
 <link rel="import" href="../../vui-colors/colors.html">
 <link rel="import" href="../centerer.html">
+<link rel="import" href="../gutter.html">
 <link rel="import" href="actions.html">
 <link rel="import" href="course.html">
 <link rel="import" href="open-button.html">
@@ -24,21 +25,15 @@
 		/* IE10 defaults to 0 0 auto */
 		d2l-navigation-header-open-button,
 		d2l-navigation-header-org,
-		d2l-navigation-header-course,
-		d2l-navigation-header-actions,
-		.d2l-navigation-header-gutter {
+		d2l-navigation-header-course {
 			-ms-flex: 0 1 auto;
 			-webkit-flex: 0 1 auto;
 			flex: 0 1 auto;
 		}
-		d2l-navigation-header-org,
-		d2l-navigation-header-course,
 		d2l-navigation-header-actions {
-			width: calc(50% - 15px);
-		}
-		.d2l-navigation-header-gutter {
-			min-width: 30px;
-			width: 100%;
+			-ms-flex: 0 0 auto;
+			-webkit-flex: 0 0 auto;
+			flex: 0 0 auto;
 		}
 
 		/* hide elements */
@@ -73,7 +68,7 @@
 					my-home="[[myHome]]"
 					org-unit-home="[[orgUnitHome]]"
 					org-unit-name="[[orgUnitName]]"></d2l-navigation-header-course>
-				<div class="d2l-navigation-header-gutter"></div>
+				<d2l-navigation-gutter size="30"></d2l-navigation-gutter>
 				<d2l-navigation-header-actions></d2l-navigation-header-actions>
 			</div>
 		</d2l-navigation-centerer>

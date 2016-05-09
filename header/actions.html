@@ -14,20 +14,12 @@
 			display: flex;
 		}
 		d2l-navigation-notifications,
+		d2l-navigation-personal-menu,
 		d2l-navigation-admin-menu,
 		d2l-navigation-help {
 			-ms-flex: 0 0 auto;
 			-webkit-flex: 0 0 auto;
 			flex: 0 0 auto;
-		}
-		d2l-navigation-personal-menu,
-		.d2l-navigation-header-actions-flex {
-			-ms-flex: 0 1 auto;
-			-webkit-flex: 0 1 auto;
-			flex: 0 1 auto;
-		}
-		.d2l-navigation-header-actions-flex {
-			width: 100%;
 		}
 		@media(max-width: 740px) {
 			d2l-navigation-admin-menu,
@@ -37,7 +29,6 @@
 		}
 	</style>
 	<template>
-		<div class="d2l-navigation-header-actions-flex"></div>
 		<d2l-navigation-notifications></d2l-navigation-notifications>
 		<d2l-navigation-personal-menu></d2l-navigation-personal-menu>
 		<d2l-navigation-admin-menu></d2l-navigation-admin-menu>
