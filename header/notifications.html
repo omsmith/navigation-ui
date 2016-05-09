@@ -10,33 +10,18 @@
 		display: inline-block;
 	}
 	.d2l-navigation-notifications-discussions {
-		margin: 0 40px;
+		margin: 0 30px;
 	}
-	d2l-navigation-divider {
-		margin: 0 10px;
+	.d2l-navigation-notifications-div {
+		display: inline-block;
+		min-width: 10px;
 	}
-	@media(max-width: 980px) {
-		.d2l-navigation-notifications-discussions {
-			margin: 0 30px;
-		}
+	@media(max-width: 554px) {
 		d2l-navigation-divider {
-			margin: 0 0;
+			display: none;
 		}
-	}
-	@media(max-width: 740px) {
-		.d2l-navigation-notifications-discussions {
-			margin: 0 40px;
-		}
-		d2l-navigation-divider {
-			margin: 0 10px;
-		}
-	}
-	@media(max-width: 400px) {
-		.d2l-navigation-notifications-discussions {
-			margin: 0 30px;
-		}
-		d2l-navigation-divider {
-			margin: 0 0;
+		.d2l-navigation-notifications-div {
+			min-width: 30px;
 		}
 	}
 	</style>
@@ -48,7 +33,9 @@
 			class="d2l-navigation-notifications-discussions"
 			icon="navigation-t3:discussions">Discussions</button><button
 			is="d2l-navigation-button-highlight"
-			icon="navigation-t3:alarmbell">Alerts</button><d2l-navigation-divider></d2l-navigation-divider>
+			class="d2l-navigation-notifications-alerts"
+			icon="navigation-t3:alarmbell">Alerts</button><div class="d2l-navigation-notifications-div"></div>
+			<d2l-navigation-divider></d2l-navigation-divider>
 	</template>
 </dom-module>
 <script>
