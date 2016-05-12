@@ -1,12 +1,13 @@
 <link rel="import" href="../../polymer/polymer.html">
 <link rel="import" href="../../iron-icon/iron-icon.html">
-<link rel="import" href="../slide-out-menu.html">
-<link rel="import" href="../items.html">
 <link rel="import" href="../logo.html">
+<link rel="import" href="../shared-styles.html">
+<link rel="import" href="../slide-out-menu.html">
 <link rel="import" href="course.html">
 <link rel="import" href="header.html">
+<link rel="import" href="item.html">
 <dom-module id="d2l-navigation-mobile-menu">
-	<style>
+	<style include="d2l-navigation-shared-styles">
 		:host {
 			display: block;
 		}
@@ -21,13 +22,19 @@
 	<template>
 		<d2l-navigation-slide-out-menu>
 			<d2l-navigation-mobile-header
+				class="d2l-navigation-gutters"
 				band-color="[[bandColor]]"
 				my-home="[[myHome]]"></d2l-navigation-mobile-header>
-			<d2l-navigation-logo my-home="[[myHome]]" src="[[logo]]"></d2l-navigation-logo>
+			<d2l-navigation-logo
+				class="d2l-navigation-gutters"
+				my-home="[[myHome]]"
+				src="[[logo]]"></d2l-navigation-logo>
 			<d2l-navigation-mobile-course
 				org-unit-home="[[orgUnitHome]]"
 				org-unit-name="[[orgUnitName]]"></d2l-navigation-mobile-course>
-			<d2l-navigation-items items="[[items]]"></d2l-navigation-items>
+			<template is="dom-repeat" items="{{items}}">
+				<d2l-navigation-item-mobile item="{{item}}"></d2l-navigation-item-mobile>
+			</template>
 		</d2l-navigation-slide-out-menu>
 	</template>
 </dom-module>

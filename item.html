@@ -1,0 +1,38 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../vui-colors/colors.html">
+<link rel="import" href="item-behavior.html">
+<link rel="import" href="shared-styles.html">
+<dom-module id="d2l-navigation-item">
+	<style include="vui-colors d2l-navigation-shared-styles">
+		:host {
+			display: inline-block;
+			padding: 20px 20px 20px 0;
+		}
+		:host-context([dir='rtl']) {
+			padding-left: 20px;
+			padding-right: 0;
+		}
+	</style>
+	<template>
+		<a class="d2l-navigation-link"
+			href$="{{href}}"
+			on-tap="onClick"
+			tabindex="0">{{text}}</a>
+	</template>
+</dom-module>
+<script>
+	Polymer({
+		is: 'd2l-navigation-item',
+		behaviors: [window.D2LBehaviors.NavigationItemBehavior],
+		properties: {
+			href: {
+				type: String,
+				computed: 'getHref(item)'
+			},
+			text: {
+				type: String,
+				computed: 'getText(item)'
+			}
+		}
+	});
+</script>

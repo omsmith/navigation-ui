@@ -2,28 +2,28 @@
 <html>
 	<head>
 		<meta charset="utf-8">
-		<title>d2l-navigation-item-link tests</title>
+		<title>d2l-navigation-item tests</title>
 		<meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
 		<script src="../../webcomponentsjs/webcomponents-lite.js"></script>
 		<script src="../../web-component-tester/browser.js"></script>
-		<link rel="import" href="../item-link.html">
+		<link rel="import" href="../item.html">
 	</head>
 	<body>
 
 		<test-fixture id="Default">
 			<template>
-				<d2l-navigation-item-link></d2l-navigation-item-link>
+				<d2l-navigation-item></d2l-navigation-item>
 			</template>
 		</test-fixture>
 
 		<script>
 			describe('Default', function() {
 
-				var itemLink;
+				var item;
 
 				beforeEach(function() {
-					itemLink = fixture('Default');
-					itemLink.setAttribute(
+					item = fixture('Default');
+					item.setAttribute(
 						'item',
 						JSON.stringify({
 							"class": ["item", "link"],
@@ -41,11 +41,11 @@
 				});
 
 				it('should set "href" property when attribute is set', function() {
-					expect(itemLink.href).to.eql('http://www.google.ca');
+					expect(item.href).to.eql('http://www.google.ca');
 				});
 
 				it('should set "text" property when attribute is set', function() {
-					expect(itemLink.text).to.eql('Hello World');
+					expect(item.text).to.eql('Hello World');
 				});
 
 			});

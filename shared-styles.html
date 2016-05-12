@@ -1,0 +1,33 @@
+<dom-module id="d2l-navigation-shared-styles">
+	<template>
+		<style>
+			:root {
+				--d2l-navigation-header-height: 90px;
+				--d2l-navigation-header-height-mobile: 72px;
+			}
+			.d2l-navigation-gutters {
+				padding-left: 2.439%;
+				padding-right: 2.439%;
+			}
+			@media(max-width: 615px) {
+				.d2l-navigation-gutters {
+					padding-left: 15px;
+					padding-right: 15px;
+				}
+			}
+			a.d2l-navigation-link,
+			a.d2l-navigation-link:link,
+			a.d2l-navigation-link:visited {
+				color: var(--vui-color-ferrite);
+				cursor: pointer;
+				text-decoration: none;
+			}
+			a.d2l-navigation-link:hover,
+			a.d2l-navigation-link:focus {
+				color: var(--vui-color-celestine);
+				text-decoration: underline;
+				outline: none;
+			}
+		</style>
+	</template>
+</dom-module>
