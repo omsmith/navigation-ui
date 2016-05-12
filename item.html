@@ -1,8 +1,9 @@
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../vui-colors/colors.html">
 <link rel="import" href="item-behavior.html">
+<link rel="import" href="shared-styles.html">
 <dom-module id="d2l-navigation-item">
-	<style include="vui-colors">
+	<style include="vui-colors d2l-navigation-shared-styles">
 		:host {
 			display: inline-block;
 			padding: 20px 20px 20px 0;
@@ -11,19 +12,9 @@
 			padding-left: 20px;
 			padding-right: 0;
 		}
-		:host > a, :host > a:link, :host > a:visited {
-			color: var(--vui-color-ferrite);
-			cursor: pointer;
-			text-decoration: none;
-		}
-		:host > a:hover, :host > a:focus {
-			color: var(--vui-color-celestine);
-			text-decoration: underline;
-			outline: none;
-		}
 	</style>
 	<template>
-		<a href$="{{href}}" on-tap="onClick" tabindex="0">{{text}}</a>
+		<a class="d2l-navigation-link" href$="{{href}}" on-tap="onClick" tabindex="0">{{text}}</a>
 	</template>
 </dom-module>
 <script>

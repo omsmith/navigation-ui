@@ -12,19 +12,11 @@
 			-webkit-align-items: center;
 			-ms-flex-align: center;
 			align-items: center;
-			color: var(--vui-color-ferrite);
-			cursor: pointer;
 			display: -ms-flexbox;
 			display: -webkit-flex;
 			display: flex;
 			padding-top: 20px;
 			padding-bottom: 20px;
-			text-decoration: none;
-		}
-		:host > a:hover, :host > a:focus {
-			color: var(--vui-color-celestine);
-			text-decoration: underline;
-			outline: none;
 		}
 		.d2l-navigation-item-link-text {
 			-ms-flex: 0 1 auto;
@@ -42,7 +34,7 @@
 		}
 	</style>
 	<template>
-		<a class="d2l-navigation-gutters" href$="{{href}}" on-tap="onClick" tabindex="0">
+		<a class="d2l-navigation-gutters d2l-navigation-link" href$="{{href}}" on-tap="onClick" tabindex="0">
 			<div class="d2l-navigation-item-link-text">{{text}}</div>
 			<iron-icon
 				icon="navigation-t1:arrow-right"

@@ -4,8 +4,9 @@
 <link rel="import" href="../button-highlight.html">
 <link rel="import" href="../divider.html">
 <link rel="import" href="../icons.html">
+<link rel="import" href="../shared-styles.html">
 <dom-module id="d2l-navigation-header-course">
-	<style include="vui-colors">
+	<style include="vui-colors d2l-navigation-shared-styles">
 		:host {
 			-webkit-align-items: center;
 			-ms-flex-align: center;
@@ -24,7 +25,7 @@
 		.d2l-navigation-header-course-menu {
 			color: var(--vui-color-tungsten);
 		}
-		.d2l-navigation-header-course-name {
+		.d2l-navigation-link {
 			display: block;
 			font-size: 1.5rem;
 			-ms-flex: 0 1 auto;
@@ -34,18 +35,6 @@
 			line-height: normal;
 			text-overflow: ellipsis;
 			white-space: nowrap;
-		}
-		.d2l-navigation-header-course-name,
-		.d2l-navigation-header-course-name:link,
-		.d2l-navigation-header-course-name:visited {
-			color: var(--vui-color-ferrite);
-			text-decoration: none;
-		}
-		.d2l-navigation-header-course-name:hover,
-		.d2l-navigation-header-course-name:focus {
-			color: var(--vui-color-celestine);
-			text-decoration: underline;
-			outline: none;
 		}
 		.d2l-navigation-header-course-menu {
 			height: 18px;
@@ -67,7 +56,7 @@
 			on-tap="handleMyHome"
 			class="d2l-navigation-header-course-home"></button>
 		<d2l-navigation-divider></d2l-navigation-divider>
-		<a href$="[[orgUnitHome]]" class="d2l-navigation-header-course-name">
+		<a href$="[[orgUnitHome]]" class="d2l-navigation-link">
 			[[orgUnitName]]
 		</a>
 		<d2l-navigation-divider small class="d2l-navigation-header-course-div2"></d2l-navigation-divider>

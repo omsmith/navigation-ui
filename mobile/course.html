@@ -6,17 +6,18 @@
 <dom-module id="d2l-navigation-mobile-course">
 	<style include="vui-colors d2l-navigation-shared-styles">
 		:host {
+			border-bottom: 1px solid var(--vui-color-gypsum);
 			display: block;
+			line-height: normal;
 		}
 		a {
 			-webkit-align-items: center;
 			-ms-flex-align: center;
 			align-items: center;
-			border-bottom: 1px solid var(--vui-color-gypsum);
 			display: -ms-flexbox;
 			display: -webkit-flex;
 			display: flex;
-			padding: 20px;
+			height: var(--d2l-navigation-header-height);
 		}
 		a > div {
 			-ms-flex: 0 1 auto;
@@ -27,17 +28,8 @@
 			width: 100%;
 			white-space: nowrap;
 		}
-		a,
-		a:link,
-		a:visited {
-			color: var(--vui-color-ferrite);
-			text-decoration: none;
-		}
-		a:hover,
-		a:focus {
-			color: var(--vui-color-celestine);
-			text-decoration: underline;
-			outline: none;
+		a {
+			font-size: 1.5rem;
 		}
 		.d2l-navigation-mobile-course-arrow {
 			color: var(--vui-color-tungsten);
@@ -49,7 +41,7 @@
 		}
 	</style>
 	<template>
-		<a class="d2l-navigation-gutters" href$="[[orgUnitHome]]">
+		<a class="d2l-navigation-gutters d2l-navigation-link" href$="[[orgUnitHome]]">
 			<div>[[orgUnitName]]</div>
 			<iron-icon
 				icon="navigation-t1:arrow-right"
