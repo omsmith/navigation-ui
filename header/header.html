@@ -7,8 +7,9 @@
 <link rel="import" href="course.html">
 <link rel="import" href="open-button.html">
 <link rel="import" href="org.html">
+<link rel="import" href="../shared.html">
 <dom-module id="d2l-navigation-header">
-	<style include="vui-colors">
+	<style include="vui-colors d2l-navigation-shared-styles">
 		:host {
 			border-bottom: 1px solid var(--vui-color-gypsum);
 			display: block;
@@ -20,7 +21,7 @@
 			display: -ms-flexbox;
 			display: -webkit-flex;
 			display: flex;
-			height: 90px;
+			height: var(--d2l-navigation-header-height);
 		}
 		/* IE10 defaults to 0 0 auto */
 		d2l-navigation-header-open-button,
@@ -56,6 +57,11 @@
 			}
 			d2l-navigation-header-open-button {
 				display: inline-block;
+			}
+		}
+		@media(max-width: 615px) {
+			.d2l-navigation-header-container {
+				height: var(--d2l-navigation-header-height-mobile);
 			}
 		}
 	</style>
