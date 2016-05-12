@@ -8,21 +8,26 @@
 			border-bottom: 1px solid var(--vui-color-gypsum);
 			display: block;
 		}
-		:host > a, :host > a:link, :host > a:visited {
+		:host > a {
 			-webkit-align-items: center;
 			-ms-flex-align: center;
 			align-items: center;
 			display: -ms-flexbox;
 			display: -webkit-flex;
 			display: flex;
-			padding-top: 20px;
-			padding-bottom: 20px;
+			height: 60px;
 		}
 		.d2l-navigation-item-link-text {
 			-ms-flex: 0 1 auto;
 			-webkit-flex: 0 1 auto;
 			flex: 0 1 auto; /* IE10 defaults to 0 0 auto */
 			width: 100%;
+		}
+		@media(max-width: 615px) {
+			:host > a {
+				font-size: 0.7rem;
+				height: 48px;
+			}
 		}
 		.d2l-navigation-item-link-arrow {
 			display: block;
@@ -45,6 +50,16 @@
 <script>
 	Polymer({
 		is: 'd2l-navigation-item-mobile',
-		behaviors: [D2LNavigationItemBehavior]
+		behaviors: [window.D2LBehaviors.NavigationItemBehavior],
+		properties: {
+			href: {
+				type: String,
+				computed: 'getHref(item)'
+			},
+			text: {
+				type: String,
+				computed: 'getText(item)'
+			}
+		}
 	});
 </script>
