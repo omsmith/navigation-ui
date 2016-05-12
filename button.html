@@ -25,8 +25,12 @@
 			border-color: var(--vui-color-pressicus);
 		}
 		.d2l-navigation-button-text {
-			margin-left: 10px;
+			margin-left: 8px;
 			text-transform: uppercase;
+		}
+		:host-context([dir='rtl']) .d2l-navigation-button-text {
+			margin-left: 0;
+			margin-right: 8px;
 		}
 		:host([hide-text]) .d2l-navigation-button-text {
 			position:absolute;
