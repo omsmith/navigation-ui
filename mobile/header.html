@@ -2,9 +2,8 @@
 <link rel="import" href="../../vui-colors/colors.html">
 <link rel="import" href="../button.html">
 <link rel="import" href="../icons.html">
-<link rel="import" href="../shared.html">
 <dom-module id="d2l-navigation-mobile-header">
-	<style include="vui-colors d2l-navigation-shared-styles">
+	<style include="vui-colors">
 		:host {
 			-webkit-align-items: center;
 			-ms-flex-align: center;
@@ -15,7 +14,6 @@
 			display: -webkit-flex;
 			display: flex;
 			height: var(--d2l-navigation-header-height);
-			padding: 0 20px;
 		}
 		@media(max-width: 615px) {
 			:host {
