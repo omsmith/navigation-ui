@@ -3,7 +3,7 @@
 <link rel="import" href="header/header.html">
 <link rel="import" href="mobile/menu.html">
 <link rel="import" href="centerer.html">
-<link rel="import" href="items.html">
+<link rel="import" href="item.html">
 <dom-module id="d2l-navigation-resolved">
 	<style include="vui-colors">
 		:host {
@@ -32,7 +32,9 @@
 				org-unit-name="[[orgUnitName]]"></d2l-navigation-header>
 			<div class="d2l-navigation-row2">
 				<d2l-navigation-centerer>
-					<d2l-navigation-items items="[[items]]"></d2l-navigation-items>
+					<template is="dom-repeat" items="{{items}}">
+						<d2l-navigation-item item="{{item}}"></d2l-navigation-item>
+					</template>
 				</d2l-navigation-centerer>
 			</div>
 			<d2l-navigation-mobile-menu

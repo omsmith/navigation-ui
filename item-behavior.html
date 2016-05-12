@@ -1,0 +1,73 @@
+<script>
+	D2LNavigationItemBehavior = {
+		properties: {
+			item: Object,
+			href: {
+				type: String,
+				computed: 'getHref(item)'
+			},
+			text: {
+				type: String,
+				computed: 'getText(item)'
+			}
+		},
+		hostAttributes: {
+			role: 'listitem'
+		},
+		getHref: function(item) {
+			var href = undefined;
+			if (item.class.indexOf('item') > -1) {
+				if (item.class.indexOf('link') > -1) {
+					item.links.forEach(function(l) {
+						if (l.rel.indexOf('self') > -1) {
+							href = l.href;
+						}
+					});
+				}
+			}
+			return href;
+		},
+		getText: function(item) {
+			if (this.item.class.indexOf('item') > -1) {
+				return item.properties.text;
+			} else if (this.item.class.indexOf('action') > -1) {
+				return this.item.title;
+			}
+		},
+		onClick: function() {
+
+			if (this.item.class.indexOf('action') < 0) {
+				return;
+			}
+
+			var frm = document.createElement('form');
+			frm.setAttribute('target', '_top');
+			frm.setAttribute('action', this.item.href);
+			frm.setAttribute('method', this.item.method);
+			frm.setAttribute('enctype', this.item.type)
+
+			this.item.fields.forEach(function(f) {
+				if (f.type === 'hidden') {
+					var hidden = document.createElement('input');
+					hidden.setAttribute('type', 'hidden');
+					hidden.setAttribute('name', f.name)
+					hidden.setAttribute('value', f.value);
+					frm.appendChild(hidden);
+				}
+			})
+
+			document.body.appendChild(frm);
+			frm.submit();
+
+			// special handling for logout
+			if (this.item.class.indexOf('logout') > -1) {
+				try {
+					window.localStorage.setItem('Session.Expired', '1');
+				} catch(e) {
+					// no access to local storage, whateves
+				}
+			}
+
+		}
+	};
+</script>
