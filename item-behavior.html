@@ -31,10 +31,46 @@ window.D2LBehaviors.NavigationItemBehavior = {
 		}
 	},
 	onClick: function() {
-
-		if (this.item.class.indexOf('action') < 0) {
-			return;
+		if (this.item.class.indexOf('popup') > -1) {
+			this.onClickPopup();
+		} else if (this.item.class.indexOf('action') > -1) {
+			this.onClickAction();
 		}
+	},
+	onClickPopup: function() {
+
+		var features = '';
+		if ( this.item.properties.Width > 0 ) {
+			features += 'width=' + this.item.properties.Width + ',';
+		}
+		if( this.item.properties.Height > 0 ) {
+			features += 'height=' + this.item.properties.Height + ',';
+		}
+
+		features += 'location=1,' +
+			'menubar=' + ( this.properties.HasMenubar ? '1' : '0' ) + ',' +
+			'resizable=1,' +
+			'status=1,' +
+			'scrollbars=1,' +
+			'toolbar=' + ( this.properties.HasToolbar ? '1' : '0' );
+
+		var href = null;
+		this.item.links.forEach(function(l) {
+			if (l.rel.indexOf('self') > -1) {
+				href = l.href;
+			}
+		});
+
+		// name can't contain non-alphanumerics
+		var windowName = href.replace(/[^a-zA-Z0-9]+/g,'_');
+
+		var w = window.open(href, windowName, features);
+		if (w) {
+			w.focus();
+		}
+
+	},
+	onClickAction: function() {
 
 		var frm = document.createElement('form');
 		frm.setAttribute('target', '_top');
