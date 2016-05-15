@@ -1,6 +1,7 @@
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../iron-icon/iron-icon.html">
 <link rel="import" href="../vui-colors/colors.html">
+<link rel="import" href="icons.html">
 <dom-module id="d2l-navigation-button-highlight">
 	<style include="vui-colors">
 		:host {
@@ -8,28 +9,44 @@
 			border: none;
 			color: var(--vui-color-tungsten);
 			cursor: pointer;
+			display: inline-block;
+			height: 100%;
 			margin: 0;
 			padding: 0;
+			position: relative;
 		}
 		:host(:hover), :host(:focus) {
-			color: var(--vui-color-celestine);
+			color: var(--vui-color-celestuba);
 			outline-style: none;
 		}
 		.d2l-navigation-button-highlight-text {
-			position:absolute;
-			left:-10000px;
+			position: absolute;
+			left: -10000px;
 			top: auto;
 			width: 1px;
 			height: 1px;
-			overflow:hidden;
+			overflow: hidden;
 		}
-		iron-icon {
+		.d2l-navigation-button-highlight-icon {
 			height: 30px;
 			width: 30px;
 		}
+		.d2l-navigation-button-highlight-bar {
+			display: none;
+			height: 44px;
+			left: -7px;
+			position: absolute;
+			top: 0;
+			width: 44px;
+		}
+		:host(:hover) .d2l-navigation-button-highlight-bar,
+		:host(:focus) .d2l-navigation-button-highlight-bar {
+			display: block;
+		}
 	</style>
 	<template>
-		<iron-icon icon="[[icon]]"></iron-icon>
+		<iron-icon icon="navigation-highlight:bar" class="d2l-navigation-button-highlight-bar"></iron-icon>
+		<iron-icon icon="[[icon]]" class="d2l-navigation-button-highlight-icon"></iron-icon>
 		<span class="d2l-navigation-button-highlight-text"><content></content></span>
 	</template>
 </dom-module>
