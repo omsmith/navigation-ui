@@ -50,9 +50,17 @@
 		}
 	</style>
 	<template>
-		<div class="d2l-navigation-slide-out-menu-mask"></div>
+		<div class="d2l-navigation-slide-out-menu-mask" on-tap="close"></div>
 		<div class="d2l-navigation-slide-out-menu-content">
+			<div
+				class="d2l-navigation-slide-out-menu-first"
+				on-focus="focusFirst"
+				tabindex="0"></div>
 			<content></content>
+			<div
+				class="d2l-navigation-slide-out-menu-last"
+				on-focus="focusLast"
+				tabindex="0"></div>
 		</div>
 	</template>
 </dom-module>
@@ -64,6 +72,10 @@
 				type: String,
 				value: 'closed',
 				reflectToAttribute: true
+			},
+			_ignoreFocus: {
+				type: Boolean,
+				value: false
 			},
 			_opener: Object
 		},
@@ -78,6 +90,8 @@
 			document.body.style.position = 'fixed';
 			document.body.style.width = '100%';
 			this._opener = opener;
+			this._ignoreFocus = true;
+			this.$$('.d2l-navigation-slide-out-menu-first').focus();
 			this.async(function() { this.state = 'opened'; }.bind(this), 50);
 
 		},
@@ -98,6 +112,22 @@
 				this._opener = null;
 			}
 
+		},
+		focusFirst: function() {
+			if (this._ignoreFocus) {
+				this._ignoreFocus = false;
+				return;
+			}
+			this._ignoreFocus = true;
+			this.$$('.d2l-navigation-slide-out-menu-last').focus();
+		},
+		focusLast: function() {
+			if (this._ignoreFocus) {
+				this._ignoreFocus = false;
+				return;
+			}
+			this._ignoreFocus = true;
+			this.$$('.d2l-navigation-slide-out-menu-first').focus();
 		}
 	});
 </script>
