@@ -88,7 +88,7 @@
 		handleNavResponse: function(res) {
 
 			res.links.forEach(function(l) {
-				if (l.rel.indexOf('http://api.brightspace.com/rel/theme') > -1) {
+				if (l.rel.indexOf('http://navigation.api.brightspace.com/rels/theme') > -1) {
 					this.themeRequest = document.createElement('iron-request');
 					this.themeRequest
 						.send({url: l.href, handleAs: 'json'})
@@ -98,13 +98,15 @@
 						.catch(function() {
 							this.updateLoading();
 						}.bind(this));
-				} else if(l.rel.indexOf('http://api.brightspace.com/rel/my-home') > -1) {
+				} else if(l.rel.indexOf('http://navigation.api.brightspace.com/rels/my-home') > -1) {
 					this.myHome = l.href;
 				}
 			}.bind(this));
 
 			res.entities.forEach(function(e) {
-				if (e.class.indexOf('item') > -1 && e.class.indexOf('group') < 0) {
+				if (e.class.indexOf('admin') > -1) {
+					// TODO: deal with admin categories/links
+				} else if (e.class.indexOf('item') > -1 && e.class.indexOf('group') < 0) {
 					this.push('items', e);
 				}
 			}.bind(this));
