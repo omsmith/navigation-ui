@@ -103,11 +103,11 @@
 			"href": "data/nav/data1.json"
 		},
 		{
-			"rel": ["http://api.brightspace.com/rel/theme"],
+			"rel": ["http://navigation.api.brightspace.com/rels/theme"],
 			"href": "data/theme/data1.json"
 		},
 		{
-			"rel": ["http://api.brightspace.com/rel/my-home"],
+			"rel": ["http://navigation.api.brightspace.com/rels/my-home"],
 			"href": "/d2l/lp/ouHome/defaultHome.d2l"
 		}
 	],

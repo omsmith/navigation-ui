@@ -24,7 +24,7 @@
 				},
 				{
 					"rel": [
-						"http://api.brightspace.com/rel/home"
+						"http://navigation.api.brightspace.com/rels/home"
 					],
 					"href": "/home/"
 				}
