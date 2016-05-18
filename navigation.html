@@ -25,7 +25,9 @@
 			logo="[[logo]]"
 			my-home="[[myHome]]"
 			org-unit-home="[[orgUnitHome]]"
-			org-unit-name="[[orgUnitName]]"></d2l-navigation-resolved>
+			org-unit-name="[[orgUnitName]]"
+			profile-display-name="[[profileDisplayName]]"
+			profile-thumbnail-src="[[profileThumbnailSrc]]"></d2l-navigation-resolved>
 	</template>
 </dom-module>
 <script>
@@ -36,7 +38,8 @@
 				type: Number,
 				value: 200
 			},
-			endpoint: String,
+			endpointNav: String,
+			endpointWhoAmI: String,
 			isOrg: {
 				reflectToAttribute: true,
 				type: Boolean,
@@ -54,14 +57,16 @@
 			},
 			myHome: String,
 			navRequest: Object,
+			whoAmIRequest: Object,
 			orgUnitName: String,
 			orgUnitHome: String,
 			showIncomplete: Boolean,
 			themeColor: String,
-			themeRequest: Object
+			themeRequest: Object,
+			profileDisplayName: String,
+			profileThumbnailSrc: String
 		},
 		updateLoading: function() {
-
 			var finish = function() {
 				var delay = Math.max(200, this.delay);
 				this.async(function() {
@@ -71,16 +76,21 @@
 				}.bind(this), delay);
 			}.bind(this);
 
-			if (this.navRequest && this.navRequest.status === 500
-				|| this.themeRequest && this.themeRequest.status === 500) {
-				return finish();
+			if(this._checkIfDoneLoading([
+				this.navRequest,
+				this.themeRequest,
+				this.whoAmIRequest
+			])) {
+				finish();
 			}
-
-			if (this.navRequest && this.navRequest.status === 200 &&
-				this.themeRequest && this.themeRequest.status === 200) {
-				return finish();
-			}
-
+		},
+		_checkIfDoneLoading: function(requests) {
+		  requests.forEach(function(request) {
+		    if (!request || (request.status != 500 && request.status != 200) ) {
+		      return false;
+		    }
+		  });
+		  return true;
 		},
 		ready: function() {
 			this.load(true);
@@ -133,6 +143,24 @@
 			this.themeColor = res.properties.BackgroundColor;
 			this.updateLoading();
 		},
+		handleWhoAmIResponse: function(res) {
+			res.entities.forEach(function(resEntity) {
+				if (resEntity.class.indexOf('profile') > -1) {
+					resEntity.entities.forEach(function(profileEntity) {
+						if (profileEntity.class.indexOf('thumbnail') > -1) {
+							profileEntity.entities.forEach(function(imageEntity) {
+								if (imageEntity.rel.indexOf('alternate') > -1) {
+									this.profileThumbnailSrc = imageEntity.href;
+								}
+							}.bind(this));
+						}
+					}.bind(this));
+				} else	if (resEntity.class.indexOf('display') > -1) {
+					this.profileDisplayName = resEntity.properties.displayname;
+				}
+			}.bind(this));
+			this.updateLoading();
+		},
 		load: function(firstLoad) {
 			if (this.loading) {
 				return;
@@ -142,9 +170,18 @@
 			this.splice('items', 0, this.items.length);
 			this.navRequest = document.createElement('iron-request');
 			this.navRequest
-				.send({url: this.endpoint, handleAs: 'json'})
+				.send({url: this.endpointNav, handleAs: 'json'})
 				.then(function(res) {
 					this.handleNavResponse(res.response);
+				}.bind(this))
+				.catch(function() {
+					this.updateLoading();
+				}.bind(this));
+			this.whoAmIRequest = document.createElement('iron-request');
+			this.whoAmIRequest
+				.send({url: this.endpointWhoAmI, handleAs: 'json'})
+				.then(function(res) {
+					this.handleWhoAmIResponse(res.response);
 				}.bind(this))
 				.catch(function() {
 					this.updateLoading();

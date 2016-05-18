@@ -29,7 +29,9 @@
 				logo="[[logo]]"
 				my-home="[[myHome]]"
 				org-unit-home="[[orgUnitHome]]"
-				org-unit-name="[[orgUnitName]]"></d2l-navigation-header>
+				org-unit-name="[[orgUnitName]]"
+				profile-display-name="[[profileDisplayName]]"
+				profile-thumbnail-src="[[profileThumbnailSrc]]"></d2l-navigation-header>
 			<div class="d2l-navigation-row2">
 				<d2l-navigation-centerer>
 					<template is="dom-repeat" items="{{items}}">
@@ -56,7 +58,9 @@
 			logo: String,
 			myHome: String,
 			orgUnitHome: String,
-			orgUnitName: String
+			orgUnitName: String,
+			profileDisplayName: String,
+			profileThumbnailSrc: String
 		},
 		listeners: {
 			'd2l-navigation-open-menu': 'openMenu'
