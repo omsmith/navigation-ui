@@ -21,7 +21,7 @@
 		height: 42px;
 		width: 42px;
 	}
-	:host.d2l-thumbnail-src-set img {
+	img[src] {
 		display: block;
 	}
 	p {
@@ -47,25 +47,48 @@
 	}
 	</style>
 	<template>
-		<img src="[[profileThumbnailSrc]]" alt="" />
-		<p>[[profileDisplayName]]</p>
+		<img src="[[thumbnailSrc]]" alt="" />
+		<p>[[displayName]]</p>
 	</template>
 </dom-module>
 <script>
 	Polymer({
 		is: 'd2l-navigation-personal-menu',
 		properties: {
-			profileDisplayName: String,
-			profileThumbnailSrc: {
-				type: String,
-				observer: '_profileThumbnailSrcChanged'
-			}
+			userHref: String,
+			displayName: String,
+			thumbnailSrc: String
 		},
-		_profileThumbnailSrcChanged: function(newValue) {
-			if(newValue) {
-				console.log('yep');
-				this.classList.add('d2l-thumbnail-src-set');
-			}
-		}
+		ready: function() {
+			this._load();
+		},
+		_load: function() {
+			document.createElement('iron-request')
+				.send({url: this.userHref, handleAs: 'json'})
+				.then(function(res) {
+					this._handleUserResponse(res.response);
+				}.bind(this))
+				.catch(function() {
+					//to do: do anything?
+				}.bind(this));
+		},
+		_handleUserResponse: function(res) {
+			res.entities.forEach(function(resEntity) {
+				if (resEntity.class.indexOf('profile') > -1) {
+					resEntity.entities.forEach(function(profileEntity) {
+						if (profileEntity.class.indexOf('thumbnail') > -1) {
+							profileEntity.entities.forEach(function(imageEntity) {
+								if (imageEntity.rel.indexOf('alternate') > -1) {
+									this.thumbnailSrc = imageEntity.href;
+								}
+							}.bind(this));
+						}
+					}.bind(this));
+				} else	if (resEntity.class.indexOf('display') > -1) {
+					this.displayName = resEntity.properties.displayname;
+				}
+			}.bind(this));
+			this.updateLoading();
+		},
 	});
 </script>

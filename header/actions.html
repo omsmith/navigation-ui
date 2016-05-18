@@ -32,8 +32,7 @@
 	<template>
 		<d2l-navigation-notifications></d2l-navigation-notifications>
 		<d2l-navigation-personal-menu
-			profile-display-name="[[profileDisplayName]]"
-			profile-thumbnail-src="[[profileThumbnailSrc]]"></d2l-navigation-personal-menu>
+			user-href="[[userHref]]"></d2l-navigation-personal-menu>
 		<d2l-navigation-admin-menu></d2l-navigation-admin-menu>
 		<d2l-navigation-help></d2l-navigation-help>
 	</template>
@@ -42,8 +41,7 @@
 	Polymer({
 		is: 'd2l-navigation-header-actions',
 		properties: {
-			profileDisplayName: String,
-			profileThumbnailSrc: String
+			userHref: String
 		}
 	});
 </script>

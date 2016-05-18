@@ -26,8 +26,8 @@
 			my-home="[[myHome]]"
 			org-unit-home="[[orgUnitHome]]"
 			org-unit-name="[[orgUnitName]]"
-			profile-display-name="[[profileDisplayName]]"
-			profile-thumbnail-src="[[profileThumbnailSrc]]"></d2l-navigation-resolved>
+			user-href="[[userHref]]"
+			></d2l-navigation-resolved>
 	</template>
 </dom-module>
 <script>
@@ -38,8 +38,8 @@
 				type: Number,
 				value: 200
 			},
-			endpointNav: String,
-			endpointWhoAmI: String,
+			href: String,
+			userHref: String,
 			isOrg: {
 				reflectToAttribute: true,
 				type: Boolean,
@@ -57,7 +57,6 @@
 			},
 			myHome: String,
 			navRequest: Object,
-			whoAmIRequest: Object,
 			orgUnitName: String,
 			orgUnitHome: String,
 			showIncomplete: Boolean,
@@ -78,25 +77,25 @@
 
 			if(this._checkIfDoneLoading([
 				this.navRequest,
-				this.themeRequest,
-				this.whoAmIRequest
+				this.themeRequest
 			])) {
 				finish();
 			}
 		},
 		_checkIfDoneLoading: function(requests) {
-		  requests.forEach(function(request) {
-		    if (!request || (request.status != 500 && request.status != 200) ) {
-		      return false;
-		    }
-		  });
-		  return true;
+			var result = true;
+			requests.forEach(function(request) {
+				if (!request || (request.status != 500 && request.status != 200) ) {
+					result = false;
+					return false;
+				}
+			});
+			return result;
 		},
 		ready: function() {
 			this.load(true);
 		},
 		handleNavResponse: function(res) {
-
 			res.links.forEach(function(l) {
 				if (l.rel.indexOf('http://navigation.api.brightspace.com/rels/theme') > -1) {
 					this.themeRequest = document.createElement('iron-request');
@@ -128,7 +127,6 @@
 			}.bind(this));
 
 			this.updateLoading();
-
 		},
 		handleThemeResponse: function(res) {
 			res.entities.forEach(function(e) {
@@ -143,24 +141,6 @@
 			this.themeColor = res.properties.BackgroundColor;
 			this.updateLoading();
 		},
-		handleWhoAmIResponse: function(res) {
-			res.entities.forEach(function(resEntity) {
-				if (resEntity.class.indexOf('profile') > -1) {
-					resEntity.entities.forEach(function(profileEntity) {
-						if (profileEntity.class.indexOf('thumbnail') > -1) {
-							profileEntity.entities.forEach(function(imageEntity) {
-								if (imageEntity.rel.indexOf('alternate') > -1) {
-									this.profileThumbnailSrc = imageEntity.href;
-								}
-							}.bind(this));
-						}
-					}.bind(this));
-				} else	if (resEntity.class.indexOf('display') > -1) {
-					this.profileDisplayName = resEntity.properties.displayname;
-				}
-			}.bind(this));
-			this.updateLoading();
-		},
 		load: function(firstLoad) {
 			if (this.loading) {
 				return;
@@ -170,18 +150,9 @@
 			this.splice('items', 0, this.items.length);
 			this.navRequest = document.createElement('iron-request');
 			this.navRequest
-				.send({url: this.endpointNav, handleAs: 'json'})
+				.send({url: this.href, handleAs: 'json'})
 				.then(function(res) {
 					this.handleNavResponse(res.response);
-				}.bind(this))
-				.catch(function() {
-					this.updateLoading();
-				}.bind(this));
-			this.whoAmIRequest = document.createElement('iron-request');
-			this.whoAmIRequest
-				.send({url: this.endpointWhoAmI, handleAs: 'json'})
-				.then(function(res) {
-					this.handleWhoAmIResponse(res.response);
 				}.bind(this))
 				.catch(function() {
 					this.updateLoading();
