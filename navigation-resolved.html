@@ -30,7 +30,8 @@
 				my-home="[[myHome]]"
 				org-unit-home="[[orgUnitHome]]"
 				org-unit-name="[[orgUnitName]]"
-				user-href="[[userHref]]"></d2l-navigation-header>
+				user-href="[[userHref]]">
+				personal-menu-location="[[personalMenuLocation]]"></d2l-navigation-header>
 			<div class="d2l-navigation-row2">
 				<d2l-navigation-centerer>
 					<template is="dom-repeat" items="{{items}}">
@@ -58,7 +59,8 @@
 			myHome: String,
 			orgUnitHome: String,
 			orgUnitName: String,
-			userHref: String
+			userHref: String,
+			personalMenuLocation: String
 		},
 		listeners: {
 			'd2l-navigation-open-menu': 'openMenu'
