@@ -1,0 +1,47 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../iron-icon/iron-icon.html">
+<link rel="import" href="../vui-colors/colors.html">
+<link rel="import" href="button-highlight-styles.html">
+<dom-module id="d2l-navigation-button-highlight-icon">
+	<style include="vui-colors d2l-navigation-button-highlight-styles">
+		:host {
+			@apply(--d2l-navigation-button-highlight);
+		}
+		:host(:hover), :host(:focus) {
+			@apply(--d2l-navigation-button-highlight-hover);
+		}
+		.d2l-navigation-button-highlight-text {
+			position: absolute;
+			left: -10000px;
+			top: auto;
+			width: 1px;
+			height: 1px;
+			overflow: hidden;
+		}
+		.d2l-navigation-button-highlight-icon {
+			height: 30px;
+			width: 30px;
+		}
+		.d2l-navigation-button-highlight-bar {
+			@apply(--d2l-navigation-button-highlight-bar);
+		}
+		:host(:hover) .d2l-navigation-button-highlight-bar,
+		:host(:focus) .d2l-navigation-button-highlight-bar {
+			@apply(--d2l-navigation-button-highlight-bar-hover);
+		}
+	</style>
+	<template>
+		<span class="d2l-navigation-button-highlight-bar"></span>
+		<iron-icon icon="[[icon]]" class="d2l-navigation-button-highlight-icon"></iron-icon>
+		<span class="d2l-navigation-button-highlight-text"><content></content></span>
+	</template>
+</dom-module>
+<script>
+	Polymer({
+		is: 'd2l-navigation-button-highlight-icon',
+		extends: 'button',
+		properties: {
+			icon: String
+		}
+	});
+</script>
