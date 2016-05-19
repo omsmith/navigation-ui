@@ -65,7 +65,10 @@
 			<span class="d2l-navigation-personal-menu-thumbnail"></span>
 			<p class="d2l-navigation-personal-menu-text">[[displayName]]</p>
 		</button>
-		<d2l-dropdown target-id="d2l-navigation-personal-menu-opener">
+		<d2l-dropdown
+			target-id="d2l-navigation-personal-menu-opener"
+			on-open="_handleOpen"
+			on-close="_handleClose">
 			<div id="d2l-navigation-personal-menu-placeholder"></div>
 		</d2l-dropdown>
 	</template>
@@ -129,6 +132,14 @@
 			var thumbnail = this.$$('.d2l-navigation-personal-menu-thumbnail');
 			thumbnail.style.backgroundImage = 'url("' + url + '")';
 			thumbnail.style.display = 'block';
+		},
+		_handleOpen: function() {
+			var opener = this.$$('#d2l-navigation-personal-menu-opener');
+			Polymer.dom(opener).setAttribute('active', 'active');
+		},
+		_handleClose: function() {
+			var opener = this.$$('#d2l-navigation-personal-menu-opener');
+			Polymer.dom(opener).removeAttribute('active');
 		}
 	});
 </script>
