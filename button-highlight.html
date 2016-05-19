@@ -10,12 +10,18 @@
 		:host(:hover), :host(:focus) {
 			@apply(--d2l-navigation-button-highlight-hover);
 		}
+		:host([active]) {
+			@apply(--d2l-navigation-button-highlight-active);
+		}
 		.d2l-navigation-button-highlight-wrapper-bar {
 			@apply(--d2l-navigation-button-highlight-bar);
 		}
 		:host(:hover) .d2l-navigation-button-highlight-wrapper-bar,
 		:host(:focus) .d2l-navigation-button-highlight-wrapper-bar {
 			@apply(--d2l-navigation-button-highlight-bar-hover);
+		}
+		:host([active]) .d2l-navigation-button-highlight-wrapper-bar {
+			@apply(--d2l-navigation-button-highlight-bar-active);
 		}
 	</style>
 	<template>
@@ -26,6 +32,13 @@
 <script>
 	Polymer({
 		is: 'd2l-navigation-button-highlight',
-		extends: 'button'
+		extends: 'button',
+		properties: {
+			active: {
+				type: Boolean,
+				reflectToAttribute: true,
+				value: false
+			}
+		}
 	});
 </script>
