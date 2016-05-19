@@ -81,7 +81,7 @@
 			displayName: {
 				type: String,
 				//to do: value is temporary until API is available in LMS
-				value: 'D2l Support'
+				value: 'D2L Support'
 			},
 			//to do: entire property is temporary until API is available in LMS
 			thumbnailUrl: {
@@ -99,7 +99,9 @@
 		},
 		_load: function() {
 			this._setThumbnail(this.thumbnailUrl); // to do: temporary until API is available
-
+			if (!this.userHref) {
+				return;
+			}
 			document.createElement('iron-request')
 				.send({url: this.userHref, handleAs: 'json'})
 				.then(function(res) {
