@@ -1,7 +1,7 @@
 <link rel="import" href="../../polymer/polymer.html">
 <link rel="import" href="../../iron-icon/iron-icon.html">
 <link rel="import" href="../../vui-colors/colors.html">
-<link rel="import" href="../button-highlight.html">
+<link rel="import" href="../button-highlight-icon.html">
 <link rel="import" href="../divider.html">
 <link rel="import" href="../icons.html">
 <link rel="import" href="../shared-styles.html">
@@ -14,16 +14,17 @@
 			display: -ms-flexbox;
 			display: -webkit-flex;
 			display: flex;
+			height: 100%;
+			margin: -7px;
 			overflow: hidden;
+			padding: 0 7px;
 		}
 		.d2l-navigation-header-course-home,
-		.d2l-navigation-header-course-menu {
+		.d2l-navigation-header-course-menu,
+		.d2l-navigation-header-course-div2 {
 			-ms-flex: 0 0 auto;
 			-webkit-flex: 0 0 auto;
 			flex: 0 0 auto;
-		}
-		.d2l-navigation-header-course-menu {
-			color: var(--vui-color-tungsten);
 		}
 		.d2l-navigation-link {
 			display: block;
@@ -36,10 +37,6 @@
 			text-overflow: ellipsis;
 			white-space: nowrap;
 		}
-		.d2l-navigation-header-course-menu {
-			height: 18px;
-			width: 18px;
-		}
 		.d2l-navigation-header-course-div2,
 		.d2l-navigation-header-course-menu {
 			display: none;
@@ -51,7 +48,7 @@
 	</style>
 	<template>
 		<button
-			is="d2l-navigation-button-highlight"
+			is="d2l-navigation-button-highlight-icon"
 			icon="navigation-t3:home"
 			on-tap="handleMyHome"
 			class="d2l-navigation-header-course-home"></button>
@@ -60,9 +57,10 @@
 			[[orgUnitName]]
 		</a>
 		<d2l-navigation-divider small class="d2l-navigation-header-course-div2"></d2l-navigation-divider>
-		<iron-icon
+		<button
+			is="d2l-navigation-button-highlight-icon"
 			icon="navigation-t1:arrow-down"
-			class="d2l-navigation-header-course-menu"></iron-icon>
+			class="d2l-navigation-header-course-menu"></button>
 	</template>
 </dom-module>
 <script>
