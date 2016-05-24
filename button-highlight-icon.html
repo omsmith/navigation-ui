@@ -18,7 +18,15 @@
 			height: 1px;
 			overflow: hidden;
 		}
-		.d2l-navigation-button-highlight-icon {
+		:host([icon*='navigation-t1']) .d2l-navigation-button-highlight-icn {
+			height: 18px;
+			width: 18px;
+		}
+		:host([icon*='navigation-t2']) .d2l-navigation-button-highlight-icn {
+			height: 24px;
+			width: 24px;
+		}
+		:host([icon*='navigation-t3']) .d2l-navigation-button-highlight-icn {
 			height: 30px;
 			width: 30px;
 		}
@@ -32,7 +40,7 @@
 	</style>
 	<template>
 		<span class="d2l-navigation-button-highlight-bar"></span>
-		<iron-icon icon="[[icon]]" class="d2l-navigation-button-highlight-icon"></iron-icon>
+		<iron-icon icon="[[icon]]" class="d2l-navigation-button-highlight-icn"></iron-icon>
 		<span class="d2l-navigation-button-highlight-text"><content></content></span>
 	</template>
 </dom-module>
