@@ -48,7 +48,9 @@ var NavigationGraftBehavior = {
 			function() {
 				return connectPartial(placeholderId, 'GET', location);
 			}
-		);
+		).AddListener(function() {
+			this.$$('d2l-dropdown')._position();
+		}.bind(this));
 
 	}
 };
