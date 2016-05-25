@@ -121,12 +121,6 @@
 				}
 			}.bind(this));
 
-			res.actions.forEach(function(a) {
-				if (a.name === 'logout') {
-					this.push('items', a);
-				}
-			}.bind(this));
-
 			this.updateLoading();
 		},
 		handleThemeResponse: function(res) {
