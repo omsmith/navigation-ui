@@ -20,8 +20,10 @@
 			autostart
 			color="[[themeColor]]"></d2l-page-load-progress>
 		<d2l-navigation-resolved
+			admin-menu-location="[[adminMenuLocation]]"
 			band-color="[[themeColor]]"
 			course-menu-location="[[courseMenuLocation]]"
+			has-admin-menu="[[hasAdminMenu]]"
 			items="[[items]]"
 			logo="[[logo]]"
 			my-home="[[myHome]]"
@@ -35,6 +37,7 @@
 	Polymer({
 		is: 'd2l-navigation',
 		properties: {
+			adminMenuLocation: String,
 			courseMenuLocation: String,
 			delay: {
 				type: Number,
@@ -42,6 +45,7 @@
 			},
 			href: String,
 			userHref: String,
+			hasAdminMenu: Boolean,
 			isOrg: {
 				reflectToAttribute: true,
 				type: Boolean,
@@ -117,7 +121,7 @@
 
 			res.entities.forEach(function(e) {
 				if (e.class.indexOf('admin') > -1) {
-					// TODO: deal with admin categories/links
+					this.hasAdminMenu = true;
 				} else if (e.class.indexOf('item') > -1 && e.class.indexOf('group') < 0) {
 					this.push('items', e);
 				}

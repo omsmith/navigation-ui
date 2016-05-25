@@ -34,7 +34,7 @@
 		<d2l-navigation-personal-menu
 			user-href="[[userHref]]"
 			graft-location="[[personalMenuLocation]]"></d2l-navigation-personal-menu>
-		<d2l-navigation-admin-menu></d2l-navigation-admin-menu>
+		<d2l-navigation-admin-menu graft-location="[[adminMenuLocation]]"></d2l-navigation-admin-menu>
 		<d2l-navigation-help></d2l-navigation-help>
 	</template>
 </dom-module>
@@ -42,6 +42,7 @@
 	Polymer({
 		is: 'd2l-navigation-header-actions',
 		properties: {
+			adminMenuLocation: String,
 			userHref: String,
 			personalMenuLocation: String
 		}
