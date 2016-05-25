@@ -26,6 +26,7 @@
 	<template>
 		<nav>
 			<d2l-navigation-header
+				course-menu-location="[[courseMenuLocation]]"
 				logo="[[logo]]"
 				my-home="[[myHome]]"
 				org-unit-home="[[orgUnitHome]]"
@@ -54,6 +55,7 @@
 		is: 'd2l-navigation-resolved',
 		properties: {
 			bandColor: String,
+			courseMenuLocation: String,
 			items: Array,
 			logo: String,
 			myHome: String,

@@ -21,6 +21,7 @@
 			color="[[themeColor]]"></d2l-page-load-progress>
 		<d2l-navigation-resolved
 			band-color="[[themeColor]]"
+			course-menu-location="[[courseMenuLocation]]"
 			items="[[items]]"
 			logo="[[logo]]"
 			my-home="[[myHome]]"
@@ -34,6 +35,7 @@
 	Polymer({
 		is: 'd2l-navigation',
 		properties: {
+			courseMenuLocation: String,
 			delay: {
 				type: Number,
 				value: 200

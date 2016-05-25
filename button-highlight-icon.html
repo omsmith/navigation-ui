@@ -10,6 +10,9 @@
 		:host(:hover), :host(:focus) {
 			@apply(--d2l-navigation-button-highlight-hover);
 		}
+		:host([active]) {
+			@apply(--d2l-navigation-button-highlight-active);
+		}
 		.d2l-navigation-button-highlight-text {
 			position: absolute;
 			left: -10000px;
@@ -37,6 +40,9 @@
 		:host(:focus) .d2l-navigation-button-highlight-bar {
 			@apply(--d2l-navigation-button-highlight-bar-hover);
 		}
+		:host([active]) .d2l-navigation-button-highlight-bar {
+			@apply(--d2l-navigation-button-highlight-bar-active);
+		}
 	</style>
 	<template>
 		<span class="d2l-navigation-button-highlight-bar"></span>
@@ -49,6 +55,11 @@
 		is: 'd2l-navigation-button-highlight-icon',
 		extends: 'button',
 		properties: {
+			active: {
+				type: Boolean,
+				reflectToAttribute: true,
+				value: false
+			},
 			icon: String
 		}
 	});
