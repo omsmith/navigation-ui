@@ -1,0 +1,30 @@
+<link rel="import" href="../../polymer/polymer.html">
+<script>
+(function() {
+'use strict';
+
+window.D2L = window.D2L || {};
+window.D2L.LP = window.D2L.LP || {
+	Web: {
+		UI: {
+			Html: {
+				PartialRendering: {
+					PartialRender: function(placeholderId) {
+						var placeholder = document.getElementById(placeholderId.GetValue());
+						var p = document.createElement('p');
+						p.style.margin = '20px';
+						p.appendChild(document.createTextNode('Contents of grafted menu go in here.'));
+						placeholder.parentNode.insertBefore(p, placeholder);
+						placeholder.parentNode.removeChild(placeholder);
+					}
+				}
+			},
+			Rpc: {
+				ConnectPartial: function() {}
+			}
+		}
+	}
+};
+
+})();
+</script>
