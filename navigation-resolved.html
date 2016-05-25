@@ -26,6 +26,7 @@
 	<template>
 		<nav>
 			<d2l-navigation-header
+				admin-menu-location="[[adminMenuLocation]]"
 				course-menu-location="[[courseMenuLocation]]"
 				logo="[[logo]]"
 				my-home="[[myHome]]"
@@ -54,8 +55,14 @@
 	Polymer({
 		is: 'd2l-navigation-resolved',
 		properties: {
+			adminMenuLocation: String,
 			bandColor: String,
 			courseMenuLocation: String,
+			hasAdminMenu: {
+				reflectToAttribute: true,
+				type: Boolean,
+				value: false
+			},
 			items: Array,
 			logo: String,
 			myHome: String,

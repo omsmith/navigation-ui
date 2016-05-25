@@ -1,5 +1,7 @@
 <link rel="import" href="../../polymer/polymer.html">
+<link rel="import" href="../../d2l-dropdown/dropdown.html">
 <link rel="import" href="../button-highlight-icon.html">
+<link rel="import" href="../graft-behavior.html">
 <link rel="import" href="../icons.html">
 <dom-module id="d2l-navigation-admin-menu">
 	<style>
@@ -7,7 +9,7 @@
 		display: none;
 		height: 100%;
 	}
-	:host-context([show-incomplete]) {
+	:host-context([has-admin-menu]) {
 		display: inline-block;
 	}
 	div {
@@ -19,11 +21,32 @@
 		<div></div>
 		<button
 			is="d2l-navigation-button-highlight-icon"
-			icon="navigation-t3:gear">Admin</button>
+			icon="navigation-t3:gear"
+			id="d2l-navigation-admin-menu-opener"
+			on-tap="open">Admin</button>
+		<d2l-dropdown
+			target-id="d2l-navigation-admin-menu-opener"
+			on-open="_handleOpen"
+			on-close="_handleClose">
+			<div id="d2l-navigation-admin-menu-placeholder"></div>
+		</d2l-dropdown>
 	</template>
 </dom-module>
 <script>
 	Polymer({
-		is: 'd2l-navigation-admin-menu'
+		is: 'd2l-navigation-admin-menu',
+		behaviors: [window.D2L.PolymerBehaviors.NavigationGraftBehavior],
+		open: function() {
+			this.$$('d2l-dropdown').setAttribute('opened', 'opened');
+			this.graft('d2l-navigation-admin-menu-placeholder');
+		},
+		_handleOpen: function() {
+			var opener = this.$$('#d2l-navigation-admin-menu-opener');
+			Polymer.dom(opener).setAttribute('active', 'active');
+		},
+		_handleClose: function() {
+			var opener = this.$$('#d2l-navigation-admin-menu-opener');
+			Polymer.dom(opener).removeAttribute('active');
+		}
 	});
 </script>
