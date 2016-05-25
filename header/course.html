@@ -1,8 +1,10 @@
 <link rel="import" href="../../polymer/polymer.html">
 <link rel="import" href="../../iron-icon/iron-icon.html">
+<link rel="import" href="../../d2l-dropdown/dropdown.html">
 <link rel="import" href="../../vui-colors/colors.html">
 <link rel="import" href="../button-highlight-icon.html">
 <link rel="import" href="../divider.html">
+<link rel="import" href="../graft-behavior.html">
 <link rel="import" href="../icons.html">
 <link rel="import" href="../shared-styles.html">
 <dom-module id="d2l-navigation-header-course">
@@ -20,7 +22,7 @@
 			padding: 0 7px;
 		}
 		.d2l-navigation-header-course-home,
-		.d2l-navigation-header-course-menu,
+		#d2l-navigation-header-course-menu-opener,
 		.d2l-navigation-header-course-div2 {
 			-ms-flex: 0 0 auto;
 			-webkit-flex: 0 0 auto;
@@ -37,20 +39,12 @@
 			text-overflow: ellipsis;
 			white-space: nowrap;
 		}
-		.d2l-navigation-header-course-div2,
-		.d2l-navigation-header-course-menu {
-			display: none;
-		}
-		:host-context([show-incomplete]) .d2l-navigation-header-course-div2,
-		:host-context([show-incomplete]) .d2l-navigation-header-course-menu {
-			display: block;
-		}
 	</style>
 	<template>
 		<button
 			is="d2l-navigation-button-highlight-icon"
 			icon="navigation-t3:home"
-			on-tap="handleMyHome"
+			on-tap="_handleMyHome"
 			class="d2l-navigation-header-course-home"></button>
 		<d2l-navigation-divider></d2l-navigation-divider>
 		<a href$="[[orgUnitHome]]" class="d2l-navigation-link">
@@ -60,7 +54,14 @@
 		<button
 			is="d2l-navigation-button-highlight-icon"
 			icon="navigation-t1:arrow-down"
-			class="d2l-navigation-header-course-menu"></button>
+			id="d2l-navigation-course-menu-opener"
+			on-tap="open"></button>
+		<d2l-dropdown
+			target-id="d2l-navigation-course-menu-opener"
+			on-open="_handleOpen"
+			on-close="_handleClose">
+			<div id="d2l-navigation-course-menu-placeholder"></div>
+		</d2l-dropdown>
 	</template>
 </dom-module>
 <script>
@@ -71,8 +72,21 @@
 			orgUnitHome: String,
 			orgUnitName: String
 		},
-		handleMyHome: function() {
+		behaviors: [window.D2L.PolymerBehaviors.NavigationGraftBehavior],
+		open: function() {
+			this.$$('d2l-dropdown').setAttribute('opened', 'opened');
+			this.graft('d2l-navigation-course-menu-placeholder');
+		},
+		_handleMyHome: function() {
 			document.location.href = this.myHome;
+		},
+		_handleOpen: function() {
+			var opener = this.$$('#d2l-navigation-course-menu-opener');
+			Polymer.dom(opener).setAttribute('active', 'active');
+		},
+		_handleClose: function() {
+			var opener = this.$$('#d2l-navigation-course-menu-opener');
+			Polymer.dom(opener).removeAttribute('active');
 		}
 	});
 </script>
