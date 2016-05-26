@@ -95,6 +95,27 @@
 					]
 				}
 			]
+		},
+		{
+			"class": ["item", "group", "admin"],
+			"properties": {
+				"text": "Admin Category 1"
+			},
+			"entities": [
+				{
+					"class": ["item", "link", "admin"],
+					"rel": ["http://navigation.api.brightspace.com/rels/admin-link"],
+					"properties": {
+						"text": "Admin Tool 1"
+					},
+					"links": [
+						{
+							"rel": ["self"],
+							"href": "/d2l/admin/tool/1"
+						}
+					]
+				}
+			]
 		}
 	],
 	"links": [
