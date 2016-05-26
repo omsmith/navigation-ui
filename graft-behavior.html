@@ -49,7 +49,7 @@ var NavigationGraftBehavior = {
 				return connectPartial(placeholderId, 'GET', location);
 			}
 		).AddListener(function() {
-			this.$$('d2l-dropdown')._position();
+			this.fire('partial-render');
 		}.bind(this));
 
 	}

@@ -3,31 +3,23 @@
 <link rel="import" href="../button-highlight-icon.html">
 <link rel="import" href="../graft-dropdown-behavior.html">
 <link rel="import" href="../icons.html">
-<dom-module id="d2l-navigation-admin-menu">
+<dom-module id="d2l-navigation-header-course-menu">
 	<style>
-	:host {
-		display: none;
-		height: 100%;
-	}
-	:host-context([has-admin-menu]) {
-		display: inline-block;
-	}
-	div {
-		display: inline-block;
-		min-width: 20px;
-	}
+		:host {
+			display: inline-block;
+			height: 100%;
+		}
 	</style>
 	<template>
-		<div></div>
 		<button
 			is="d2l-navigation-button-highlight-icon"
-			icon="navigation-t3:gear">Admin</button>
+			icon="navigation-t1:arrow-down"></button>
 		<d2l-dropdown></d2l-dropdown>
 	</template>
 </dom-module>
 <script>
 	Polymer({
-		is: 'd2l-navigation-admin-menu',
+		is: 'd2l-navigation-header-course-menu',
 		behaviors: [window.D2L.PolymerBehaviors.NavigationGraftDropdownBehavior]
 	});
 </script>

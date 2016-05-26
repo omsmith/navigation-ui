@@ -1,0 +1,75 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="graft-behavior.html">
+<link rel="import" href="unique-id-behavior.html">
+<script>
+(function() {
+'use strict';
+
+/** @polymerBehavior D2L.PolymerBehaviors.NavigationGraftDropdownBehavior */
+var NavigationGraftDropdownBehavior = {
+	_dropdow: null,
+	_opener: null,
+	_placeholderId: null,
+	listeners: {
+		'partial-render': '_handlePartialRender'
+	},
+	ready: function() {
+		this._placeholderId = this.getUniqueId();
+	},
+	attached: function() {
+		this._opener = this.$$('[is="d2l-navigation-button-highlight-icon"]') ||
+			this.$$('[is="d2l-navigation-button-highlight"]');
+		if (this._opener) {
+			this.listen(this._opener, 'tap', '_onTap')
+		}
+		this._dropdown = this.$$('d2l-dropdown');
+		if (this._dropdown) {
+			var placeholder = document.createElement('div');
+			placeholder.id = this._placeholderId;
+			Polymer.dom(this._dropdown).appendChild(placeholder);
+			this.listen(this._dropdown, 'open', '_onOpen');
+			this.listen(this._dropdown, 'close', '_onClose');
+		}
+	},
+	detached: function() {
+		if (this._opener) {
+			this.unlisten(this._opener, 'tap', '_onTap')
+		}
+		if (this._dropdown) {
+			this.unlisten(this._dropdown, 'open', '_onOpen');
+			this.unlisten(this._dropdown, 'close', '_onClose');
+		}
+	},
+	_handlePartialRender: function() {
+		if (this._dropdown) {
+			this._dropdown._position();
+		}
+	},
+	_onClose: function() {
+		if (this._opener) {
+			Polymer.dom(this._opener).removeAttribute('active');
+		}
+	},
+	_onOpen: function() {
+		if (this._opener) {
+			Polymer.dom(this._opener).setAttribute('active', 'active');
+		}
+	},
+	_onTap: function() {
+		if (this._dropdown) {
+			this._dropdown.open(this._opener);
+		}
+		this.graft(this._placeholderId);
+	}
+};
+
+window.D2L = window.D2L || {};
+window.D2L.PolymerBehaviors = window.D2L.PolymerBehaviors || {};
+/** @polymerBehavior */
+window.D2L.PolymerBehaviors.NavigationGraftDropdownBehavior = [
+	window.D2L.PolymerBehaviors.NavigationUniqueIdBehavior,
+	window.D2L.PolymerBehaviors.NavigationGraftBehavior,
+	NavigationGraftDropdownBehavior
+];
+})();
+</script>
