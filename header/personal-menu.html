@@ -2,7 +2,7 @@
 <link rel="import" href="../../vui-colors/colors.html">
 <link rel="import" href="../../d2l-dropdown/dropdown.html">
 <link rel="import" href="../button-highlight.html">
-<link rel="import" href="../graft-behavior.html">
+<link rel="import" href="../graft-dropdown-behavior.html">
 <dom-module id="d2l-navigation-personal-menu">
 	<style>
 	:host {
@@ -54,19 +54,11 @@
 	}
 	</style>
 	<template>
-		<button
-			is="d2l-navigation-button-highlight"
-			on-tap="open"
-			id="d2l-navigation-personal-menu-opener">
+		<button is="d2l-navigation-button-highlight">
 			<span class="d2l-navigation-personal-menu-thumbnail"></span>
 			<p class="d2l-navigation-personal-menu-text">[[displayName]]</p>
 		</button>
-		<d2l-dropdown
-			target-id="d2l-navigation-personal-menu-opener"
-			on-open="_handleOpen"
-			on-close="_handleClose">
-			<div id="d2l-navigation-personal-menu-placeholder"></div>
-		</d2l-dropdown>
+		<d2l-dropdown></d2l-dropdown>
 	</template>
 </dom-module>
 <script>
@@ -76,11 +68,7 @@
 			userHref: String,
 			displayName: String
 		},
-		behaviors: [window.D2L.PolymerBehaviors.NavigationGraftBehavior],
-		open: function() {
-			this.$$('d2l-dropdown').setAttribute('opened', 'opened');
-			this.graft('d2l-navigation-personal-menu-placeholder');
-		},
+		behaviors: [window.D2L.PolymerBehaviors.NavigationGraftDropdownBehavior],
 		ready: function() {
 			if (!this.userHref) {
 				return;
@@ -116,14 +104,6 @@
 			var thumbnail = this.$$('.d2l-navigation-personal-menu-thumbnail');
 			thumbnail.style.backgroundImage = 'url("' + url + '")';
 			thumbnail.style.display = 'block';
-		},
-		_handleOpen: function() {
-			var opener = this.$$('#d2l-navigation-personal-menu-opener');
-			Polymer.dom(opener).setAttribute('active', 'active');
-		},
-		_handleClose: function() {
-			var opener = this.$$('#d2l-navigation-personal-menu-opener');
-			Polymer.dom(opener).removeAttribute('active');
 		}
 	});
 </script>

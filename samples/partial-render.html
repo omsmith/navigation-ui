@@ -16,6 +16,11 @@ window.D2L.LP = window.D2L.LP || {
 						p.appendChild(document.createTextNode('Contents of grafted menu go in here.'));
 						placeholder.parentNode.insertBefore(p, placeholder);
 						placeholder.parentNode.removeChild(placeholder);
+						return {
+							AddListener: function(cb) {
+								cb();
+							}
+						}
 					}
 				}
 			},
