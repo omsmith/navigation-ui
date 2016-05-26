@@ -26,6 +26,7 @@ var NavigationGraftDropdownBehavior = {
 		if (this._dropdown) {
 			var placeholder = document.createElement('div');
 			placeholder.id = this._placeholderId;
+			placeholder.style.minHeight = '60px';
 			Polymer.dom(this._dropdown).appendChild(placeholder);
 			this.listen(this._dropdown, 'open', '_onOpen');
 			this.listen(this._dropdown, 'close', '_onClose');
