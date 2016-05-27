@@ -7,9 +7,10 @@
 
 /** @polymerBehavior D2L.PolymerBehaviors.NavigationGraftDropdownBehavior */
 var NavigationGraftDropdownBehavior = {
-	_dropdow: null,
+	_dropdown: null,
 	_opener: null,
 	_placeholderId: null,
+	_delayOpen: false,
 	listeners: {
 		'partial-render': '_handlePartialRender'
 	},
@@ -42,7 +43,13 @@ var NavigationGraftDropdownBehavior = {
 		}
 	},
 	_handlePartialRender: function() {
-		if (this._dropdown) {
+		if (!this._dropdown) {
+			return;
+		}
+		if (this._delayOpen) {
+			this._delayOpen = false;
+			this._dropdown.open(this._opener);
+		} else {
 			this._dropdown._position();
 		}
 	},
@@ -57,10 +64,25 @@ var NavigationGraftDropdownBehavior = {
 		}
 	},
 	_onTap: function() {
-		if (this._dropdown) {
-			this._dropdown.open(this._opener);
+
+		if (!this._dropdown) {
+			return;
 		}
+
+		if (this._partialled) {
+			this._dropdown.open(this._opener);
+			return;
+		}
+
+		this._delayOpen = true;
 		this.graft(this._placeholderId);
+		this.async(function() {
+			if (this._delayOpen) {
+				this._delayOpen = false;
+				this._dropdown.open(this._opener);
+			}
+		}.bind(this), 400);
+
 	}
 };
 
