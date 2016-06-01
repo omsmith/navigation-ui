@@ -86,7 +86,7 @@
 			res.entities.forEach(function(resEntity) {
 				if (resEntity.class.indexOf('profile') > -1) {
 					resEntity.entities.forEach(function(profileEntity) {
-						if (profileEntity.class.indexOf('thumbnail') > -1) {
+						if (profileEntity.class.indexOf('thumbnail') > -1 && profileEntity.class.indexOf('regular')) {
 							profileEntity.entities.forEach(function(imageEntity) {
 								if ((imageEntity.rel.indexOf('alternate') > -1)) {
 									this._setThumbnail(imageEntity.href);
