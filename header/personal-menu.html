@@ -9,7 +9,7 @@
 		display: inline-block;
 		height: 100%;
 	}
-	button {
+	.d2l-navigation-personal-menu-wrapper {
 		-webkit-align-items: center;
 		-ms-flex-align: center;
 		align-items: center;
@@ -55,8 +55,10 @@
 	</style>
 	<template>
 		<button is="d2l-navigation-button-highlight">
-			<span class="d2l-navigation-personal-menu-thumbnail"></span>
-			<p class="d2l-navigation-personal-menu-text">[[displayName]]</p>
+			<div class="d2l-navigation-personal-menu-wrapper">
+				<span class="d2l-navigation-personal-menu-thumbnail"></span>
+				<p class="d2l-navigation-personal-menu-text">[[displayName]]</p>
+			</div>
 		</button>
 		<d2l-dropdown></d2l-dropdown>
 	</template>
