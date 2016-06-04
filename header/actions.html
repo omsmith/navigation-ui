@@ -30,7 +30,7 @@
 		}
 	</style>
 	<template>
-		<d2l-navigation-notifications></d2l-navigation-notifications>
+		<d2l-navigation-notifications notifications="[[notifications]]"></d2l-navigation-notifications>
 		<d2l-navigation-personal-menu
 			user-href="[[userHref]]"
 			graft-location="[[personalMenuLocation]]"></d2l-navigation-personal-menu>
@@ -43,6 +43,7 @@
 		is: 'd2l-navigation-header-actions',
 		properties: {
 			adminMenuLocation: String,
+			notifications: Array,
 			userHref: String,
 			personalMenuLocation: String
 		}
