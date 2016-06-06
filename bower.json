@@ -15,7 +15,7 @@
     "/demo/"
   ],
   "dependencies": {
-    "d2l-dropdown": "^0.0.4",
+    "d2l-dropdown": "^0.0.5",
     "d2l-page-load-progress": "^0.0.3",
     "polymer": "Polymer/polymer#^1.0.0",
     "iron-ajax": "PolymerElements/iron-ajax#^1.2.0",
