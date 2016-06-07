@@ -1,0 +1,45 @@
+<link rel="import" href="../../polymer/polymer.html">
+<link rel="import" href="../../d2l-dropdown/dropdown.html">
+<link rel="import" href="../button-highlight-icon.html">
+<link rel="import" href="../graft-dropdown-behavior.html">
+<link rel="import" href="../icons.html">
+<dom-module id="d2l-navigation-notification">
+	<style>
+	:host {
+		display: inline-block;
+		height: 100%;
+	}
+	d2l-dropdown {
+		width: 350px;
+	}
+	</style>
+	<template>
+		<button
+			is="d2l-navigation-button-highlight-icon"
+			icon="{{icon}}">{{text}}</button>
+		<d2l-dropdown vertical-offset="-5" horizontal-offset="-24"></d2l-dropdown>
+	</template>
+</dom-module>
+<script>
+	Polymer({
+		is: 'd2l-navigation-notification',
+		behaviors: [window.D2L.PolymerBehaviors.NavigationGraftDropdownBehavior],
+		properties: {
+			category: Number,
+			icon: {
+				type: String,
+				computed: '_getIcon(category)'
+			},
+			text: String
+		},
+		_getIcon: function(category) {
+			if (category === 2) {
+				return 'navigation-t3:email';
+			} else if (category === 0) {
+				return 'navigation-t3:discussions';
+			} else {
+				return 'navigation-t3:alarmbell'
+			}
+		}
+	});
+</script>

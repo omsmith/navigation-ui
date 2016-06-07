@@ -1,7 +1,9 @@
 <link rel="import" href="../../polymer/polymer.html">
+<link rel="import" href="../../iron-icon/iron-icon.html">
 <link rel="import" href="../../vui-colors/colors.html">
 <link rel="import" href="../../d2l-dropdown/dropdown.html">
 <link rel="import" href="../button-highlight.html">
+<link rel="import" href="../icons.html">
 <link rel="import" href="../graft-dropdown-behavior.html">
 <dom-module id="d2l-navigation-personal-menu">
 	<style>
@@ -9,7 +11,7 @@
 		display: inline-block;
 		height: 100%;
 	}
-	button {
+	.d2l-navigation-personal-menu-wrapper {
 		-webkit-align-items: center;
 		-ms-flex-align: center;
 		align-items: center;
@@ -17,16 +19,18 @@
 		display: -webkit-flex;
 		display: flex;
 	}
-	.d2l-navigation-personal-menu-thumbnail {
-		background-repeat: no-repeat;
-		background-size: 42px 42px;
-		border-radius: 8px;
+	.d2l-navigation-personal-menu-thumbnail,
+	.d2l-navigation-personal-menu-thumbnail-default {
 		display: none;
 		-ms-flex: 0 0 auto;
 		-webkit-flex: 0 0 auto;
 		flex: 0 0 auto;
 		height: 42px;
 		width: 42px;
+	}
+	.d2l-navigation-personal-menu-thumbnail {
+		border-radius: 8px;
+		overflow: hidden;
 	}
 	.d2l-navigation-personal-menu-text {
 		-ms-flex: 0 1 auto;
@@ -55,10 +59,13 @@
 	</style>
 	<template>
 		<button is="d2l-navigation-button-highlight">
-			<span class="d2l-navigation-personal-menu-thumbnail"></span>
-			<p class="d2l-navigation-personal-menu-text">[[displayName]]</p>
+			<div class="d2l-navigation-personal-menu-wrapper">
+				<iron-icon icon="navigation-42:profile" class="d2l-navigation-personal-menu-thumbnail-default"></iron-icon>
+				<iron-icon class="d2l-navigation-personal-menu-thumbnail"></iron-icon>
+				<p class="d2l-navigation-personal-menu-text">[[displayName]]</p>
+			</div>
 		</button>
-		<d2l-dropdown></d2l-dropdown>
+		<d2l-dropdown vertical-offset="-5"></d2l-dropdown>
 	</template>
 </dom-module>
 <script>
@@ -83,27 +90,37 @@
 				}.bind(this));
 		},
 		_handleUserResponse: function(res) {
+			var hasProfile = false;
+			var thumbnailHref = undefined;
 			res.entities.forEach(function(resEntity) {
 				if (resEntity.class.indexOf('profile') > -1) {
 					resEntity.entities.forEach(function(profileEntity) {
 						if (profileEntity.class.indexOf('thumbnail') > -1 && profileEntity.class.indexOf('regular')) {
 							profileEntity.entities.forEach(function(imageEntity) {
 								if ((imageEntity.rel.indexOf('alternate') > -1)) {
-									this._setThumbnail(imageEntity.href);
+									thumbnailHref = imageEntity.href;
 								}
 							}.bind(this));
+						} else if(profileEntity.class.indexOf('file') > -1 && profileEntity.class.indexOf('thumbnail') === -1) {
+							hasProfile = true;
 						}
 					}.bind(this));
 				} else if (resEntity.class.indexOf('display') > -1) {
 					this.displayName = resEntity.properties.name;
 				}
 			}.bind(this));
-			this.updateLoading();
+			this._setThumbnail(hasProfile, thumbnailHref);
 		},
-		_setThumbnail: function(url) {
+		_setThumbnail: function(hasProfile, url) {
 			var thumbnail = this.$$('.d2l-navigation-personal-menu-thumbnail');
-			thumbnail.style.backgroundImage = 'url("' + url + '")';
-			thumbnail.style.display = 'block';
+			var thumbnailDefault = this.$$('.d2l-navigation-personal-menu-thumbnail-default');
+			if (hasProfile && url) {
+				Polymer.dom(thumbnail).removeAttribute('icon');
+				Polymer.dom(thumbnail).setAttribute('src', url);
+				thumbnail.style.display = 'block';
+			} else {
+				thumbnailDefault.style.display = 'block';
+			}
 		}
 	});
 </script>

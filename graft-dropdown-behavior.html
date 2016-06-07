@@ -21,7 +21,7 @@ var NavigationGraftDropdownBehavior = {
 		this._opener = this.$$('[is="d2l-navigation-button-highlight-icon"]') ||
 			this.$$('[is="d2l-navigation-button-highlight"]');
 		if (this._opener) {
-			this.listen(this._opener, 'tap', '_onTap')
+			this.listen(this._opener, 'tap', '_onTap');
 		}
 		this._dropdown = this.$$('d2l-dropdown');
 		if (this._dropdown) {
