@@ -5,6 +5,7 @@
 <dom-module id="d2l-navigation-item-group">
 	<style>
 		:host {
+			display: inline-block;
 			padding: 20px 20px 20px 0;
 		}
 		:host-context([dir='rtl']) {
@@ -16,6 +17,10 @@
 			background: none;
 			border: 0;
 			color: inherit;
+			display: -webkit-inline-box;
+			display: -moz-inline-box;
+			display: -ms-inline-flexbox;
+			display: -webkit-inline-flex;
 			display: inline-flex;
 			font-family: inherit;
 			font-size: inherit;
@@ -43,8 +48,8 @@
 		}
 	</style>
 	<template>
-		<button	class="d2l-navigation-item-group-opener"	on-tap="_handleOpenerTap">
-			<span class="d2l-navigation-item-group-text vui-typography">{{groupText}}</span>
+		<button class="d2l-navigation-item-group-opener" on-tap="_handleOpenerTap">
+			<span class="d2l-navigation-item-group-text">{{groupText}}</span>
 			<iron-icon icon="vui-tier1:chevron-down" class="d2l-navigation-item-group-arrow"></iron-icon>
 		</button>
 		<d2l-dropdown-menu class="d2l-navigation-item-group-menu">
