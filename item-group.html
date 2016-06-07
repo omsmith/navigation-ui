@@ -97,7 +97,7 @@
 			var menu = this.$$('.d2l-navigation-item-group-menu');
 			menu.open(opener);
 		},
-		_handleLinkSelect(e) {
+		_handleLinkSelect: function(e) {
 			var newUrl = e.target.getAttribute('data-href');
 			if(newUrl) {
 				window.location.href = newUrl;
