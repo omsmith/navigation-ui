@@ -15,13 +15,14 @@
     "/demo/"
   ],
   "dependencies": {
-    "d2l-dropdown": "^0.0.4",
+    "d2l-dropdown": "^0.0.6",
     "d2l-page-load-progress": "^0.0.3",
     "polymer": "Polymer/polymer#^1.0.0",
     "iron-ajax": "PolymerElements/iron-ajax#^1.2.0",
     "iron-icon": "PolymerElements/iron-icon#^1.0.0",
     "iron-iconset-svg": "PolymerElements/iron-iconset-svg#^1.0.0",
-    "vui-colors": "^1.0.1"
+    "vui-colors": "^1.0.1",
+    "d2l-icons-ui": "d2l-icons#^2.0.0"
   },
   "devDependencies": {
     "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",

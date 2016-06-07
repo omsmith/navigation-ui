@@ -1,8 +1,8 @@
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../vui-colors/colors.html">
-<link rel="import" href="item-behavior.html">
+<link rel="import" href="item-link-behavior.html">
 <link rel="import" href="shared-styles.html">
-<dom-module id="d2l-navigation-item">
+<dom-module id="d2l-navigation-item-link">
 	<style include="vui-colors d2l-navigation-shared-styles">
 		:host {
 			display: inline-block;
@@ -22,8 +22,8 @@
 </dom-module>
 <script>
 	Polymer({
-		is: 'd2l-navigation-item',
-		behaviors: [window.D2L.PolymerBehaviors.NavigationItemBehavior],
+		is: 'd2l-navigation-item-link',
+		behaviors: [window.D2L.PolymerBehaviors.NavigationItemLinkBehavior],
 		properties: {
 			href: {
 				type: String,

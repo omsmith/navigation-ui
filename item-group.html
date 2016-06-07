@@ -1,0 +1,107 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../d2l-dropdown/dropdown-menu.html">
+<link rel="import" href="../d2l-dropdown/menu-item.html">
+<link rel="import" href="../d2l-icons-ui/tier1-icons.html">
+<dom-module id="d2l-navigation-item-group">
+	<style>
+		:host {
+			padding: 20px 20px 20px 0;
+		}
+		:host-context([dir='rtl']) {
+			padding-left: 20px;
+			padding-right: 0;
+		}
+		.d2l-navigation-item-group-opener {
+			align-items: center;
+			background: none;
+			border: 0;
+			color: inherit;
+			display: inline-flex;
+			font-family: inherit;
+			font-size: inherit;
+			font-weight: inherit;
+			margin: 0;
+			padding: 0;
+		}
+		.d2l-navigation-item-group-opener:hover,
+		.d2l-navigation-item-group-opener:focus {
+			color: var(--vui-color-celestine);
+			cursor: pointer;
+		}
+		.d2l-navigation-item-group-opener:hover .d2l-navigation-item-group-text,
+		.d2l-navigation-item-group-opener:focus .d2l-navigation-item-group-text {
+			text-decoration: underline;
+		}
+		.d2l-navigation-item-group-text {
+			margin-right: 0.3rem;
+		}
+		.d2l-navigation-item-group-arrow {
+			width: 20px;
+		}
+		.d2l-navigation-item-group-menu {
+			width: 10rem;
+		}
+	</style>
+	<template>
+		<button	class="d2l-navigation-item-group-opener"	on-tap="_handleOpenerTap">
+			<span class="d2l-navigation-item-group-text vui-typography">{{groupText}}</span>
+			<iron-icon icon="vui-tier1:chevron-down" class="d2l-navigation-item-group-arrow"></iron-icon>
+		</button>
+		<d2l-dropdown-menu class="d2l-navigation-item-group-menu">
+			<template is="dom-repeat" items="{{links}}">
+			    <d2l-menu-item text="{{item.text}}" data-href="{{item.href}}"></d2l-menu-item>
+			</template>
+		</d2l-dropdown-menu>
+	</template>
+</dom-module>
+<script>
+	Polymer({
+		is: 'd2l-navigation-item-group',
+		properties: {
+			item: Object,
+			groupText: {
+				type: String,
+				computed: '_computeGroupText(item)'
+			},
+			links: {
+				type: String,
+				computed: '_computeLinks(item)'
+			}
+		},
+		listeners: {
+			select: '_handleLinkSelect'
+		},
+		_computeGroupText: function(item) {
+			if(item.properties.text) {
+				return item.properties.text;
+			}
+			return '';
+		},
+		_computeLinks: function(item) {
+			var links = [];
+
+			if(item.entities.length > 0) {
+				item.entities.forEach(function(entity) {
+					if(entity.class.indexOf('link') > -1) {
+						links.push({
+							href: entity.links[0].href,
+							text: entity.properties.text
+						});
+					}
+				});
+			}
+			return links;
+		},
+		_handleOpenerTap: function() {
+			var opener = this.$$('.d2l-navigation-item-group-opener');
+			var menu = this.$$('.d2l-navigation-item-group-menu');
+			menu.open(opener);
+		},
+		_handleLinkSelect(e) {
+			var newUrl = e.target.getAttribute('data-href');
+			if(newUrl) {
+				window.location.href = newUrl;
+			}
+		}
+	});
+</script>

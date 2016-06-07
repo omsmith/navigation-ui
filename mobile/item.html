@@ -1,6 +1,6 @@
 <link rel="import" href="../../polymer/polymer.html">
 <link rel="import" href="../../vui-colors/colors.html">
-<link rel="import" href="../item-behavior.html">
+<link rel="import" href="../item-link-behavior.html">
 <link rel="import" href="../shared-styles.html">
 <dom-module id="d2l-navigation-item-mobile">
 	<style include="vui-colors d2l-navigation-shared-styles">
@@ -50,7 +50,7 @@
 <script>
 	Polymer({
 		is: 'd2l-navigation-item-mobile',
-		behaviors: [window.D2L.PolymerBehaviors.NavigationItemBehavior],
+		behaviors: [window.D2L.PolymerBehaviors.NavigationItemLinkBehavior],
 		properties: {
 			href: {
 				type: String,
