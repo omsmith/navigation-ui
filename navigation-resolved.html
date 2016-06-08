@@ -80,7 +80,8 @@
 			personalMenuLocation: String
 		},
 		listeners: {
-			'd2l-navigation-open-menu': 'openMenu'
+			'd2l-navigation-open-menu': 'openMenu',
+			'_focus': '_handleFocus'
 		},
 		openMenu: function(e) {
 			this.$$('d2l-navigation-mobile-menu').open(e.detail.opener);
@@ -90,6 +91,9 @@
 		},
 		_isItemLink: function(item) {
 			return !this._isItemGroup(item);
+		},
+		_handleFocus: function() {
+			this.$$('.d2l-navigation-row2').scrollTop = 0;
 		}
 	});
 </script>
