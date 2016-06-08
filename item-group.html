@@ -54,7 +54,7 @@
 		</button>
 		<d2l-dropdown-menu class="d2l-navigation-item-group-menu">
 			<template is="dom-repeat" items="{{links}}">
-			    <d2l-menu-item text="{{item.text}}" data-href="{{item.href}}"></d2l-menu-item>
+					<d2l-menu-item text="{{getItemLinkText(item)}}" data-index$="{{index}}"></d2l-menu-item>
 			</template>
 		</d2l-dropdown-menu>
 	</template>
@@ -62,6 +62,7 @@
 <script>
 	Polymer({
 		is: 'd2l-navigation-item-group',
+		behaviors: [window.D2L.PolymerBehaviors.NavigationItemLinkBehavior],
 		properties: {
 			item: Object,
 			groupText: {
@@ -88,10 +89,7 @@
 			if(item.entities.length > 0) {
 				item.entities.forEach(function(entity) {
 					if(entity.class.indexOf('link') > -1) {
-						links.push({
-							href: entity.links[0].href,
-							text: entity.properties.text
-						});
+						links.push(entity);
 					}
 				});
 			}
@@ -103,10 +101,8 @@
 			menu.open(opener);
 		},
 		_handleLinkSelect: function(e) {
-			var newUrl = e.target.getAttribute('data-href');
-			if(newUrl) {
-				window.location.href = newUrl;
-			}
+			var index = Polymer.dom(e).rootTarget.getAttribute('data-index');
+			this.onItemLinkClick(this.links[index], true);
 		}
 	});
 </script>
