@@ -124,7 +124,7 @@
 			res.entities.forEach(function(e) {
 				if (e.class.indexOf('admin') > -1) {
 					this.hasAdminMenu = true;
-				} else if (e.class.indexOf('item') > -1 && e.class.indexOf('group') < 0) {
+				} else if (e.class.indexOf('item') > -1) {
 					this.push('items', e);
 				}
 			}.bind(this));

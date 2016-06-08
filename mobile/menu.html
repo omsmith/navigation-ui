@@ -5,7 +5,7 @@
 <link rel="import" href="../slide-out-menu.html">
 <link rel="import" href="course.html">
 <link rel="import" href="header.html">
-<link rel="import" href="item.html">
+<link rel="import" href="item-link.html">
 <dom-module id="d2l-navigation-mobile-menu">
 	<style include="d2l-navigation-shared-styles">
 		:host {
@@ -33,7 +33,7 @@
 				org-unit-home="[[orgUnitHome]]"
 				org-unit-name="[[orgUnitName]]"></d2l-navigation-mobile-course>
 			<template is="dom-repeat" items="{{items}}">
-				<d2l-navigation-item-mobile item="{{item}}"></d2l-navigation-item-mobile>
+				<d2l-navigation-item-link-mobile item="{{item}}"></d2l-navigation-item-link-mobile>
 			</template>
 		</d2l-navigation-slide-out-menu>
 	</template>

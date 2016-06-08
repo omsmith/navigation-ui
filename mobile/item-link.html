@@ -1,8 +1,8 @@
 <link rel="import" href="../../polymer/polymer.html">
 <link rel="import" href="../../vui-colors/colors.html">
-<link rel="import" href="../item-behavior.html">
+<link rel="import" href="../item-link-behavior.html">
 <link rel="import" href="../shared-styles.html">
-<dom-module id="d2l-navigation-item-mobile">
+<dom-module id="d2l-navigation-item-link-mobile">
 	<style include="vui-colors d2l-navigation-shared-styles">
 		:host {
 			border-bottom: 1px solid var(--vui-color-gypsum);
@@ -39,7 +39,7 @@
 		}
 	</style>
 	<template>
-		<a class="d2l-navigation-gutters d2l-navigation-link" href$="{{href}}" on-tap="onClick" tabindex="0">
+		<a class="d2l-navigation-gutters d2l-navigation-link" href$="{{href}}" on-tap="_handleTap" tabindex="0">
 			<div class="d2l-navigation-item-link-text">{{text}}</div>
 			<iron-icon
 				icon="navigation-t1:arrow-right"
@@ -49,17 +49,23 @@
 </dom-module>
 <script>
 	Polymer({
-		is: 'd2l-navigation-item-mobile',
-		behaviors: [window.D2L.PolymerBehaviors.NavigationItemBehavior],
+		is: 'd2l-navigation-item-link-mobile',
+		behaviors: [window.D2L.PolymerBehaviors.NavigationItemLinkBehavior],
 		properties: {
+			item: {
+				type: Object
+			},
 			href: {
 				type: String,
-				computed: 'getHref(item)'
+				computed: 'getItemLinkHref(item)'
 			},
 			text: {
 				type: String,
-				computed: 'getText(item)'
+				computed: 'getItemLinkText(item)'
 			}
+		},
+		_handleTap: function(e) {
+			this.onItemLinkClick(this.item);
 		}
 	});
 </script>

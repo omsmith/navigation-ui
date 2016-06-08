@@ -3,19 +3,16 @@
 (function() {
 'use strict';
 
-/** @polymerBehavior D2L.PolymerBehaviors.NavigationItemBehavior */
-var NavigationItemBehavior = {
-	properties: {
-		item: Object
-	},
+/** @polymerBehavior D2L.PolymerBehaviors.NavigationItemLinkBehavior */
+var NavigationItemLinkBehavior = {
 	hostAttributes: {
 		role: 'listitem'
 	},
-	getHref: function() {
+	getItemLinkHref: function(item) {
 		var href = undefined;
-		if (this.item.class.indexOf('item') > -1) {
-			if (this.item.class.indexOf('link') > -1) {
-				this.item.links.forEach(function(l) {
+		if (item.class.indexOf('item') > -1) {
+			if (item.class.indexOf('link') > -1) {
+				item.links.forEach(function(l) {
 					if (l.rel.indexOf('self') > -1) {
 						href = l.href;
 					}
@@ -24,28 +21,31 @@ var NavigationItemBehavior = {
 		}
 		return href;
 	},
-	getText: function() {
-		if (this.item.class.indexOf('item') > -1) {
-			return this.item.properties.text;
-		} else if (this.item.class.indexOf('action') > -1) {
-			return this.item.title;
+	getItemLinkText: function(item) {
+		if (item.class.indexOf('item') > -1) {
+			return item.properties.text;
+		} else if (item.class.indexOf('action') > -1) {
+			return item.title;
 		}
 	},
-	onClick: function() {
-		if (this.item.class.indexOf('popup') > -1) {
-			this.onClickPopup();
-		} else if (this.item.class.indexOf('action') > -1) {
-			this.onClickAction();
+	onItemLinkClick: function(item, handleRegularLink) {
+		if (item.class.indexOf('popup') > -1) {
+			this._onClickPopup(item);
+		} else if (item.class.indexOf('action') > -1) {
+			this._onClickAction(item);
+		} else if (handleRegularLink) {
+			this._onClickRegular(item);
 		}
+		return false;
 	},
-	onClickPopup: function() {
+	_onClickPopup: function(item) {
 
 		var features = '';
-		if ( this.item.properties.Width > 0 ) {
-			features += 'width=' + this.item.properties.Width + ',';
+		if ( item.properties.Width > 0 ) {
+			features += 'width=' + item.properties.Width + ',';
 		}
-		if( this.item.properties.Height > 0 ) {
-			features += 'height=' + this.item.properties.Height + ',';
+		if( item.properties.Height > 0 ) {
+			features += 'height=' + item.properties.Height + ',';
 		}
 
 		features += 'location=1,' +
@@ -56,7 +56,7 @@ var NavigationItemBehavior = {
 			'toolbar=' + ( this.properties.HasToolbar ? '1' : '0' );
 
 		var href = null;
-		this.item.links.forEach(function(l) {
+		item.links.forEach(function(l) {
 			if (l.rel.indexOf('self') > -1) {
 				href = l.href;
 			}
@@ -71,15 +71,15 @@ var NavigationItemBehavior = {
 		}
 
 	},
-	onClickAction: function() {
+	_onClickAction: function(item) {
 
 		var frm = document.createElement('form');
 		frm.setAttribute('target', '_top');
-		frm.setAttribute('action', this.item.href);
-		frm.setAttribute('method', this.item.method);
-		frm.setAttribute('enctype', this.item.type)
+		frm.setAttribute('action', item.href);
+		frm.setAttribute('method', item.method);
+		frm.setAttribute('enctype', item.type)
 
-		this.item.fields.forEach(function(f) {
+		item.fields.forEach(function(f) {
 			if (f.type === 'hidden') {
 				var hidden = document.createElement('input');
 				hidden.setAttribute('type', 'hidden');
@@ -93,7 +93,7 @@ var NavigationItemBehavior = {
 		frm.submit();
 
 		// special handling for logout
-		if (this.item.class.indexOf('logout') > -1) {
+		if (item.class.indexOf('logout') > -1) {
 			try {
 				window.localStorage.setItem('Session.Expired', '1');
 			} catch(e) {
@@ -101,12 +101,17 @@ var NavigationItemBehavior = {
 			}
 		}
 
+	},
+	_onClickRegular: function (item) {
+		if(item.links[0].href) {
+			window.location = item.links[0].href;
+		}
 	}
 };
 
 window.D2L = window.D2L || {};
 window.D2L.PolymerBehaviors = window.D2L.PolymerBehaviors || {};
 /** @polymerBehavior */
-window.D2L.PolymerBehaviors.NavigationItemBehavior = [NavigationItemBehavior]
+window.D2L.PolymerBehaviors.NavigationItemLinkBehavior = [NavigationItemLinkBehavior]
 })();
 </script>

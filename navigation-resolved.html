@@ -3,7 +3,8 @@
 <link rel="import" href="header/header.html">
 <link rel="import" href="mobile/menu.html">
 <link rel="import" href="centerer.html">
-<link rel="import" href="item.html">
+<link rel="import" href="item-link.html">
+<link rel="import" href="item-group.html">
 <dom-module id="d2l-navigation-resolved">
 	<style include="vui-colors">
 		:host {
@@ -38,7 +39,12 @@
 			<div class="d2l-navigation-row2">
 				<d2l-navigation-centerer>
 					<template is="dom-repeat" items="{{items}}">
-						<d2l-navigation-item item="{{item}}"></d2l-navigation-item>
+						<template is="dom-if" if="{{_isItemGroup(item)}}">
+							<d2l-navigation-item-group item={{item}}></d2l-navigation-item-group>
+						</template>
+						<template is="dom-if" if="{{_isItemLink(item)}}">
+							<d2l-navigation-item-link item="{{item}}"></d2l-navigation-item-link>
+						</template>
 					</template>
 				</d2l-navigation-centerer>
 			</div>
@@ -78,6 +84,12 @@
 		},
 		openMenu: function(e) {
 			this.$$('d2l-navigation-mobile-menu').open(e.detail.opener);
+		},
+		_isItemGroup: function(item) {
+			return (item.class.indexOf('group') > -1);
+		},
+		_isItemLink: function(item) {
+			return !this._isItemGroup(item);
 		}
 	});
 </script>
