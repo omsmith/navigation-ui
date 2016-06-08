@@ -1,7 +1,7 @@
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../d2l-dropdown/dropdown-menu.html">
 <link rel="import" href="../d2l-dropdown/menu-item.html">
-<link rel="import" href="../d2l-icons-ui/tier1-icons.html">
+<link rel="import" href="../d2l-icons/tier1-icons.html">
 <dom-module id="d2l-navigation-item-group">
 	<style>
 		:host {
@@ -29,7 +29,9 @@
 			padding: 0;
 		}
 		.d2l-navigation-item-group-opener:hover,
-		.d2l-navigation-item-group-opener:focus {
+		.d2l-navigation-item-group-opener:focus,
+		.d2l-navigation-item-group-opener:hover .d2l-navigation-item-group-arrow,
+		.d2l-navigation-item-group-opener:focus .d2l-navigation-item-group-arrow {
 			color: var(--vui-color-celestine);
 			cursor: pointer;
 		}
@@ -45,7 +47,9 @@
 			margin-right: 0;
 		}
 		.d2l-navigation-item-group-arrow {
-			width: 20px;
+			color: var(--vui-color-tungsten);
+			height: 15px;
+			width: 15px;
 		}
 		.d2l-navigation-item-group-menu {
 			width: 10rem;
@@ -54,11 +58,11 @@
 	<template>
 		<button class="d2l-navigation-item-group-opener" on-tap="_handleOpenerTap">
 			<span class="d2l-navigation-item-group-text">{{groupText}}</span>
-			<iron-icon icon="vui-tier1:chevron-down" class="d2l-navigation-item-group-arrow"></iron-icon>
+			<iron-icon icon="d2l-tier1:chevron-down" class="d2l-navigation-item-group-arrow"></iron-icon>
 		</button>
 		<d2l-dropdown-menu class="d2l-navigation-item-group-menu">
 			<template is="dom-repeat" items="{{links}}">
-					<d2l-menu-item text="{{getItemLinkText(item)}}" data-index$="{{index}}"></d2l-menu-item>
+				<d2l-menu-item text="{{getItemLinkText(item)}}" data-index$="{{index}}"></d2l-menu-item>
 			</template>
 		</d2l-dropdown-menu>
 	</template>
