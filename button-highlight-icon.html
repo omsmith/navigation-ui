@@ -47,7 +47,8 @@
 	<template>
 		<span class="d2l-navigation-button-highlight-bar"></span>
 		<iron-icon icon="[[icon]]" class="d2l-navigation-button-highlight-icn"></iron-icon>
-		<span class="d2l-navigation-button-highlight-text"><content></content></span>
+		<span class="d2l-navigation-button-highlight-text">[[text]]</span>
+		<content></content>
 	</template>
 </dom-module>
 <script>
@@ -63,7 +64,8 @@
 			icon: {
 				type: String,
 				reflectToAttribute: true
-			}
+			},
+			text: String
 		}
 	});
 </script>
