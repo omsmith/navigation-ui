@@ -33,8 +33,10 @@
 		<div class="d2l-navigation-notifications-wrapper">
 			<template is="dom-repeat" items="{{notifications}}" sort="_sort">
 				<d2l-navigation-notification
+					aria-message="{{item.ariaMessage}}"
 					category="{{item.category}}"
 					graft-location="{{item.location}}"
+					updates="{{item.updates}}"
 					text="{{item.text}}"></d2l-navigation-notification>
 			</template><!-- next bit needs to be on one line, otherwise there's extra space -->
 		</div><template is="dom-if" if="{{hasNotifications}}"><div class="d2l-navigation-notifications-div"></div><d2l-navigation-divider></d2l-navigation-divider></template>

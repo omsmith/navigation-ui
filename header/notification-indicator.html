@@ -1,0 +1,44 @@
+<link rel="import" href="../../polymer/polymer.html">
+<link rel="import" href="../../iron-icon/iron-icon.html">
+<link rel="import" href="../icons.html">
+<dom-module id="d2l-navigation-notification-indicator">
+	<style>
+	:host {
+		display: none;
+		position: absolute;
+		right: -7px;
+		top: calc(50% - 17px);
+	}
+	:host([visible]) {
+		display: inline-block;
+	}
+	iron-icon {
+		width: 14px;
+		height: 14px;
+	}
+	.d2l-navigation-notification-indicator-text {
+		position: absolute;
+		left: -10000px;
+		top: auto;
+		width: 1px;
+		height: 1px;
+		overflow: hidden;
+	}
+	</style>
+	<template>
+		<iron-icon icon="navigation-t1:notification-indicator"></iron-icon>
+		<span class="d2l-navigation-notification-indicator-text">you have new alerts</span>
+	</template>
+</dom-module>
+<script>
+	Polymer({
+		is: 'd2l-navigation-notification-indicator',
+		properties: {
+			visible: {
+				reflectToAttribute: true,
+				type: Boolean,
+				value: false
+			}
+		}
+	});
+</script>

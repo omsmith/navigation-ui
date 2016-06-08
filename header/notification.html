@@ -1,8 +1,10 @@
 <link rel="import" href="../../polymer/polymer.html">
 <link rel="import" href="../../d2l-dropdown/dropdown.html">
 <link rel="import" href="../button-highlight-icon.html">
+<link rel="import" href="../find-page-object-behavior.html">
 <link rel="import" href="../graft-dropdown-behavior.html">
 <link rel="import" href="../icons.html">
+<link rel="import" href="notification-indicator.html">
 <dom-module id="d2l-navigation-notification">
 	<style>
 	:host {
@@ -12,34 +14,69 @@
 	d2l-dropdown {
 		width: 350px;
 	}
+	button[is='d2l-navigation-button-highlight-icon'] {
+		display: relative;
+	}
 	</style>
 	<template>
 		<button
 			is="d2l-navigation-button-highlight-icon"
-			icon="{{icon}}">{{text}}</button>
-		<d2l-dropdown vertical-offset="-5" horizontal-offset="-24"></d2l-dropdown>
+			icon="{{icon}}"
+			text="{{text}}">
+			<d2l-navigation-notification-indicator visible="[[updates]]"></d2l-navigation-notification-indicator>
+		</button>
+		<d2l-dropdown on-open="_onOpen" vertical-offset="-5" horizontal-offset="-24"></d2l-dropdown>
 	</template>
 </dom-module>
 <script>
 	Polymer({
 		is: 'd2l-navigation-notification',
-		behaviors: [window.D2L.PolymerBehaviors.NavigationGraftDropdownBehavior],
+		behaviors: [
+			window.D2L.PolymerBehaviors.NavigationGraftDropdownBehavior,
+			window.D2L.PolymerBehaviors.NavigationFindPageObjectBehavior
+		],
 		properties: {
+			ariaMessage: String,
 			category: Number,
+			updates: Boolean,
 			icon: {
 				type: String,
 				computed: '_getIcon(category)'
 			},
 			text: String
 		},
+		attached: function() {
+			var onNotification = this.findPageObject('D2L.LP.ActivityBar.OnNotification');
+			if (onNotification) {
+				onNotification.AddListener(this._handleNotification.bind(this));
+			}
+		},
+		detached: function() {
+			var onNotification = this.findPageObject('D2L.LP.ActivityBar.OnNotification');
+			if (onNotification) {
+				onNotification.RemoveListener(this._handleNotification);
+			}
+		},
 		_getIcon: function(category) {
-			if (category === 2) {
+			if (category === 'messages') {
 				return 'navigation-t3:email';
-			} else if (category === 0) {
+			} else if (category === 'alerts') {
 				return 'navigation-t3:discussions';
 			} else {
 				return 'navigation-t3:alarmbell'
 			}
+		},
+		_handleNotification: function(category) {
+			if (category.toLowerCase() === this.category && !this.updates) {
+				this.updates = true;
+				var logMessage = this.findPageObject('D2L.LP.Web.UI.Html.Aria.LogMessage');
+				if (logMessage) {
+					logMessage(this.ariaMessage);
+				}
+			}
+		},
+		_onOpen: function() {
+			this.updates = false;
 		}
 	});
 </script>
