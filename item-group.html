@@ -13,20 +13,29 @@
 			padding-right: 0;
 		}
 		.d2l-navigation-item-group-opener {
-			align-items: center;
 			background: none;
 			border: 0;
 			color: inherit;
-			display: -webkit-inline-box;
-			display: -moz-inline-box;
-			display: -ms-inline-flexbox;
-			display: -webkit-inline-flex;
-			display: inline-flex;
 			font-family: inherit;
 			font-size: inherit;
 			font-weight: inherit;
 			margin: 0;
 			padding: 0;
+		}
+		.d2l-navigation-item-group-wrapper {
+			-webkit-align-items: center;
+			-moz-align-items: center;
+			-ms-align-items: center;
+			align-items: center;
+			display: -webkit-inline-box;
+			display: -moz-inline-box;
+			display: -ms-inline-flexbox;
+			display: -webkit-inline-flex;
+			display: inline-flex;
+			-webkit-flex-wrap: nowrap;
+			-moz-flex-wrap: nowrap;
+			-ms-flex-wrap: nowrap;
+			flex-wrap: nowrap;
 		}
 		.d2l-navigation-item-group-opener:hover,
 		.d2l-navigation-item-group-opener:focus,
@@ -56,9 +65,11 @@
 		}
 	</style>
 	<template>
-		<button class="d2l-navigation-item-group-opener" on-tap="_handleOpenerTap">
-			<span class="d2l-navigation-item-group-text">{{groupText}}</span>
-			<iron-icon icon="d2l-tier1:chevron-down" class="d2l-navigation-item-group-arrow"></iron-icon>
+		<button on-tap="_handleOpenerTap" class="d2l-navigation-item-group-opener">
+			<div class="d2l-navigation-item-group-wrapper">
+				<span class="d2l-navigation-item-group-text">{{groupText}}</span>
+				<iron-icon icon="d2l-tier1:chevron-down" class="d2l-navigation-item-group-arrow"></iron-icon>
+			</div>
 		</button>
 		<d2l-dropdown-menu class="d2l-navigation-item-group-menu">
 			<template is="dom-repeat" items="{{links}}">
