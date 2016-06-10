@@ -21,7 +21,7 @@ var NavigationGraftDropdownBehavior = {
 		this._opener = this.$$('[is="d2l-navigation-button-highlight-icon"]') ||
 			this.$$('[is="d2l-navigation-button-highlight"]');
 		if (this._opener) {
-			this.listen(this._opener, 'tap', '_onTap');
+			this.listen(this._opener, 'click', '_onClick');
 		}
 		this._dropdown = this.$$('d2l-dropdown');
 		if (this._dropdown) {
@@ -35,7 +35,7 @@ var NavigationGraftDropdownBehavior = {
 	},
 	detached: function() {
 		if (this._opener) {
-			this.unlisten(this._opener, 'tap', '_onTap')
+			this.unlisten(this._opener, 'click', '_onClick')
 		}
 		if (this._dropdown) {
 			this.unlisten(this._dropdown, 'open', '_onOpen');
@@ -63,7 +63,7 @@ var NavigationGraftDropdownBehavior = {
 			Polymer.dom(this._opener).setAttribute('active', 'active');
 		}
 	},
-	_onTap: function() {
+	_onClick: function() {
 
 		if (!this._dropdown) {
 			return;
