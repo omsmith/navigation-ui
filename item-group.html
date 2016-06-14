@@ -1,9 +1,10 @@
 <link rel="import" href="../polymer/polymer.html">
-<link rel="import" href="../d2l-dropdown/dropdown-menu.html">
-<link rel="import" href="../d2l-dropdown/menu-item.html">
+<link rel="import" href="../d2l-colors/d2l-colors.html">
+<link rel="import" href="../d2l-dropdown/d2l-dropdown-menu.html">
+<link rel="import" href="../d2l-dropdown/d2l-menu-item.html">
 <link rel="import" href="../d2l-icons/tier1-icons.html">
 <dom-module id="d2l-navigation-item-group">
-	<style>
+	<style include="d2l-colors">
 		:host {
 			display: inline-block;
 			padding: 20px 20px 20px 0;
@@ -41,7 +42,7 @@
 		.d2l-navigation-item-group-opener:focus,
 		.d2l-navigation-item-group-opener:hover .d2l-navigation-item-group-arrow,
 		.d2l-navigation-item-group-opener:focus .d2l-navigation-item-group-arrow {
-			color: var(--vui-color-celestine);
+			color: var(--d2l-color-celestine);
 			cursor: pointer;
 		}
 		.d2l-navigation-item-group-opener:hover .d2l-navigation-item-group-text,
@@ -56,7 +57,7 @@
 			margin-right: 0;
 		}
 		.d2l-navigation-item-group-arrow {
-			color: var(--vui-color-tungsten);
+			color: var(--d2l-color-tungsten);
 			height: 15px;
 			width: 15px;
 		}
