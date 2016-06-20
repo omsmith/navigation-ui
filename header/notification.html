@@ -25,7 +25,7 @@
 			text="{{text}}">
 			<d2l-navigation-notification-indicator visible="[[updates]]"></d2l-navigation-notification-indicator>
 		</button>
-		<d2l-dropdown on-open="_onOpen" vertical-offset="-5" horizontal-offset="-24"></d2l-dropdown>
+		<d2l-dropdown on-open="_onDropdownOpen" vertical-offset="-5" horizontal-offset="-24"></d2l-dropdown>
 	</template>
 </dom-module>
 <script>
@@ -75,7 +75,7 @@
 				}
 			}
 		},
-		_onOpen: function() {
+		_onDropdownOpen: function() {
 			this.updates = false;
 		}
 	});
