@@ -69,7 +69,10 @@
 		<d2l-navigation-centerer>
 			<div class="d2l-navigation-header-container">
 				<d2l-navigation-header-open-button></d2l-navigation-header-open-button>
-				<d2l-navigation-header-org my-home="[[myHome]]" logo="[[logo]]"></d2l-navigation-header-org>
+				<d2l-navigation-header-org
+					logo="[[logo]]"
+					logo-href="[[logoHref]]"
+					logo-text="[[logoText]]"></d2l-navigation-header-org>
 				<d2l-navigation-header-course
 					course-menu-location="[[courseMenuLocation]]"
 					my-home="[[myHome]]"
@@ -92,6 +95,8 @@
 			adminMenuLocation: String,
 			courseMenuLocation: String,
 			logo: String,
+			logoHref: String,
+			logoText: String,
 			myHome: String,
 			notifications: Array,
 			orgUnitHome: String,

@@ -26,6 +26,8 @@
 			has-admin-menu="[[hasAdminMenu]]"
 			items="[[items]]"
 			logo="[[logo]]"
+			logo-href="[[logoHref]]"
+			logo-text="[[logoText]]"
 			my-home="[[myHome]]"
 			notifications="[[notifications]]"
 			org-unit-home="[[orgUnitHome]]"
@@ -53,6 +55,8 @@
 				value: false
 			},
 			logo: String,
+			logoHref: String,
+			logoText: String,
 			loading: {
 				reflectToAttribute: true,
 				type: Boolean,
@@ -134,9 +138,12 @@
 		handleThemeResponse: function(res) {
 			res.entities.forEach(function(e) {
 				if (e.class.indexOf('image') > -1) {
+					this.logoText = e.properties.alt;
 					e.links.forEach(function(l) {
 						if (l.rel.indexOf('alternate') > -1) {
 							this.logo = l.href;
+						} else if(l.rel.indexOf('http://navigation.api.brightspace.com/rels/home') > -1) {
+							this.logoHref = l.href;
 						}
 					}.bind(this));
 				}
