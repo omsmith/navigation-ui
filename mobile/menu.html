@@ -27,8 +27,9 @@
 				my-home="[[myHome]]"></d2l-navigation-mobile-header>
 			<d2l-navigation-logo
 				class="d2l-navigation-gutters"
-				my-home="[[myHome]]"
-				src="[[logo]]"></d2l-navigation-logo>
+				href$="[[logoHref]]"
+				src="[[logo]]"
+				text="[[logoText]]"></d2l-navigation-logo>
 			<d2l-navigation-mobile-course
 				org-unit-home="[[orgUnitHome]]"
 				org-unit-name="[[orgUnitName]]"></d2l-navigation-mobile-course>
@@ -45,6 +46,8 @@
 			bandColor: String,
 			items: Object,
 			logo: String,
+			logoHref: String,
+			logoText: String,
 			myHome: String,
 			orgUnitHome: String,
 			orgUnitName: String

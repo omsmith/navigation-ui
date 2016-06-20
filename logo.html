@@ -21,17 +21,40 @@
 		}
 	</style>
 	<template>
-		<a href$="[[myHome]]" title="My Home">
-			<img src$="[[src]]" alt="My Home" />
-		</a>
+		<template is="dom-if" if="{{hasLink}}">
+			<a href$="[[href]]" title="[[text]]">
+				<img src$="[[src]]" alt="[[text]]" />
+			</a>
+		</template>
+		<template is="dom-if" if="{{hasImage}}">
+			<img src$="[[src]]" alt="[[text]]" title="[[text]]" />
+		</template>
 	</template>
 </dom-module>
 <script>
 	Polymer({
 		is: 'd2l-navigation-logo',
 		properties: {
+			href: {
+				type: String,
+				value: null
+			},
 			src: String,
-			myHome: String
+			text: String,
+			hasImage: {
+				type: Boolean,
+				computed: '_computeHasImage(href)'
+			},
+			hasLink: {
+				type: Boolean,
+				computed: '_computeHasLink(href)'
+			}
+		},
+		_computeHasLink: function(href) {
+			return href !== undefined && href !== null && href.length > 0;
+		},
+		_computeHasImage: function(href) {
+			return href === undefined || href === null || href.length === 0;
 		}
 	});
 </script>
