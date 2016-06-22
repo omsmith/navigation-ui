@@ -108,7 +108,10 @@
 
 			if(item.entities.length > 0) {
 				item.entities.forEach(function(entity) {
-					if(entity.class.indexOf('link') > -1) {
+					if(
+						(entity.class.indexOf('link') > -1) ||
+						(entity.class.indexOf('popup') > -1)
+					) {
 						links.push(entity);
 					}
 				});
