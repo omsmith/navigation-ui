@@ -94,6 +94,9 @@
 				computed: '_computeLinks(item)'
 			}
 		},
+		hostAttributes: {
+			role: 'listitem'
+		},
 		listeners: {
 			select: '_handleLinkSelect'
 		},
