@@ -1,30 +1,30 @@
 <link rel="import" href="../polymer/polymer.html">
 <script>
 (function() {
-'use strict';
+	'use strict';
 
-/** @polymerBehavior D2L.PolymerBehaviors.NavigationFindPageObjectBehavior */
-var NavigationFindPageObjectBehavior = {
-	findPageObject: function(name) {
+	/** @polymerBehavior D2L.PolymerBehaviors.NavigationFindPageObjectBehavior */
+	var NavigationFindPageObjectBehavior = {
+		findPageObject: function(name) {
 
-		var parts = name.split('.');
-		var func = window;
+			var parts = name.split('.');
+			var func = window;
 
-		for (var i=0; i<parts.length; i++) {
-			func = func[parts[i]];
-			if (!func) {
-				break;
+			for (var i = 0; i < parts.length; i++) {
+				func = func[parts[i]];
+				if (!func) {
+					break;
+				}
 			}
+
+			return func;
+
 		}
+	};
 
-		return func;
-
-	}
-};
-
-window.D2L = window.D2L || {};
-window.D2L.PolymerBehaviors = window.D2L.PolymerBehaviors || {};
-/** @polymerBehavior */
-window.D2L.PolymerBehaviors.NavigationFindPageObjectBehavior = [NavigationFindPageObjectBehavior]
+	window.D2L = window.D2L || {};
+	window.D2L.PolymerBehaviors = window.D2L.PolymerBehaviors || {};
+	/** @polymerBehavior */
+	window.D2L.PolymerBehaviors.NavigationFindPageObjectBehavior = [NavigationFindPageObjectBehavior];
 })();
 </script>
