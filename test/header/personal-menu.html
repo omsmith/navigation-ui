@@ -1,0 +1,275 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>personal-menu tests</title>
+		<meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+		<script src="../../../webcomponentsjs/webcomponents-lite.js"></script>
+		<script src="../../../web-component-tester/browser.js"></script>
+		<link rel="import" href="../../header/personal-menu.html">
+	</head>
+	<body>
+
+		<test-fixture id="no-data">
+			<template>
+				<d2l-navigation-personal-menu user-href="no-data.json"></d2l-navigation-personal-menu>
+			</template>
+		</test-fixture>
+
+		<test-fixture id="display-name">
+			<template>
+				<d2l-navigation-personal-menu user-href="display-name.json"></d2l-navigation-personal-menu>
+			</template>
+		</test-fixture>
+
+		<test-fixture id="thumbnail-default">
+			<template>
+				<d2l-navigation-personal-menu user-href="thumbnail-default.json"></d2l-navigation-personal-menu>
+			</template>
+		</test-fixture>
+
+		<test-fixture id="thumbnail">
+			<template>
+				<d2l-navigation-personal-menu user-href="thumbnail.json"></d2l-navigation-personal-menu>
+			</template>
+		</test-fixture>
+
+		<test-fixture id="error">
+			<template>
+				<d2l-navigation-personal-menu user-href="error.json"></d2l-navigation-personal-menu>
+			</template>
+		</test-fixture>
+
+		<script>
+			var server, menu;
+
+			function setupMenu(fixtureName) {
+				return new Promise(function(resolve) {
+					menu = fixture(fixtureName);
+					menu.addEventListener('data-ready', resolve);
+					server.respond();
+				});
+			}
+
+			before(function() {
+				server = sinon.fakeServer.create();
+				server.respondWith(
+					'GET',
+					'error.json',
+					[
+						500,
+						{ 'Content-Type': 'application/json' },
+						'oh no'
+					]
+				);
+				server.respondWith(
+					'GET',
+					'display-name.json',
+					[
+						200,
+						{ 'Content-Type': 'application/json' },
+						JSON.stringify({
+							'class': ['user'],
+							'entities': [
+								{
+									'class': ['display', 'name'],
+									'rel': ['http://users.api.brightspace.com/rels/display-name'],
+									'properties': {
+										'name': 'Jim Smith'
+									}
+								}
+							]
+						})
+					]
+				);
+				server.respondWith(
+					'GET',
+					'no-data.json',
+					[
+						200,
+						{ 'Content-Type': 'application/json' },
+						JSON.stringify({
+							'class': ['user'],
+							'entities': []
+						})
+					]
+				);
+				server.respondWith(
+					'GET',
+					'thumbnail-default.json',
+					[
+						200,
+						{ 'Content-Type': 'application/json' },
+						JSON.stringify({
+							'class': ['user'],
+							'entities': [
+								{
+									'class': ['profile'],
+									'rel': ['http://users.api.brightspace.com/rels/profile'],
+									'entities': [
+										{
+											'class': ['file', 'image', 'thumbnail', 'regular'],
+											'rel': ['http://users.api.brightspace.com/rels/thumbnail'],
+											'entities': [
+												{
+													'rel': ['alternate'],
+													'href': 'profile.png'
+												}
+											]
+										}
+									]
+								}
+							]
+						})
+					]
+				);
+				server.respondWith(
+					'GET',
+					'thumbnail.json',
+					[
+						200,
+						{ 'Content-Type': 'application/json' },
+						JSON.stringify({
+							'class': ['user'],
+							'entities': [
+								{
+									'class': ['profile'],
+									'rel': ['http://users.api.brightspace.com/rels/profile'],
+									'entities': [
+										{
+											'class': ['file', 'image'],
+											'rel': ['http://users.api.brightspace.com/rels/image'],
+											'links': [
+												{
+													'rel': ['alternate'],
+													'href': 'profile.png'
+												}
+											]
+										},
+										{
+											'class': ['file', 'image', 'thumbnail', 'regular'],
+											'rel': ['http://users.api.brightspace.com/rels/thumbnail'],
+											'entities': [
+												{
+													'rel': ['alternate'],
+													'href': 'profile.png'
+												}
+											]
+										}
+									]
+								},
+								{
+									'class': ['display', 'name'],
+									'rel': ['http://users.api.brightspace.com/rels/display-name'],
+									'properties': {
+										'name': 'Jim Smith'
+									}
+								}
+							]
+						})
+					]
+				);
+			});
+
+			after(function() {
+				server.restore();
+			});
+
+			describe('no display name', function() {
+
+				beforeEach(function() {
+					return setupMenu('no-data');
+				});
+
+				it('should default "displayName" property to undefined', function() {
+					expect(menu.displayName).to.not.be.defined;
+				});
+
+				it('should leave text element empty', function() {
+					var elem = menu.$$('.d2l-navigation-personal-menu-text');
+					expect(elem.innerText.trim()).to.eql('');
+				});
+
+			});
+
+			describe('display name', function() {
+
+				beforeEach(function() {
+					return setupMenu('display-name');
+				});
+
+				it('should set "displayName" property', function() {
+					expect(menu.displayName).to.eql('Jim Smith');
+				});
+
+				it('should apply name to text element', function() {
+					var elem = menu.$$('.d2l-navigation-personal-menu-text');
+					expect(elem.innerText).to.eql('Jim Smith');
+				});
+
+			});
+
+			describe('no thumbnail', function() {
+
+				beforeEach(function() {
+					return setupMenu('no-data');
+				});
+
+				it('should make default profile image visible', function() {
+					expect(window.getComputedStyle(menu._getThumbnailDefault()).display)
+						.to.eql('block');
+					expect(window.getComputedStyle(menu._getThumbnail()).display)
+						.to.eql('none');
+				});
+
+			});
+
+			describe('thumbnail, no image set', function() {
+
+				beforeEach(function() {
+					return setupMenu('thumbnail-default');
+				});
+
+				it('should still use default thumbnail', function() {
+					expect(window.getComputedStyle(menu._getThumbnailDefault()).display)
+						.to.eql('block');
+					expect(window.getComputedStyle(menu._getThumbnail()).display)
+						.to.eql('none');
+				});
+
+			});
+
+			describe('thumbnail, image set', function() {
+
+				beforeEach(function() {
+					return setupMenu('thumbnail');
+				});
+
+				it('should apply medium thumbnail to image', function() {
+					expect(menu._getThumbnail().getAttribute('src'))
+						.to.eql('profile.png');
+				});
+
+				it('should hide default profile image', function() {
+					expect(window.getComputedStyle(menu._getThumbnailDefault()).display)
+						.to.eql('none');
+				});
+
+			});
+
+			describe('response error', function() {
+
+				beforeEach(function() {
+					return setupMenu('error');
+				});
+
+				it('should just render nothing', function() {
+					var elem = menu.$$('.d2l-navigation-personal-menu-text');
+					expect(elem.innerText.trim()).to.eql('');
+				});
+
+			});
+
+		</script>
+	</body>
+</html>

@@ -1,4 +1,5 @@
 <link rel="import" href="../../polymer/polymer.html">
+<link rel="import" href="../../iron-ajax/iron-ajax.html">
 <link rel="import" href="../../iron-icon/iron-icon.html">
 <link rel="import" href="../../d2l-dropdown/d2l-dropdown.html">
 <link rel="import" href="../button-highlight.html">
@@ -85,8 +86,15 @@
 					this._handleUserResponse(res.response);
 				}.bind(this))
 				.catch(function() {
+					this.fire('data-ready');
 					//to do: do anything?
 				}.bind(this));
+		},
+		_getThumbnail: function() {
+			return this.$$('.d2l-navigation-personal-menu-thumbnail');
+		},
+		_getThumbnailDefault: function() {
+			return this.$$('.d2l-navigation-personal-menu-thumbnail-default');
 		},
 		_handleUserResponse: function(res) {
 			var hasProfile = false;
@@ -109,15 +117,16 @@
 				}
 			}.bind(this));
 			this._setThumbnail(hasProfile, thumbnailHref);
+			this.fire('data-ready');
 		},
 		_setThumbnail: function(hasProfile, url) {
-			var thumbnail = this.$$('.d2l-navigation-personal-menu-thumbnail');
-			var thumbnailDefault = this.$$('.d2l-navigation-personal-menu-thumbnail-default');
 			if (hasProfile && url) {
+				var thumbnail = this._getThumbnail();
 				Polymer.dom(thumbnail).removeAttribute('icon');
 				Polymer.dom(thumbnail).setAttribute('src', url);
 				thumbnail.style.display = 'block';
 			} else {
+				var thumbnailDefault = this._getThumbnailDefault();
 				thumbnailDefault.style.display = 'block';
 			}
 		}
