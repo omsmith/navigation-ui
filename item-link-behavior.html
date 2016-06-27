@@ -1,117 +1,117 @@
 <link rel="import" href="../polymer/polymer.html">
 <script>
 (function() {
-'use strict';
+	'use strict';
 
-/** @polymerBehavior D2L.PolymerBehaviors.NavigationItemLinkBehavior */
-var NavigationItemLinkBehavior = {
-	hostAttributes: {
-		role: 'listitem'
-	},
-	getItemLinkHref: function(item) {
-		var href = undefined;
-		if (item.class.indexOf('item') > -1) {
-			if (item.class.indexOf('link') > -1) {
-				item.links.forEach(function(l) {
-					if (l.rel.indexOf('self') > -1) {
-						href = l.href;
-					}
-				});
+	/** @polymerBehavior D2L.PolymerBehaviors.NavigationItemLinkBehavior */
+	var NavigationItemLinkBehavior = {
+		hostAttributes: {
+			role: 'listitem'
+		},
+		getItemLinkHref: function(item) {
+			var href = undefined;
+			if (item.class.indexOf('item') > -1) {
+				if (item.class.indexOf('link') > -1) {
+					item.links.forEach(function(l) {
+						if (l.rel.indexOf('self') > -1) {
+							href = l.href;
+						}
+					});
+				}
+			}
+			return href;
+		},
+		getItemLinkText: function(item) {
+			if (item.class.indexOf('item') > -1) {
+				return item.properties.text;
+			} else if (item.class.indexOf('action') > -1) {
+				return item.title;
+			}
+		},
+		onItemLinkClick: function(item, handleRegularLink) {
+			if (item.class.indexOf('popup') > -1) {
+				this._onClickPopup(item);
+			} else if (item.class.indexOf('action') > -1) {
+				this._onClickAction(item);
+			} else if (handleRegularLink) {
+				this._onClickRegular(item);
+			}
+			return false;
+		},
+		_onClickPopup: function(item) {
+
+			var features = '';
+			if ( item.properties.Width > 0 ) {
+				features += 'width=' + item.properties.Width + ',';
+			}
+			if ( item.properties.Height > 0 ) {
+				features += 'height=' + item.properties.Height + ',';
+			}
+
+			features += 'location=1,' +
+				'menubar=' + ( this.properties.HasMenubar ? '1' : '0' ) + ',' +
+				'resizable=1,' +
+				'status=1,' +
+				'scrollbars=1,' +
+				'toolbar=' + ( this.properties.HasToolbar ? '1' : '0' );
+
+			var href = null;
+			item.links.forEach(function(l) {
+				if (l.rel.indexOf('self') > -1) {
+					href = l.href;
+				}
+			});
+
+			// name can't contain non-alphanumerics
+			var windowName = href.replace(/[^a-zA-Z0-9]+/g, '_');
+
+			var w = window.open(href, windowName, features);
+			if (w) {
+				w.focus();
+			}
+
+		},
+		_onClickAction: function(item) {
+
+			var frm = document.createElement('form');
+			frm.setAttribute('target', '_top');
+			frm.setAttribute('action', item.href);
+			frm.setAttribute('method', item.method);
+			frm.setAttribute('enctype', item.type);
+
+			item.fields.forEach(function(f) {
+				if (f.type === 'hidden') {
+					var hidden = document.createElement('input');
+					hidden.setAttribute('type', 'hidden');
+					hidden.setAttribute('name', f.name);
+					hidden.setAttribute('value', f.value);
+					frm.appendChild(hidden);
+				}
+			});
+
+			document.body.appendChild(frm);
+			frm.submit();
+
+			// special handling for logout
+			if (item.class.indexOf('logout') > -1) {
+				try {
+					window.localStorage.setItem('Session.Expired', '1');
+				} catch (e) {
+					// no access to local storage, whateves
+				}
+			}
+
+		},
+		_onClickRegular: function(item) {
+			if (item.links[0].href) {
+				window.location = item.links[0].href;
 			}
 		}
-		return href;
-	},
-	getItemLinkText: function(item) {
-		if (item.class.indexOf('item') > -1) {
-			return item.properties.text;
-		} else if (item.class.indexOf('action') > -1) {
-			return item.title;
-		}
-	},
-	onItemLinkClick: function(item, handleRegularLink) {
-		if (item.class.indexOf('popup') > -1) {
-			this._onClickPopup(item);
-		} else if (item.class.indexOf('action') > -1) {
-			this._onClickAction(item);
-		} else if (handleRegularLink) {
-			this._onClickRegular(item);
-		}
-		return false;
-	},
-	_onClickPopup: function(item) {
+	};
 
-		var features = '';
-		if ( item.properties.Width > 0 ) {
-			features += 'width=' + item.properties.Width + ',';
-		}
-		if( item.properties.Height > 0 ) {
-			features += 'height=' + item.properties.Height + ',';
-		}
-
-		features += 'location=1,' +
-			'menubar=' + ( this.properties.HasMenubar ? '1' : '0' ) + ',' +
-			'resizable=1,' +
-			'status=1,' +
-			'scrollbars=1,' +
-			'toolbar=' + ( this.properties.HasToolbar ? '1' : '0' );
-
-		var href = null;
-		item.links.forEach(function(l) {
-			if (l.rel.indexOf('self') > -1) {
-				href = l.href;
-			}
-		});
-
-		// name can't contain non-alphanumerics
-		var windowName = href.replace(/[^a-zA-Z0-9]+/g,'_');
-
-		var w = window.open(href, windowName, features);
-		if (w) {
-			w.focus();
-		}
-
-	},
-	_onClickAction: function(item) {
-
-		var frm = document.createElement('form');
-		frm.setAttribute('target', '_top');
-		frm.setAttribute('action', item.href);
-		frm.setAttribute('method', item.method);
-		frm.setAttribute('enctype', item.type)
-
-		item.fields.forEach(function(f) {
-			if (f.type === 'hidden') {
-				var hidden = document.createElement('input');
-				hidden.setAttribute('type', 'hidden');
-				hidden.setAttribute('name', f.name)
-				hidden.setAttribute('value', f.value);
-				frm.appendChild(hidden);
-			}
-		})
-
-		document.body.appendChild(frm);
-		frm.submit();
-
-		// special handling for logout
-		if (item.class.indexOf('logout') > -1) {
-			try {
-				window.localStorage.setItem('Session.Expired', '1');
-			} catch(e) {
-				// no access to local storage, whateves
-			}
-		}
-
-	},
-	_onClickRegular: function (item) {
-		if(item.links[0].href) {
-			window.location = item.links[0].href;
-		}
-	}
-};
-
-window.D2L = window.D2L || {};
-window.D2L.PolymerBehaviors = window.D2L.PolymerBehaviors || {};
-/** @polymerBehavior */
-window.D2L.PolymerBehaviors.NavigationItemLinkBehavior = [NavigationItemLinkBehavior]
+	window.D2L = window.D2L || {};
+	window.D2L.PolymerBehaviors = window.D2L.PolymerBehaviors || {};
+	/** @polymerBehavior */
+	window.D2L.PolymerBehaviors.NavigationItemLinkBehavior = [NavigationItemLinkBehavior];
 })();
 </script>
