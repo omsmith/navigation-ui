@@ -1,41 +1,63 @@
 <link rel="import" href="../../polymer/polymer.html">
 <link rel="import" href="../../iron-icon/iron-icon.html">
+<link rel="import" href="../../d2l-colors/d2l-colors.html">
+<link rel="import" href="../../d2l-dropdown/d2l-menu.html">
+<link rel="import" href="../../d2l-dropdown/d2l-menu-item.html">
 <link rel="import" href="../logo.html">
 <link rel="import" href="../shared-styles.html">
 <link rel="import" href="../slide-out-menu.html">
-<link rel="import" href="course.html">
+<link rel="import" href="../item-link-behavior.html">
 <link rel="import" href="header.html">
-<link rel="import" href="item-link.html">
+<link rel="import" href="course.html">
 <dom-module id="d2l-navigation-mobile-menu">
 	<style include="d2l-navigation-shared-styles">
 		:host {
 			display: block;
 		}
-		d2l-navigation-logo,
+		.d2l-navigation-mobile-menu-wrapper {
+			border-top: 4px solid var(--d2l-color-pressicus);
+		}
+		:host-context([is-org]) d2l-navigation-logo.d2l-navigation-mobile {
+			display: block;
+		}
+		d2l-navigation-logo.d2l-navigation-mobile,
 		:host-context([is-org]) d2l-navigation-mobile-course {
 			display: none;
-		}
-		:host-context([is-org]) d2l-navigation-logo {
-			display: block;
 		}
 	</style>
 	<template>
 		<d2l-navigation-slide-out-menu>
-			<d2l-navigation-mobile-header
-				class="d2l-navigation-gutters"
-				band-color="[[bandColor]]"
-				my-home="[[myHome]]"></d2l-navigation-mobile-header>
-			<d2l-navigation-logo
-				class="d2l-navigation-gutters"
-				href$="[[logoHref]]"
-				src="[[logo]]"
-				text="[[logoText]]"></d2l-navigation-logo>
-			<d2l-navigation-mobile-course
-				org-unit-home="[[orgUnitHome]]"
-				org-unit-name="[[orgUnitName]]"></d2l-navigation-mobile-course>
-			<template is="dom-repeat" items="{{items}}">
-				<d2l-navigation-item-link-mobile item="{{item}}"></d2l-navigation-item-link-mobile>
-			</template>
+			<div class="d2l-navigation-mobile-menu-wrapper">
+				<div class="d2l-navigation-mobile-header-wrapper">
+					<d2l-navigation-mobile-header
+						my-home="[[myHome]]"></d2l-navigation-mobile-header>
+					<d2l-navigation-logo
+						class="d2l-navigation-mobile"
+						href$="[[logoHref]]"
+						src="[[logo]]"
+						text="[[logoText]]"></d2l-navigation-logo>
+					<d2l-navigation-mobile-course
+						org-unit-name="[[orgUnitName]]"
+						org-unit-home="[[orgUnitHome]]"></d2l-navigation-mobile-course>
+				</div>
+				<d2l-menu no-side-borders style="width:100%;" label="Menu"> <!-- todo: localize -->
+				  <template is="dom-repeat" items="{{items}}">
+				    <d2l-menu-item text="{{getItemLinkText(item)}}" item="{{item}}">
+				      <template is="dom-if" if="{{isItemGroup(item)}}">
+				        <d2l-menu label="{{getItemLinkText(item)}}">
+				          <template is="dom-repeat" items="{{item.entities}}">
+										<template is="dom-if" if="{{isItemLink(item)}}">
+				            	<d2l-menu-item
+												text="{{getItemLinkText(item)}}"
+												item="{{item}}"></d2l-menu-item>
+										</template>
+				          </template>
+				        </d2l-menu>
+				      </template>
+				    </d2l-menu-item>
+				  </template>
+				</d2l-menu>
+			</div>
 		</d2l-navigation-slide-out-menu>
 	</template>
 </dom-module>
@@ -43,7 +65,11 @@
 	Polymer({
 		is: 'd2l-navigation-mobile-menu',
 		properties: {
-			bandColor: String,
+			bandColor: {
+				type: String,
+				value: '#b9c2d0',
+				observer: '_handleBandColorChange'
+			},
 			items: Object,
 			logo: String,
 			logoHref: String,
@@ -52,14 +78,34 @@
 			orgUnitHome: String,
 			orgUnitName: String
 		},
+		behaviors: [window.D2L.PolymerBehaviors.NavigationItemLinkBehavior],
 		listeners: {
-			'd2l-navigation-close-menu': 'close'
+			'd2l-navigation-close-menu': 'close',
+			'select': '_handleSelect',
+			'hide-start': '_handleHideOrShow',
+			'show-start': '_handleHideOrShow'
 		},
 		close: function() {
 			this.$$('d2l-navigation-slide-out-menu').close();
 		},
 		open: function(opener) {
 			this.$$('d2l-navigation-slide-out-menu').open(opener);
+			this.$$('d2l-menu').resize();
+		},
+		_handleBandColorChange: function() {
+			Polymer.dom(this.$$('.d2l-navigation-mobile-menu-wrapper'))
+				.node.style.borderTopColor = this.bandColor;
+		},
+		_handleSelect: function(event) {
+			var item = Polymer.dom(event).rootTarget.item;
+			if (this.isItemLink(item)) {
+				this.onItemLinkClick(item, true);
+			}
+		},
+		_handleHideOrShow: function() {
+			var isActive = this.$$('d2l-menu').isActive();
+			Polymer.dom(this.$$('.d2l-navigation-mobile-header-wrapper')).node.style.display =
+				(isActive) ? 'block' : 'none'; // todo: nicer transition animation
 		}
 	});
 </script>

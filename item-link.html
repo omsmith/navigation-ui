@@ -36,6 +36,9 @@
 				computed: 'getItemLinkText(item)'
 			}
 		},
+		hostAttributes: {
+			role: 'listitem'
+		},
 		_handleTap: function() {
 			this.onItemLinkClick(this.item);
 		}

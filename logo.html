@@ -5,12 +5,6 @@
 		:host {
 			display: inline-block;
 		}
-		:host-context(d2l-navigation-slide-out-menu) {
-			border-bottom: 1px solid var(--d2l-color-gypsum);
-			display: block;
-			padding-top: 10px;
-			padding-bottom: 10px;
-		}
 		:host > a {
 			display: inline-block;
 		}
@@ -19,16 +13,39 @@
 			max-height: 60px;
 			max-width: 260px;
 		}
+		:host-context(d2l-navigation-slide-out-menu) {
+			display: block;
+			background: linear-gradient(to bottom, var(--d2l-color-regolith) 0%, var(--d2l-color-white) 100%);
+		}
+		:host-context(d2l-navigation-slide-out-menu) .d2l-navigation-logo-wrapper {
+			-webkit-align-items: center;
+			-ms-flex-align: center;
+			align-items: center;
+			-webkit-display: flex;
+			-ms-flex-display: flex;
+			display: flex;
+			height: var(--d2l-navigation-header-height);
+			-webkit-justify-content: center;
+			-ms-justify-content: center;
+			justify-content: center;
+		}
+		@media(max-width: 615px) {
+			:host-context(d2l-navigation-slide-out-menu) .d2l-navigation-logo-wrapper {
+				height: var(--d2l-navigation-header-height-mobile);
+			}
+		}
 	</style>
 	<template>
-		<template is="dom-if" if="{{hasLink}}">
-			<a href$="[[href]]" title="[[text]]">
-				<img src$="[[src]]" alt="[[text]]" />
-			</a>
-		</template>
-		<template is="dom-if" if="{{hasImage}}">
-			<img src$="[[src]]" alt="[[text]]" title="[[text]]" />
-		</template>
+		<div class="d2l-navigation-logo-wrapper">
+			<template is="dom-if" if="{{hasLink}}">
+				<a href$="[[href]]" title="[[text]]">
+					<img src$="[[src]]" alt="[[text]]" />
+				</a>
+			</template>
+			<template is="dom-if" if="{{hasImage}}">
+				<img src$="[[src]]" alt="[[text]]" title="[[text]]" />
+			</template>
+		</div>
 	</template>
 </dom-module>
 <script>

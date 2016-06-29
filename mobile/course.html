@@ -1,15 +1,13 @@
 <link rel="import" href="../../polymer/polymer.html">
-<link rel="import" href="../../iron-icon/iron-icon.html">
 <link rel="import" href="../../d2l-colors/d2l-colors.html">
-<link rel="import" href="../icons.html">
 <link rel="import" href="../shared-styles.html">
 <dom-module id="d2l-navigation-mobile-course">
 	<style include="d2l-colors d2l-navigation-shared-styles">
 		:host {
 			background: linear-gradient(to bottom, var(--d2l-color-regolith) 0%, var(--d2l-color-white) 100%);
-			border-bottom: 1px solid var(--d2l-color-gypsum);
 			display: block;
 			line-height: normal;
+			padding: 0 1rem;
 		}
 		a {
 			-webkit-align-items: center;
@@ -27,30 +25,16 @@
 				height: var(--d2l-navigation-header-height-mobile);
 			}
 		}
-		a > div {
-			-ms-flex: 0 1 auto;
-			-webkit-flex: 0 1 auto;
-			flex: 0 1 auto; /* IE10 defaults to 0 0 auto */
+		a div {
 			overflow: hidden;
 			text-overflow: ellipsis;
 			width: 100%;
 			white-space: nowrap;
 		}
-		.d2l-navigation-mobile-course-arrow {
-			color: var(--d2l-color-tungsten);
-			-ms-flex: 0 0 auto;
-			-webkit-flex: 0 0 auto;
-			flex: 0 0 auto;
-			height: 14px;
-			width: 14px;
-		}
 	</style>
 	<template>
-		<a class="d2l-navigation-gutters d2l-navigation-link" href$="[[orgUnitHome]]">
+		<a class="d2l-navigation-link" href$="[[orgUnitHome]]">
 			<div>[[orgUnitName]]</div>
-			<iron-icon
-				icon="navigation-t1:arrow-right"
-				class="d2l-navigation-mobile-course-arrow"></iron-icon>
 		</a>
 	</template>
 </dom-module>
