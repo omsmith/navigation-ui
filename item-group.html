@@ -101,7 +101,7 @@
 			select: '_handleLinkSelect'
 		},
 		_computeGroupText: function(item) {
-			if(item.properties.text) {
+			if (item.properties.text) {
 				return item.properties.text;
 			}
 			return '';
@@ -109,9 +109,12 @@
 		_computeLinks: function(item) {
 			var links = [];
 
-			if(item.entities.length > 0) {
+			if (item.entities.length > 0) {
 				item.entities.forEach(function(entity) {
-					if(entity.class.indexOf('link') > -1) {
+					if (
+						(entity.class.indexOf('link') > -1) ||
+						(entity.class.indexOf('popup') > -1)
+					) {
 						links.push(entity);
 					}
 				});

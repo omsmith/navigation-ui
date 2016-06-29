@@ -98,12 +98,12 @@
 		},
 		_handleSelect: function(event) {
 			var item = Polymer.dom(event).rootTarget.item;
-			if(this.isItemLink(item)) {
+			if (this.isItemLink(item)) {
 				this.onItemLinkClick(item, true);
 			}
 		},
 		_handleHideOrShow: function() {
-			isActive = this.$$('d2l-menu').isActive();
+			var isActive = this.$$('d2l-menu').isActive();
 			Polymer.dom(this.$$('.d2l-navigation-mobile-header-wrapper')).node.style.display =
 				(isActive) ? 'block' : 'none'; // todo: nicer transition animation
 		}
