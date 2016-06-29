@@ -8,12 +8,12 @@
 			-webkit-align-items: center;
 			-ms-flex-align: center;
 			align-items: center;
-			border-top: 4px solid var(--d2l-color-pressicus);
 			border-bottom: 1px solid var(--d2l-color-gypsum);
 			display: -ms-flexbox;
 			display: -webkit-flex;
 			display: flex;
 			height: var(--d2l-navigation-header-height);
+			padding: 0 1rem;
 		}
 		@media(max-width: 615px) {
 			:host {
@@ -47,12 +47,12 @@
 		}
 	</style>
 	<template>
-		<div class="d2l-navigation-mobile-menu-org-text">menu</div>
+		<div class="d2l-navigation-mobile-menu-org-text">menu</div> <!--todo: localize-->
 		<div class="d2l-navigation-mobile-menu-home">
 			<button
 				is="d2l-navigation-button"
 				icon="navigation-t3:home"
-				on-tap="handleMyHome">home</button>
+				on-tap="handleMyHome">home</button> <!--todo: localize-->
 		</div>
 		<button
 			is="d2l-navigation-button"
@@ -60,22 +60,14 @@
 			has-outline
 			class="d2l-navigation-mobile-menu-close"
 			icon="navigation-t3:close"
-			on-tap="close">Close</button>
+			on-tap="close">Close</button> <!--todo: localize-->
 	</template>
 </dom-module>
 <script>
 	Polymer({
 		is: 'd2l-navigation-mobile-header',
 		properties: {
-			bandColor: {
-				type: String,
-				value: '#b9c2d0',
-				observer: '_bandColorChanged'
-			},
 			myHome: String
-		},
-		_bandColorChanged: function() {
-			this.style.borderTopColor = this.bandColor;
 		},
 		close: function() {
 			this.fire('d2l-navigation-close-menu');

@@ -25,6 +25,21 @@ var NavigationItemLinkBehavior = {
 			return item.title;
 		}
 	},
+	isItemGroup: function(item) {
+		return (
+			item &&
+			item.class &&
+			(item.class.indexOf('group') > -1)
+		);
+	},
+	isItemLink: function(item) {
+		return (
+			item &&
+			item.class &&
+			(item.class.indexOf('item') > -1) &&
+			!this.isItemGroup(item)
+		);
+	},
 	onItemLinkClick: function(item, handleRegularLink) {
 		if (item.class.indexOf('popup') > -1) {
 			this._onClickPopup(item);
