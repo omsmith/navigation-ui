@@ -3,8 +3,8 @@
 (function() {
 	'use strict';
 
-/** @polymerBehavior D2L.PolymerBehaviors.NavigationItemLinkBehavior */
-	var NavigationItemLinkBehavior = {
+/** @polymerBehavior D2L.PolymerBehaviors.Navigation.ItemLinkBehavior */
+	var ItemLinkBehavior = {
 		getItemLinkHref: function(item) {
 			var href = undefined;
 			if (item.class.indexOf('item') > -1) {
@@ -123,7 +123,8 @@
 
 	window.D2L = window.D2L || {};
 	window.D2L.PolymerBehaviors = window.D2L.PolymerBehaviors || {};
+	window.D2L.PolymerBehaviors.Navigation = window.D2L.PolymerBehaviors.Navigation || {};
 	/** @polymerBehavior */
-	window.D2L.PolymerBehaviors.NavigationItemLinkBehavior = [NavigationItemLinkBehavior];
+	window.D2L.PolymerBehaviors.Navigation.ItemLinkBehavior = [ItemLinkBehavior];
 })();
 </script>

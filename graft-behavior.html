@@ -4,8 +4,8 @@
 (function() {
 	'use strict';
 
-	/** @polymerBehavior D2L.PolymerBehaviors.NavigationGraftBehavior */
-	var NavigationGraftBehavior = {
+	/** @polymerBehavior D2L.PolymerBehaviors.Navigation.GraftBehavior */
+	var GraftBehavior = {
 		properties: {
 			graftLocation: String,
 			_partialled: {
@@ -43,10 +43,11 @@
 
 	window.D2L = window.D2L || {};
 	window.D2L.PolymerBehaviors = window.D2L.PolymerBehaviors || {};
+	window.D2L.PolymerBehaviors.Navigation = window.D2L.PolymerBehaviors.Navigation || {};
 	/** @polymerBehavior */
-	window.D2L.PolymerBehaviors.NavigationGraftBehavior = [
-		window.D2L.PolymerBehaviors.NavigationFindPageObjectBehavior,
-		NavigationGraftBehavior
+	window.D2L.PolymerBehaviors.Navigation.GraftBehavior = [
+		window.D2L.PolymerBehaviors.Navigation.FindPageObjectBehavior,
+		GraftBehavior
 	];
 })();
 </script>
