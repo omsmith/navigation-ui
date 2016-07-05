@@ -1,77 +1,24 @@
 <link rel="import" href="../polymer/polymer.html">
-<link rel="import" href="../d2l-colors/d2l-colors.html">
 <link rel="import" href="../d2l-dropdown/d2l-dropdown-menu.html">
 <link rel="import" href="../d2l-dropdown/d2l-menu-item.html">
 <link rel="import" href="../d2l-icons/tier1-icons.html">
+<link rel="import" href="shared-styles.html">
+<link rel="import" href="item-link-behavior.html">
+<link rel="import" href="group-button.html">
 <dom-module id="d2l-navigation-item-group">
-	<style include="d2l-colors">
+	<style include="d2l-navigation-shared-styles">
 		:host {
-			display: inline-block;
-			padding: 20px 20px 20px 0;
+			@apply(--d2l-navigation-item);
 		}
 		:host-context([dir='rtl']) {
-			padding-left: 20px;
-			padding-right: 0;
-		}
-		.d2l-navigation-item-group-opener {
-			background: none;
-			border: 0;
-			color: inherit;
-			font-family: inherit;
-			font-size: inherit;
-			font-weight: inherit;
-			margin: 0;
-			padding: 0;
-		}
-		.d2l-navigation-item-group-wrapper {
-			-webkit-align-items: center;
-			-moz-align-items: center;
-			-ms-align-items: center;
-			align-items: center;
-			display: -webkit-inline-box;
-			display: -moz-inline-box;
-			display: -ms-inline-flexbox;
-			display: -webkit-inline-flex;
-			display: inline-flex;
-			-webkit-flex-wrap: nowrap;
-			-moz-flex-wrap: nowrap;
-			-ms-flex-wrap: nowrap;
-			flex-wrap: nowrap;
-		}
-		.d2l-navigation-item-group-opener:hover,
-		.d2l-navigation-item-group-opener:focus,
-		.d2l-navigation-item-group-opener:hover .d2l-navigation-item-group-arrow,
-		.d2l-navigation-item-group-opener:focus .d2l-navigation-item-group-arrow {
-			color: var(--d2l-color-celestine);
-			cursor: pointer;
-		}
-		.d2l-navigation-item-group-opener:hover .d2l-navigation-item-group-text,
-		.d2l-navigation-item-group-opener:focus .d2l-navigation-item-group-text {
-			text-decoration: underline;
-		}
-		.d2l-navigation-item-group-text {
-			margin-right: 0.3rem;
-		}
-		:host-context([dir='rtl']) .d2l-navigation-item-group-text {
-			margin-left: 0.3rem;
-			margin-right: 0;
-		}
-		.d2l-navigation-item-group-arrow {
-			color: var(--d2l-color-tungsten);
-			height: 15px;
-			width: 15px;
+			@apply(--d2l-navigation-item-rtl);
 		}
 		.d2l-navigation-item-group-menu {
-			width: 12.5rem;
+			@apply(--d2l-navigation-item-dropdown);
 		}
 	</style>
 	<template>
-		<button on-tap="_handleOpenerTap" class="d2l-navigation-item-group-opener">
-			<div class="d2l-navigation-item-group-wrapper">
-				<span class="d2l-navigation-item-group-text">{{groupText}}</span>
-				<iron-icon icon="d2l-tier1:chevron-down" class="d2l-navigation-item-group-arrow"></iron-icon>
-			</div>
-		</button>
+		<button is="d2l-navigation-group" on-tap="_handleOpenerTap">[[groupText]]</button>
 		<d2l-dropdown-menu class="d2l-navigation-item-group-menu">
 			<template is="dom-repeat" items="{{links}}">
 				<d2l-menu-item text="{{getItemLinkText(item)}}" data-index$="{{index}}"></d2l-menu-item>
@@ -122,7 +69,7 @@
 			return links;
 		},
 		_handleOpenerTap: function() {
-			var opener = this.$$('.d2l-navigation-item-group-opener');
+			var opener = this.$$('button');
 			var menu = this.$$('.d2l-navigation-item-group-menu');
 			menu.open(opener);
 		},
