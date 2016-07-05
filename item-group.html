@@ -18,9 +18,7 @@
 		}
 	</style>
 	<template>
-		<button is="d2l-navigation-more-group"
-			on-tap="_handleOpenerTap"
-			text="[[groupText]]"></button>
+		<button is="d2l-navigation-group" on-tap="_handleOpenerTap">[[groupText]]</button>
 		<d2l-dropdown-menu class="d2l-navigation-item-group-menu">
 			<template is="dom-repeat" items="{{links}}">
 				<d2l-menu-item text="{{getItemLinkText(item)}}" data-index$="{{index}}"></d2l-menu-item>

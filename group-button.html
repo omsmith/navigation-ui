@@ -1,6 +1,6 @@
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../d2l-colors/d2l-colors.html">
-<dom-module id="d2l-navigation-more-group">
+<dom-module id="d2l-navigation-group">
 	<style include="d2l-colors">
 		:host {
 			background: none;
@@ -56,17 +56,14 @@
 	</style>
 	<template>
 		<div class="d2l-navigation-group-wrapper">
-			<span class="d2l-navigation-group-text">[[text]]</span>
+			<span class="d2l-navigation-group-text"><content></content></span>
 			<iron-icon icon="d2l-tier1:chevron-down" class="d2l-navigation-group-arrow"></iron-icon>
 		</div>
 	</template>
 </dom-module>
 <script>
 	Polymer({
-		is: 'd2l-navigation-more-group',
-		extends: 'button',
-		properties: {
-			text: String
-		}
+		is: 'd2l-navigation-group',
+		extends: 'button'
 	});
 </script>
