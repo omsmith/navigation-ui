@@ -5,12 +5,10 @@
 <dom-module id="d2l-navigation-item-link">
 	<style include="d2l-navigation-shared-styles">
 		:host {
-			display: inline-block;
-			padding: 20px 20px 20px 0;
+			@apply(--d2l-navigation-item);
 		}
 		:host-context([dir='rtl']) {
-			padding-left: 20px;
-			padding-right: 0;
+			@apply(--d2l-navigation-item-rtl);
 		}
 	</style>
 	<template>
