@@ -6,6 +6,7 @@
 <link rel="import" href="item-link.html">
 <link rel="import" href="item-group.html">
 <link rel="import" href="item-link-behavior.html">
+<link rel="import" href="more-group.html">
 <dom-module id="d2l-navigation-resolved">
 	<style include="d2l-colors">
 		:host {
@@ -24,6 +25,9 @@
 				display: none;
 			}
 		}
+		d2l-navigation-more-group {
+			display: none;
+		}
 	</style>
 	<template>
 		<nav>
@@ -41,6 +45,7 @@
 				personal-menu-location="[[personalMenuLocation]]"></d2l-navigation-header>
 			<div class="d2l-navigation-row2">
 				<d2l-navigation-centerer>
+					<d2l-navigation-more-group items="[[items]]"></d2l-navigation-more-group>
 					<template is="dom-repeat" items="{{items}}">
 						<template is="dom-if" if="{{isItemGroup(item)}}">
 							<d2l-navigation-item-group item={{item}}></d2l-navigation-item-group>

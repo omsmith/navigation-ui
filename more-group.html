@@ -1,0 +1,63 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="shared-styles.html">
+<link rel="import" href="item-link-behavior.html">
+<link rel="import" href="group-button.html">
+<dom-module id="d2l-navigation-more-group">
+	<style include="d2l-navigation-shared-styles">
+		:host {
+			@apply(--d2l-navigation-item);
+		}
+		:host-context([dir='rtl']) {
+			@apply(--d2l-navigation-item-rtl);
+		}
+		.d2l-navigation-item-group-menu {
+			@apply(--d2l-navigation-item-dropdown);
+		}
+	</style>
+	<template>
+		<button is="d2l-navigation-group" on-tap="_handleOpenerTap">More</button> <!-- todo: needs to be localized -->
+		<d2l-dropdown-menu class="d2l-navigation-more-group-menu">
+			<template is="dom-repeat" items="{{items}}">
+				 <d2l-menu-item text="{{getItemLinkText(item)}}" item="{{item}}">
+					 <template is="dom-if" if="{{isItemGroup(item)}}">
+						 <d2l-menu label="{{getItemLinkText(item)}}">
+							 <template is="dom-repeat" items="{{item.entities}}">
+								 <template is="dom-if" if="{{isItemLink(item)}}">
+									 <d2l-menu-item
+										 text="{{getItemLinkText(item)}}"
+										 item="{{item}}"></d2l-menu-item>
+								 </template>
+							 </template>
+						 </d2l-menu>
+					 </template>
+				 </d2l-menu-item>
+			 </template>
+		 </d2l-dropdown-menu>
+	</template>
+</dom-module>
+<script>
+	Polymer({
+		is: 'd2l-navigation-more-group',
+		behaviors: [window.D2L.PolymerBehaviors.NavigationItemLinkBehavior],
+		properties: {
+			items: Array
+		},
+		hostAttributes: {
+			role: 'listitem'
+		},
+		listeners: {
+			'select': '_handleSelect'
+		},
+		_handleOpenerTap: function() {
+			var opener = this.$$('button');
+			var menu = this.$$('.d2l-navigation-more-group-menu');
+			menu.open(opener);
+		},
+		_handleSelect: function(event) {
+			var item = Polymer.dom(event).rootTarget.item;
+			if (this.isItemLink(item)) {
+				this.onItemLinkClick(item, true);
+			}
+		}
+	});
+</script>
