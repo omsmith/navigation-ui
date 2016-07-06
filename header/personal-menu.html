@@ -72,24 +72,13 @@
 	Polymer({
 		is: 'd2l-navigation-personal-menu',
 		properties: {
-			userHref: String,
+			userHref: {
+				type: String,
+				observer: '_userHrefChanged'
+			},
 			displayName: String
 		},
 		behaviors: [window.D2L.PolymerBehaviors.Navigation.GraftDropdownBehavior],
-		ready: function() {
-			if (!this.userHref) {
-				return;
-			}
-			document.createElement('iron-request')
-				.send({url: this.userHref, handleAs: 'json'})
-				.then(function(res) {
-					this._handleUserResponse(res.response);
-				}.bind(this))
-				.catch(function() {
-					this.fire('data-ready');
-					//to do: do anything?
-				}.bind(this));
-		},
 		_getThumbnail: function() {
 			return this.$$('.d2l-navigation-personal-menu-thumbnail');
 		},
@@ -129,6 +118,16 @@
 				var thumbnailDefault = this._getThumbnailDefault();
 				thumbnailDefault.style.display = 'block';
 			}
+		},
+		_userHrefChanged: function(newHref) {
+			document.createElement('iron-request')
+				.send({url: newHref, handleAs: 'json'})
+				.then(function(res) {
+					this._handleUserResponse(res.response);
+				}.bind(this))
+				.catch(function() {
+					this.fire('data-ready');
+				}.bind(this));
 		}
 	});
 </script>
