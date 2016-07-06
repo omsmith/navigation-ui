@@ -46,7 +46,10 @@
 				type: Number,
 				value: 200
 			},
-			href: String,
+			href: {
+				type: String,
+				observer: '_hrefChanged'
+			},
 			userHref: String,
 			hasAdminMenu: Boolean,
 			isOrg: {
@@ -105,8 +108,8 @@
 			});
 			return result;
 		},
-		ready: function() {
-			this.load(true);
+		_hrefChanged: function() {
+			this.load();
 		},
 		handleNavResponse: function(res) {
 			res.links.forEach(function(l) {
@@ -151,7 +154,7 @@
 			this.themeColor = res.properties.BackgroundColor;
 			this.updateLoading();
 		},
-		load: function(firstLoad) {
+		load: function() {
 			if (this.loading) {
 				return;
 			}
@@ -167,9 +170,6 @@
 				.catch(function() {
 					this.updateLoading();
 				}.bind(this));
-			if (!firstLoad) {
-				this.$$('d2l-page-load-progress').start();
-			}
 		}
 	});
 </script>
