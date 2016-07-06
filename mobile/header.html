@@ -2,6 +2,7 @@
 <link rel="import" href="../../d2l-colors/d2l-colors.html">
 <link rel="import" href="../button.html">
 <link rel="import" href="../icons.html">
+<link rel="import" href="../localize-behavior.html">
 <dom-module id="d2l-navigation-mobile-header">
 	<style include="d2l-colors">
 		:host {
@@ -47,12 +48,12 @@
 		}
 	</style>
 	<template>
-		<div class="d2l-navigation-mobile-menu-org-text">menu</div> <!--todo: localize-->
+		<div class="d2l-navigation-mobile-menu-org-text">{{localize('menu')}}</div>
 		<div class="d2l-navigation-mobile-menu-home">
 			<button
 				is="d2l-navigation-button"
 				icon="navigation-t3:home"
-				on-tap="handleMyHome">home</button> <!--todo: localize-->
+				on-tap="handleMyHome">{{localize('home')}}</button>
 		</div>
 		<button
 			is="d2l-navigation-button"
@@ -60,12 +61,15 @@
 			has-outline
 			class="d2l-navigation-mobile-menu-close"
 			icon="navigation-t3:close"
-			on-tap="close">Close</button> <!--todo: localize-->
+			on-tap="close">{{localize('close')}}</button>
 	</template>
 </dom-module>
 <script>
 	Polymer({
 		is: 'd2l-navigation-mobile-header',
+		behaviors: [
+			window.D2L.PolymerBehaviors.Navigation.LocalizeBehavior
+		],
 		properties: {
 			myHome: String
 		},

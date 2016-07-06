@@ -3,6 +3,7 @@
 <link rel="import" href="../button-highlight-icon.html">
 <link rel="import" href="../graft-dropdown-behavior.html">
 <link rel="import" href="../icons.html">
+<link rel="import" href="../localize-behavior.html">
 <dom-module id="d2l-navigation-admin-menu">
 	<style>
 	:host {
@@ -25,13 +26,16 @@
 		<button
 			is="d2l-navigation-button-highlight-icon"
 			icon="navigation-t3:gear"
-			text="Admin Tools"></button>
+			text="{{localize('adminTools')}}"></button>
 		<d2l-dropdown vertical-offset="-5" horizontal-offset="-22"></d2l-dropdown>
 	</template>
 </dom-module>
 <script>
 	Polymer({
 		is: 'd2l-navigation-admin-menu',
-		behaviors: [window.D2L.PolymerBehaviors.Navigation.GraftDropdownBehavior]
+		behaviors: [
+			window.D2L.PolymerBehaviors.Navigation.LocalizeBehavior,
+			window.D2L.PolymerBehaviors.Navigation.GraftDropdownBehavior
+		]
 	});
 </script>
