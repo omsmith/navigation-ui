@@ -1,0 +1,67 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../d2l-colors/d2l-colors.html">
+<link rel="import" href="centerer.html">
+<link rel="import" href="item-link.html">
+<link rel="import" href="item-group.html">
+<link rel="import" href="item-link-behavior.html">
+<link rel="import" href="more-group.html">
+<dom-module id="d2l-navigation-main">
+	<style include="d2l-colors">
+		:host {
+			border-bottom: 1px solid var(--d2l-color-gypsum);
+			display: block;
+			height: calc(1rem + 40px);
+			overflow: hidden;
+		}
+		:host([aria-hidden]) {
+			bottom: 0;
+			display: none;
+			left: -10000px;
+			position: fixed;
+			width: 100%;
+		}
+		/*:host([debugging]) {
+			background-color: orange;
+			display: block;
+			left: 0;
+		}*/
+		d2l-navigation-more-group {
+			display: none;
+		}
+	</style>
+	<template>
+	  <d2l-navigation-centerer>
+	    <d2l-navigation-more-group items="[[items]]"></d2l-navigation-more-group>
+	    <template is="dom-repeat" items="[[items]]" on-dom-change="_handleDomChange">
+	      <template is="dom-if" if="[[isItemGroup(item)]]">
+	        <d2l-navigation-item-group item=[[item]]></d2l-navigation-item-group>
+	      </template>
+	      <template is="dom-if" if="[[isItemLink(item)]]">
+	        <d2l-navigation-item-link item="[[item]]"></d2l-navigation-item-link>
+	      </template>
+	    </template>
+	  </d2l-navigation-centerer>
+	</template>
+</dom-module>
+<script>
+	Polymer({
+		is: 'd2l-navigation-main',
+		properties: {
+			items: Array,
+			itemCount: 0,
+			_navItems: Array
+		},
+		behaviors: [window.D2L.PolymerBehaviors.Navigation.ItemLinkBehavior],
+		_handleDomChange: function() {
+			this.async(function() {
+				this._navItems = Polymer.dom(this.root).querySelectorAll(
+					'd2l-navigation-item-link,d2l-navigation-item-group'
+				);
+				this.itemCount = this._navItems.length;
+				if (this.itemCount > 0) {
+					this.fire('d2l-navigation-main-items-available');
+				}
+			});
+		}
+	});
+</script>
