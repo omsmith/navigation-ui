@@ -2,6 +2,7 @@
 <link rel="import" href="../button-highlight-icon.html">
 <link rel="import" href="../divider.html">
 <link rel="import" href="../icons.html">
+<link rel="import" href="../localize-behavior.html">
 <link rel="import" href="../shared-styles.html">
 <link rel="import" href="course-menu.html">
 <dom-module id="d2l-navigation-header-course">
@@ -43,7 +44,7 @@
 			icon="navigation-t3:home"
 			on-tap="_handleMyHome"
 			class="d2l-navigation-header-course-home"
-			text="My Home"></button>
+			text="{{localize('myHome')}}"></button>
 		<d2l-navigation-divider></d2l-navigation-divider>
 		<a href$="[[orgUnitHome]]" class="d2l-navigation-link">
 			[[orgUnitName]]
@@ -56,6 +57,9 @@
 <script>
 	Polymer({
 		is: 'd2l-navigation-header-course',
+		behaviors: [
+			window.D2L.PolymerBehaviors.Navigation.LocalizeBehavior
+		],
 		properties: {
 			courseMenuLocation: String,
 			myHome: String,

@@ -20,7 +20,9 @@
 			is="d2l-navigation-button-highlight-icon"
 			icon="{{icon}}"
 			text="{{text}}">
-			<d2l-navigation-notification-indicator visible="[[updates]]"></d2l-navigation-notification-indicator>
+			<d2l-navigation-notification-indicator
+				text="{{text}}"
+				visible="[[updates]]"></d2l-navigation-notification-indicator>
 		</button>
 		<d2l-dropdown on-open="_onDropdownOpen" vertical-offset="-5" horizontal-offset="-24"></d2l-dropdown>
 	</template>
