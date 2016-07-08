@@ -44,7 +44,7 @@
 			<d2l-navigation-main
 				aria-hidden
 				role$="presentation"
-				items="[[items]]"></d2l-navigation-main>
+				items="[[items]]" debugging></d2l-navigation-main>
 		</nav>
 	</template>
 </dom-module>
@@ -81,6 +81,7 @@
 		ready: function() {
 			this._navMainViewable = this.$$('d2l-navigation-main:not([aria-hidden])');
 			this._navMainHidden = this.$$('d2l-navigation-main[aria-hidden]');
+			window.addEventListener('resize', this._chompMainNav.bind(this), true);
 		},
 		openMenu: function(e) {
 			this.$$('d2l-navigation-mobile-menu').open(e.detail.opener);
@@ -89,10 +90,26 @@
 			this._navMainViewable.scrollTop = 0;
 		},
 		_handleItemsAvailable: function() {
-			if (this._navMainViewable.itemCount && this._navMainHidden.itemCount) {
-				//console.log(Polymer.dom(this._navMainViewable).node.offsetWidth);
-				//console.log(Polymer.dom(this._navMainHidden).node.offsetWidth);
-				//console.log('ready to chomp!');
+			if (this._navMainViewable.getItemCount() && this._navMainHidden.getItemCount()) {				
+				var me = this;
+				setTimeout(function() {
+					me._chompMainNav();
+				}, 10);
+			}
+		},
+		_chompMainNav: function() {
+			var mainViewable = this._navMainViewable,
+				mainHidden = this._navMainHidden;
+
+			mainHidden.hiddenChomp();
+			mainViewable.showStartingItems(mainHidden.getItemsShowingCount());
+
+			if (mainHidden.getIsMoreGroupShowing()) {
+				Polymer.dom(mainViewable).node.setAttribute('justify-space-between', 'true');
+				mainViewable.showMainGroup();
+			} else {
+				mainViewable.hideMainGroup();
+				Polymer.dom(mainViewable).node.removeAttribute('justify-space-between');
 			}
 		}
 	});
