@@ -20,7 +20,7 @@
 			position: fixed;
 			width: 100%;
 		}
-		:host([justify-space-between]) .d2l-navigation-main-wrapper {
+		:host([justify-content]) .d2l-navigation-main-wrapper {
 			-webkit-align-items: center;
 			-moz-align-items: center;
 			-ms-align-items: center;
@@ -38,11 +38,6 @@
 			-moz-flex-wrap: nowrap;
 			-ms-flex-wrap: nowrap;
 			flex-wrap: nowrap;
-		}
-		:host([debugging]) {
-			background-color: orange;
-			display: block;
-			left: 0;
 		}
 	</style>
 	<template>
@@ -73,28 +68,14 @@
 		ready: function() {
 			this._moreGroup = this.$$('d2l-navigation-more-group');
 		},
-		getItemCount: function() {
-			return this._navItems.length;
-		},
-		getItemsShowingCount: function() {
-			var result = 0;
-			this._navItems.forEach(function(navItem) {
-				if (Polymer.dom(navItem).node.style.display !== 'none') {
-					result++;
-				}
-			});
-			return result;
-		},
-		getIsMoreGroupShowing: function() {
-			return Polymer.dom(this._moreGroup).node.style.display !== 'none';
-		},
-		hiddenChomp: function() {
-			// todo: if this is aria-hiden ensure it is shown to start
+		chomp: function() {
 			var navItems = this._navItems,
-				navItemsLength = this.getItemCount();
+				navItemsLength = this._navItems.length;
+
+			Polymer.dom(this).node.removeAttribute('justify-content');
 
 			if (navItemsLength === 0) {
-				this.hideMainGroup();
+				this._hideMainGroup();
 				return undefined;
 			}
 
@@ -102,34 +83,29 @@
 			var lastNavItem = navItems[navItemsLength - 1];
 
 			if (this._isOnFirstRow(lastNavItem)) {
-				this.hideMainGroup();
+				this._hideMainGroup();
 				return undefined;
 			}
 
-			this.showMainGroup();
+			this._showMainGroup();
 			var index = navItemsLength - 1;
 			while (!this._isOnFirstRow(this._moreGroup)) {
 				this._hideItem(navItems[index]);
 				index--;
 			}
-			// todo: if this is aria-hiden & not debugging? ensure it is hidden again
+			Polymer.dom(this).node.setAttribute('justify-content', 'justify-content');
 		},
-		showStartingItems: function(numItems) {
-			this._navItems.forEach(function(navItem, index) {
-				Polymer.dom(navItem).node.style.display =
-					(index < numItems) ? 'inline-block' : 'none';
-			});
-		},
-		showMainGroup: function() {
+		_showMainGroup: function() {
 			Polymer.dom(this._moreGroup).node.style.display = 'inline-block';
 		},
-		hideMainGroup: function() {
+		_hideMainGroup: function() {
 			Polymer.dom(this._moreGroup).node.style.display = 'none';
 		},
 		_isOnFirstRow: function(navItem) {
-			var baseOffsetTop = Polymer.dom(this._navItems[0]).node.offsetTop;
-			var result = (Polymer.dom(navItem).node.offsetTop === baseOffsetTop);
-			return result;
+			var baseOffsetTop = Polymer.dom(this._navItems[0]).node.offsetTop,
+				itemOffsetTop = Polymer.dom(navItem).node.offsetTop,
+				OFFSET_TOLERANCE =  10;
+			return (Math.abs(baseOffsetTop - itemOffsetTop) < OFFSET_TOLERANCE);
 		},
 		_showAllItems: function() {
 			this._navItems.forEach(function(navItem) {
@@ -144,7 +120,7 @@
 				this._navItems = Polymer.dom(this.root).querySelectorAll(
 					'd2l-navigation-item-link,d2l-navigation-item-group'
 				);
-				if (this.getItemCount() > 0) {
+				if (this._navItems.length > 0) {
 					this.fire('d2l-navigation-main-items-available');
 				}
 			});
