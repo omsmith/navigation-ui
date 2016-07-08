@@ -93,6 +93,8 @@
 				this._hideItem(navItems[index]);
 				index--;
 			}
+
+			this._moreGroup.showAndHideItems(index + 1);
 			Polymer.dom(this).node.setAttribute('justify-content', 'justify-content');
 		},
 		_showMainGroup: function() {
