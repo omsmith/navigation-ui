@@ -20,26 +20,44 @@
 			position: fixed;
 			width: 100%;
 		}
-		/*:host([debugging]) {
+		:host([justify-space-between]) .d2l-navigation-main-wrapper {
+			-webkit-align-items: center;
+			-moz-align-items: center;
+			-ms-align-items: center;
+			align-items: center;
+			display: -webkit-box;
+			display: -moz-box;
+			display: -ms-flexbox;
+			display: -webkit-flex;
+			display: flex;
+			-webkit-justify-content: space-between;
+			-moz-align-justify-content: space-between;
+			-ms-align-justify-content: space-between;
+			justify-content: space-between;
+			-webkit-flex-wrap: nowrap;
+			-moz-flex-wrap: nowrap;
+			-ms-flex-wrap: nowrap;
+			flex-wrap: nowrap;
+		}
+		:host([debugging]) {
 			background-color: orange;
 			display: block;
 			left: 0;
-		}*/
-		d2l-navigation-more-group {
-			display: none;
 		}
 	</style>
 	<template>
 	  <d2l-navigation-centerer>
-	    <d2l-navigation-more-group items="[[items]]"></d2l-navigation-more-group>
-	    <template is="dom-repeat" items="[[items]]" on-dom-change="_handleDomChange">
-	      <template is="dom-if" if="[[isItemGroup(item)]]">
-	        <d2l-navigation-item-group item=[[item]]></d2l-navigation-item-group>
-	      </template>
-	      <template is="dom-if" if="[[isItemLink(item)]]">
-	        <d2l-navigation-item-link item="[[item]]"></d2l-navigation-item-link>
-	      </template>
-	    </template>
+			<div class="d2l-navigation-main-wrapper">
+				<template is="dom-repeat" items="[[items]]" on-dom-change="_handleDomChange">
+					<template is="dom-if" if="[[isItemGroup(item)]]">
+						<d2l-navigation-item-group item=[[item]]></d2l-navigation-item-group>
+					</template>
+					<template is="dom-if" if="[[isItemLink(item)]]">
+						<d2l-navigation-item-link item="[[item]]"></d2l-navigation-item-link>
+					</template>
+				</template>
+				<d2l-navigation-more-group items="[[items]]"></d2l-navigation-more-group>
+			</div>
 	  </d2l-navigation-centerer>
 	</template>
 </dom-module>
