@@ -66,17 +66,85 @@
 		is: 'd2l-navigation-main',
 		properties: {
 			items: Array,
-			itemCount: 0,
-			_navItems: Array
+			_navItems: Array,
+			_moreGroup: Object
 		},
 		behaviors: [window.D2L.PolymerBehaviors.Navigation.ItemLinkBehavior],
+		ready: function() {
+			this._moreGroup = this.$$('d2l-navigation-more-group');
+		},
+		getItemCount: function() {
+			return this._navItems.length;
+		},
+		getItemsShowingCount: function() {
+			var result = 0;
+			this._navItems.forEach(function(navItem) {
+				if (Polymer.dom(navItem).node.style.display !== 'none') {
+					result++;
+				}
+			});
+			return result;
+		},
+		getIsMoreGroupShowing: function() {
+			return Polymer.dom(this._moreGroup).node.style.display !== 'none';
+		},
+		hiddenChomp: function() {
+			// todo: if this is aria-hiden ensure it is shown to start
+			var navItems = this._navItems,
+				navItemsLength = this.getItemCount();
+
+			if (navItemsLength === 0) {
+				this.hideMainGroup();
+				return undefined;
+			}
+
+			this._showAllItems();
+			var lastNavItem = navItems[navItemsLength - 1];
+
+			if (this._isOnFirstRow(lastNavItem)) {
+				this.hideMainGroup();
+				return undefined;
+			}
+
+			this.showMainGroup();
+			var index = navItemsLength - 1;
+			while (!this._isOnFirstRow(this._moreGroup)) {
+				this._hideItem(navItems[index]);
+				index--;
+			}
+			// todo: if this is aria-hiden & not debugging? ensure it is hidden again
+		},
+		showStartingItems: function(numItems) {
+			this._navItems.forEach(function(navItem, index) {
+				Polymer.dom(navItem).node.style.display =
+					(index < numItems) ? 'inline-block' : 'none';
+			});
+		},
+		showMainGroup: function() {
+			Polymer.dom(this._moreGroup).node.style.display = 'inline-block';
+		},
+		hideMainGroup: function() {
+			Polymer.dom(this._moreGroup).node.style.display = 'none';
+		},
+		_isOnFirstRow: function(navItem) {
+			var baseOffsetTop = Polymer.dom(this._navItems[0]).node.offsetTop;
+			var result = (Polymer.dom(navItem).node.offsetTop === baseOffsetTop);
+			return result;
+		},
+		_showAllItems: function() {
+			this._navItems.forEach(function(navItem) {
+				Polymer.dom(navItem).node.style.display = 'inline-block';
+			});
+		},
+		_hideItem: function(navItem) {
+			Polymer.dom(navItem).node.style.display = 'none';
+		},
 		_handleDomChange: function() {
 			this.async(function() {
 				this._navItems = Polymer.dom(this.root).querySelectorAll(
 					'd2l-navigation-item-link,d2l-navigation-item-group'
 				);
-				this.itemCount = this._navItems.length;
-				if (this.itemCount > 0) {
+				if (this.getItemCount() > 0) {
 					this.fire('d2l-navigation-main-items-available');
 				}
 			});
