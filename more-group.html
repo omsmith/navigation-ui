@@ -10,6 +10,10 @@
 		:host-context([dir='rtl']) {
 			@apply(--d2l-navigation-item-rtl);
 		}
+		:host-context([justify-content]) {
+			margin-left: 0;
+			margin-right: 0;
+		}
 		.d2l-navigation-item-group-menu {
 			@apply(--d2l-navigation-item-dropdown);
 		}
@@ -55,9 +59,9 @@
 			var items = Polymer.dom(this.root).querySelectorAll('d2l-menu-item.d2l-navigation-more-group-first-level');
 			items.forEach(function(item, index) {
 				if (index < startingIndex) {
-					Polymer.dom(item).node.style.display = 'none';
+					Polymer.dom(item).node.setAttribute('hidden', 'hidden');
 				} else {
-					Polymer.dom(item).node.style.display = 'inline-block';
+					Polymer.dom(item).node.removeAttribute('hidden');
 				}
 			});
 		},
