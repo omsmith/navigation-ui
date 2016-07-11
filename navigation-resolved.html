@@ -65,7 +65,8 @@
 			orgUnitHome: String,
 			orgUnitName: String,
 			userHref: String,
-			personalMenuLocation: String
+			personalMenuLocation: String,
+			_onResize: Function
 		},
 		listeners: {
 			'd2l-navigation-open-menu': 'openMenu',
@@ -73,7 +74,11 @@
 			'd2l-navigation-main-items-available': '_handleItemsAvailable'
 		},
 		attached: function() {
-			window.addEventListener('resize', this._chompMainNav.bind(this), true);
+			this._onResize = this._chompMainNav.bind(this);
+			window.addEventListener('resize', this._onResize, true);
+		},
+		detached: function() {
+			window.removeEventListener('resize', this._onResize, true);
 		},
 		openMenu: function(e) {
 			this.$$('d2l-navigation-mobile-menu').open(e.detail.opener);
