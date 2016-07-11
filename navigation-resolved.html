@@ -65,35 +65,17 @@
 			orgUnitHome: String,
 			orgUnitName: String,
 			userHref: String,
-			personalMenuLocation: String,
-			_onResize: Function
+			personalMenuLocation: String
 		},
 		listeners: {
 			'd2l-navigation-open-menu': 'openMenu',
-			'_focus': '_handleFocus',
-			'd2l-navigation-main-items-available': '_handleItemsAvailable'
-		},
-		attached: function() {
-			this._onResize = this._chompMainNav.bind(this);
-			window.addEventListener('resize', this._onResize, true);
-		},
-		detached: function() {
-			window.removeEventListener('resize', this._onResize, true);
+			'_focus': '_handleFocus'
 		},
 		openMenu: function(e) {
 			this.$$('d2l-navigation-mobile-menu').open(e.detail.opener);
 		},
 		_handleFocus: function() {
 			this.$$('d2l-navigation-main').scrollTop = 0; // Chrome browser workaround
-		},
-		_handleItemsAvailable: function() {
-			var me = this;
-			setTimeout(function() {
-				me._chompMainNav();
-			}, 10); // Firefox seems to need a few extra ms
-		},
-		_chompMainNav: function() {
-			this.$$('d2l-navigation-main').chomp();
 		}
 	});
 </script>

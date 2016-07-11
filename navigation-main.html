@@ -55,13 +55,21 @@
 		properties: {
 			items: Array,
 			_navItems: Array,
-			_moreGroup: Object
+			_moreGroup: Object,
+			_onResize: Function
 		},
 		behaviors: [window.D2L.PolymerBehaviors.Navigation.ItemLinkBehavior],
 		ready: function() {
 			this._moreGroup = this.$$('d2l-navigation-more-group');
 		},
-		chomp: function() {
+		attached: function() {
+			this._onResize = this._chomp.bind(this);
+			window.addEventListener('resize', this._onResize, true);
+		},
+		detached: function() {
+			window.removeEventListener('resize', this._onResize, true);
+		},
+		_chomp: function() {
 			var navItems = this._navItems,
 				navItemsLength = this._navItems.length;
 
@@ -116,7 +124,10 @@
 					'd2l-navigation-item-link,d2l-navigation-item-group'
 				);
 				if (this._navItems.length > 0) {
-					this.fire('d2l-navigation-main-items-available');
+					var me = this;
+					setTimeout(function() {
+						me._chomp();
+					}, 20); // Firefox seems to need a few extra ms
 				}
 			});
 		}
