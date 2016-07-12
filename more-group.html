@@ -24,22 +24,24 @@
 	<template>
 		<button is="d2l-navigation-group" on-tap="_handleOpenerTap">More</button> <!-- todo: needs to be localized -->
 		<d2l-dropdown-menu>
-			<template is="dom-repeat" items="{{items}}">
-				 <d2l-menu-item text="{{getItemLinkText(item)}}" item="{{item}}" class="d2l-navigation-more-group-first-level">
-					 <template is="dom-if" if="{{isItemGroup(item)}}">
-						 <d2l-menu label="{{getItemLinkText(item)}}">
-							 <template is="dom-repeat" items="{{item.entities}}">
-								 <template is="dom-if" if="{{isItemLink(item)}}">
-									 <d2l-menu-item
-										 text="{{getItemLinkText(item)}}"
-										 item="{{item}}"></d2l-menu-item>
+			<d2l-menu>
+				<template is="dom-repeat" items="{{items}}">
+					 <d2l-menu-item text="{{getItemLinkText(item)}}" item="{{item}}" class="d2l-navigation-more-group-first-level">
+						 <template is="dom-if" if="{{isItemGroup(item)}}">
+							 <d2l-menu label="{{getItemLinkText(item)}}">
+								 <template is="dom-repeat" items="{{item.entities}}">
+									 <template is="dom-if" if="{{isItemLink(item)}}">
+										 <d2l-menu-item
+											 text="{{getItemLinkText(item)}}"
+											 item="{{item}}"></d2l-menu-item>
+									 </template>
 								 </template>
-							 </template>
-						 </d2l-menu>
-					 </template>
-				 </d2l-menu-item>
-			 </template>
-		 </d2l-dropdown-menu>
+							 </d2l-menu>
+						 </template>
+					 </d2l-menu-item>
+				 </template>
+			</d2l-menu>
+		</d2l-dropdown-menu>
 	</template>
 </dom-module>
 <script>
