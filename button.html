@@ -1,8 +1,9 @@
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../iron-icon/iron-icon.html">
 <link rel="import" href="../d2l-colors/d2l-colors.html">
+<link rel="import" href="../d2l-offscreen/d2l-offscreen-shared-styles.html">
 <dom-module id="d2l-navigation-button">
-	<style include="d2l-colors">
+	<style include="d2l-colors d2l-offscreen-shared-styles">
 		:host {
 			background-color: var(--d2l-color-white);
 			border: none;
@@ -34,12 +35,7 @@
 			margin-right: 8px;
 		}
 		:host([hide-text]) .d2l-navigation-button-text {
-			position:absolute;
-			left:-10000px;
-			top: auto;
-			width: 1px;
-			height: 1px;
-			overflow:hidden;
+			@apply(--d2l-offscreen);
 		}
 		iron-icon {
 			height: 30px;
