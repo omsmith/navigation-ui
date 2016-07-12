@@ -1,4 +1,7 @@
 <link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../d2l-dropdown/d2l-dropdown-menu.html">
+<link rel="import" href="../d2l-dropdown/d2l-menu.html">
+<link rel="import" href="../d2l-dropdown/d2l-menu-item.html">
 <link rel="import" href="shared-styles.html">
 <link rel="import" href="item-link-behavior.html">
 <link rel="import" href="group-button.html">
@@ -10,29 +13,41 @@
 		:host-context([dir='rtl']) {
 			@apply(--d2l-navigation-item-rtl);
 		}
+		:host-context([justify-content]) {
+			margin-left: 0;
+			margin-right: 0;
+		}
 		.d2l-navigation-item-group-menu {
 			@apply(--d2l-navigation-item-dropdown);
+		}
+		d2l-dropdown-menu {
+			width: 12.5rem;
 		}
 	</style>
 	<template>
 		<button is="d2l-navigation-group" on-tap="_handleOpenerTap">More</button> <!-- todo: needs to be localized -->
-		<d2l-dropdown-menu class="d2l-navigation-more-group-menu">
-			<template is="dom-repeat" items="{{items}}">
-				 <d2l-menu-item text="{{getItemLinkText(item)}}" item="{{item}}">
-					 <template is="dom-if" if="{{isItemGroup(item)}}">
-						 <d2l-menu label="{{getItemLinkText(item)}}">
-							 <template is="dom-repeat" items="{{item.entities}}">
-								 <template is="dom-if" if="{{isItemLink(item)}}">
-									 <d2l-menu-item
-										 text="{{getItemLinkText(item)}}"
-										 item="{{item}}"></d2l-menu-item>
-								 </template>
-							 </template>
-						 </d2l-menu>
-					 </template>
-				 </d2l-menu-item>
-			 </template>
-		 </d2l-dropdown-menu>
+		<d2l-dropdown-menu>
+			<d2l-menu>
+				<template is="dom-repeat" items="{{items}}">
+					<d2l-menu-item
+						text="{{getItemLinkText(item)}}"
+						item="{{item}}"
+						class="d2l-navigation-more-group-first-level">
+						<template is="dom-if" if="{{isItemGroup(item)}}">
+							<d2l-menu label="{{getItemLinkText(item)}}">
+								<template is="dom-repeat" items="{{item.entities}}">
+									<template is="dom-if" if="{{isItemLink(item)}}">
+										<d2l-menu-item
+											text="[[getItemLinkText(item)]]"
+											item="[[item]]"></d2l-menu-item>
+									</template>
+								</template>
+							</d2l-menu>
+						</template>
+					</d2l-menu-item>
+				</template>
+			</d2l-menu>
+		</d2l-dropdown-menu>
 	</template>
 </dom-module>
 <script>
@@ -48,9 +63,36 @@
 		listeners: {
 			'select': '_handleSelect'
 		},
+		focus: function() {
+			this.$$('button').focus();
+		},
+		showAndHideItems: function(startingIndex) {
+			var items = this._getItems();
+			var me = this;
+			items.forEach(function(item, index) {
+				if (index < startingIndex) {
+					me._hideItem(item, index);
+				} else {
+					Polymer.dom(item).node.removeAttribute('hidden');
+				}
+			});
+		},
+		tryGetFocusedIndex: function() {
+			var items = this._getItems(),
+				activeElement = document.activeElement;
+			for (var x = 0; x < this.items.length; x++) {
+				if (activeElement === items[x]) {
+					return x;
+				}
+			}
+			return -1;
+		},
+		_getItems: function() {
+			return Polymer.dom(this.root).querySelectorAll('d2l-menu-item.d2l-navigation-more-group-first-level');
+		},
 		_handleOpenerTap: function() {
 			var opener = this.$$('button');
-			var menu = this.$$('.d2l-navigation-more-group-menu');
+			var menu = this.$$('d2l-dropdown-menu');
 			menu.open(opener);
 		},
 		_handleSelect: function(event) {
@@ -58,6 +100,12 @@
 			if (this.isItemLink(item)) {
 				this.onItemLinkClick(item, true);
 			}
+		},
+		_hideItem: function(item, index) {
+			if (document.activeElement === item) {
+				this.fire('focused-item-hidden', { index: index });
+			}
+			Polymer.dom(item).node.setAttribute('hidden', 'hidden');
 		}
 	});
 </script>

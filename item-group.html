@@ -1,5 +1,6 @@
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../d2l-dropdown/d2l-dropdown-menu.html">
+<link rel="import" href="../d2l-dropdown/d2l-menu.html">
 <link rel="import" href="../d2l-dropdown/d2l-menu-item.html">
 <link rel="import" href="../d2l-icons/tier1-icons.html">
 <link rel="import" href="shared-styles.html">
@@ -20,9 +21,11 @@
 	<template>
 		<button is="d2l-navigation-group" on-tap="_handleOpenerTap">[[groupText]]</button>
 		<d2l-dropdown-menu class="d2l-navigation-item-group-menu">
-			<template is="dom-repeat" items="{{links}}">
-				<d2l-menu-item text="{{getItemLinkText(item)}}" data-index$="{{index}}"></d2l-menu-item>
-			</template>
+			<d2l-menu>
+				<template is="dom-repeat" items="{{links}}">
+					<d2l-menu-item text="{{getItemLinkText(item)}}" data-index$="{{index}}"></d2l-menu-item>
+				</template>
+			</d2l-menu>
 		</d2l-dropdown-menu>
 	</template>
 </dom-module>
@@ -46,6 +49,12 @@
 		},
 		listeners: {
 			select: '_handleLinkSelect'
+		},
+		focus: function() {
+			this.$$('button').focus();
+		},
+		isFocused: function() {
+			return (document.activeElement === this.$$('button'));
 		},
 		_computeGroupText: function(item) {
 			if (item.properties.text) {
