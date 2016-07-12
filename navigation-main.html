@@ -55,6 +55,9 @@
 			_onResize: Function
 		},
 		behaviors: [window.D2L.PolymerBehaviors.Navigation.ItemLinkBehavior],
+		listeners: {
+			'focused-item-hidden': '_handleMoreGroupFocusedItemHidden'
+		},
 		ready: function() {
 			this._moreGroup = this.$$('d2l-navigation-more-group');
 		},
@@ -73,15 +76,19 @@
 
 			if (navItemsLength === 0) {
 				this._hideMainGroup();
-				return undefined;
+				return;
 			}
 
 			this._showAllItems();
 			var lastNavItem = navItems[navItemsLength - 1];
 
 			if (this._isOnFirstRow(lastNavItem)) {
+				var focusedIndex = this._moreGroup.tryGetFocusedIndex();
+				if (focusedIndex > -1) {
+					this._focusItem(focusedIndex);
+				}
 				this._hideMainGroup();
-				return undefined;
+				return;
 			}
 
 			this._showMainGroup();
@@ -112,6 +119,9 @@
 			});
 		},
 		_hideItem: function(navItem) {
+			if (navItem.isFocused()) {
+				this._moreGroup.focus();
+			}
 			Polymer.dom(navItem).node.style.display = 'none';
 		},
 		_handleDomChange: function() {
@@ -126,6 +136,12 @@
 					}, 20); // Firefox seems to need a few extra ms
 				}
 			});
+		},
+		_handleMoreGroupFocusedItemHidden: function(event, details) {
+			this._focusItem(details.index);
+		},
+		_focusItem: function(index) {
+			this._navItems[index].focus();
 		}
 	});
 </script>

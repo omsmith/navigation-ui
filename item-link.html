@@ -36,6 +36,12 @@
 		hostAttributes: {
 			role: 'listitem'
 		},
+		focus: function() {
+			this.$$('a').focus();
+		},
+		isFocused: function() {
+			return (document.activeElement === this.$$('a'));
+		},
 		_handleTap: function() {
 			this.onItemLinkClick(this.item);
 		}

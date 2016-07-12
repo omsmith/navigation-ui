@@ -32,7 +32,6 @@
 					<d2l-menu-item
 						text="{{getItemLinkText(item)}}"
 						item="{{item}}"
-						item-index="[[index]]"
 						class="d2l-navigation-more-group-first-level">
 						<template is="dom-if" if="{{isItemGroup(item)}}">
 							<d2l-menu label="{{getItemLinkText(item)}}">
@@ -64,15 +63,32 @@
 		listeners: {
 			'select': '_handleSelect'
 		},
+		focus: function() {
+			this.$$('button').focus();
+		},
 		showAndHideItems: function(startingIndex) {
-			var items = Polymer.dom(this.root).querySelectorAll('d2l-menu-item.d2l-navigation-more-group-first-level');
+			var items = this._getItems();
+			var me = this;
 			items.forEach(function(item, index) {
 				if (index < startingIndex) {
-					Polymer.dom(item).node.setAttribute('hidden', 'hidden');
+					me._hideItem(item, index);
 				} else {
 					Polymer.dom(item).node.removeAttribute('hidden');
 				}
 			});
+		},
+		tryGetFocusedIndex: function() {
+			var items = this._getItems(),
+				activeElement = document.activeElement;
+			for (var x = 0; x < this.items.length; x++) {
+				if (activeElement === items[x]) {
+					return x;
+				}
+			}
+			return -1;
+		},
+		_getItems: function() {
+			return Polymer.dom(this.root).querySelectorAll('d2l-menu-item.d2l-navigation-more-group-first-level');
 		},
 		_handleOpenerTap: function() {
 			var opener = this.$$('button');
@@ -84,6 +100,12 @@
 			if (this.isItemLink(item)) {
 				this.onItemLinkClick(item, true);
 			}
+		},
+		_hideItem: function(item, index) {
+			if (document.activeElement === item) {
+				this.fire('focused-item-hidden', { index: index });
+			}
+			Polymer.dom(item).node.setAttribute('hidden', 'hidden');
 		}
 	});
 </script>

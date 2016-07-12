@@ -50,6 +50,12 @@
 		listeners: {
 			select: '_handleLinkSelect'
 		},
+		focus: function() {
+			this.$$('button').focus();
+		},
+		isFocused: function() {
+			return (document.activeElement === this.$$('button'));
+		},
 		_computeGroupText: function(item) {
 			if (item.properties.text) {
 				return item.properties.text;
