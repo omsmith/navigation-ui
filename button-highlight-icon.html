@@ -1,5 +1,6 @@
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../iron-icon/iron-icon.html">
+<link rel="import" href="../d2l-offscreen/d2l-offscreen.html">
 <link rel="import" href="button-highlight-styles.html">
 <dom-module id="d2l-navigation-button-highlight-icon">
 	<style include="d2l-navigation-button-highlight-styles">
@@ -11,14 +12,6 @@
 		}
 		:host([active]) {
 			@apply(--d2l-navigation-button-highlight-active);
-		}
-		.d2l-navigation-button-highlight-text {
-			position: absolute;
-			left: -10000px;
-			top: auto;
-			width: 1px;
-			height: 1px;
-			overflow: hidden;
 		}
 		:host([icon*='navigation-t1']) .d2l-navigation-button-highlight-icn {
 			height: 18px;
@@ -46,7 +39,7 @@
 	<template>
 		<span class="d2l-navigation-button-highlight-bar"></span>
 		<iron-icon icon="[[icon]]" class="d2l-navigation-button-highlight-icn"></iron-icon>
-		<span class="d2l-navigation-button-highlight-text">[[text]]</span>
+		<d2l-offscreen>[[text]]</d2l-offscreen>
 		<content></content>
 	</template>
 </dom-module>
