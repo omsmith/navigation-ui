@@ -53,8 +53,8 @@
 
 			before(function() {
 				server = sinon.fakeServer.create();
+				server.respondWidth('profile-thumbnail.png', '');
 				server.respondWith(
-					'GET',
 					'error.json',
 					[
 						500,
@@ -63,7 +63,6 @@
 					]
 				);
 				server.respondWith(
-					'GET',
 					'display-name.json',
 					[
 						200,
@@ -82,7 +81,6 @@
 					]
 				);
 				server.respondWith(
-					'GET',
 					'no-data.json',
 					[
 						200,
@@ -94,7 +92,6 @@
 					]
 				);
 				server.respondWith(
-					'GET',
 					'thumbnail-default.json',
 					[
 						200,
@@ -121,7 +118,6 @@
 					]
 				);
 				server.respondWith(
-					'GET',
 					'thumbnail.json',
 					[
 						200,

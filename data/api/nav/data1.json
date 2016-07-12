@@ -121,11 +121,11 @@
 	"links": [
 		{
 			"rel": ["self"],
-			"href": "data/nav/data1.json"
+			"href": "/components/d2l-navigation/data/api/nav/data1.json"
 		},
 		{
 			"rel": ["http://navigation.api.brightspace.com/rels/theme"],
-			"href": "data/theme/data1.json"
+			"href": "/components/d2l-navigation/data/api/theme/data1.json"
 		},
 		{
 			"rel": ["http://navigation.api.brightspace.com/rels/my-home"],
