@@ -20,7 +20,7 @@
 					"rel": [
 						"alternate"
 					],
-					"href": "assets/logo.png"
+					"href": "/components/d2l-navigation/data/assets/logo.png"
 				},
 				{
 					"rel": [
@@ -29,14 +29,6 @@
 					"href": "/home/"
 				}
 			]
-		}
-	],
-	"links": [
-		{
-			"rel": [
-				"self"
-			],
-			"href": "data/theme/data1.json"
 		}
 	]
 }

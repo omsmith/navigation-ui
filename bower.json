@@ -12,7 +12,8 @@
     "/.*",
     "package.json",
     "/test/",
-    "/demo/"
+    "/test-data/",
+    "/samples/"
   ],
   "dependencies": {
     "d2l-colors": "~2.0.0",
