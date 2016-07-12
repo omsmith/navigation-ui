@@ -12,7 +12,7 @@
     "/.*",
     "package.json",
     "/test/",
-    "/test-data/",
+    "/data/",
     "/samples/"
   ],
   "dependencies": {
