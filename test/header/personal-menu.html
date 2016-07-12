@@ -73,7 +73,6 @@
 							'entities': [
 								{
 									'class': ['display', 'name'],
-									'rel': ['http://users.api.brightspace.com/rels/display-name'],
 									'properties': {
 										'name': 'Jim Smith'
 									}
@@ -105,15 +104,13 @@
 							'entities': [
 								{
 									'class': ['profile'],
-									'rel': ['http://users.api.brightspace.com/rels/profile'],
 									'entities': [
 										{
-											'class': ['file', 'image', 'thumbnail', 'regular'],
-											'rel': ['http://users.api.brightspace.com/rels/thumbnail'],
-											'entities': [
+											'class': ['file', 'image'],
+											'links': [
 												{
-													'rel': ['alternate'],
-													'href': 'profile.png'
+													'rel': ['preview', 'https://api.brightspace.com/rels/thumbnail#regular'],
+													'href': 'profile-default.svg'
 												}
 											]
 										}
@@ -134,25 +131,21 @@
 							'entities': [
 								{
 									'class': ['profile'],
-									'rel': ['http://users.api.brightspace.com/rels/profile'],
 									'entities': [
 										{
 											'class': ['file', 'image'],
-											'rel': ['http://users.api.brightspace.com/rels/image'],
+											'properties': {
+												'name': 'profile.png',
+												'type': 'image/png'
+											},
 											'links': [
 												{
 													'rel': ['alternate'],
 													'href': 'profile.png'
-												}
-											]
-										},
-										{
-											'class': ['file', 'image', 'thumbnail', 'regular'],
-											'rel': ['http://users.api.brightspace.com/rels/thumbnail'],
-											'entities': [
+												},
 												{
-													'rel': ['alternate'],
-													'href': 'profile.png'
+													'rel': ['preview', 'https://api.brightspace.com/rels/thumbnail#regular'],
+													'href': 'profile-thumbnail.png'
 												}
 											]
 										}
@@ -160,7 +153,6 @@
 								},
 								{
 									'class': ['display', 'name'],
-									'rel': ['http://users.api.brightspace.com/rels/display-name'],
 									'properties': {
 										'name': 'Jim Smith'
 									}
@@ -247,7 +239,7 @@
 
 				it('should apply medium thumbnail to image', function() {
 					expect(menu._getThumbnail().getAttribute('src'))
-						.to.eql('profile.png');
+						.to.eql('profile-thumbnail.png');
 				});
 
 				it('should hide default profile image', function() {
