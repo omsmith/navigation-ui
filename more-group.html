@@ -10,15 +10,22 @@
 		:host-context([dir='rtl']) {
 			@apply(--d2l-navigation-item-rtl);
 		}
+		:host-context([justify-content]) {
+			margin-left: 0;
+			margin-right: 0;
+		}
 		.d2l-navigation-item-group-menu {
 			@apply(--d2l-navigation-item-dropdown);
+		}
+		d2l-dropdown-menu {
+			width: 12.5rem;
 		}
 	</style>
 	<template>
 		<button is="d2l-navigation-group" on-tap="_handleOpenerTap">More</button> <!-- todo: needs to be localized -->
-		<d2l-dropdown-menu class="d2l-navigation-more-group-menu">
+		<d2l-dropdown-menu>
 			<template is="dom-repeat" items="{{items}}">
-				 <d2l-menu-item text="{{getItemLinkText(item)}}" item="{{item}}">
+				 <d2l-menu-item text="{{getItemLinkText(item)}}" item="{{item}}" class="d2l-navigation-more-group-first-level">
 					 <template is="dom-if" if="{{isItemGroup(item)}}">
 						 <d2l-menu label="{{getItemLinkText(item)}}">
 							 <template is="dom-repeat" items="{{item.entities}}">
@@ -48,9 +55,19 @@
 		listeners: {
 			'select': '_handleSelect'
 		},
+		showAndHideItems: function(startingIndex) {
+			var items = Polymer.dom(this.root).querySelectorAll('d2l-menu-item.d2l-navigation-more-group-first-level');
+			items.forEach(function(item, index) {
+				if (index < startingIndex) {
+					Polymer.dom(item).node.setAttribute('hidden', 'hidden');
+				} else {
+					Polymer.dom(item).node.removeAttribute('hidden');
+				}
+			});
+		},
 		_handleOpenerTap: function() {
 			var opener = this.$$('button');
-			var menu = this.$$('.d2l-navigation-more-group-menu');
+			var menu = this.$$('d2l-dropdown-menu');
 			menu.open(opener);
 		},
 		_handleSelect: function(event) {
