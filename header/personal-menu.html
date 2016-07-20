@@ -1,6 +1,6 @@
 <link rel="import" href="../../polymer/polymer.html">
-<link rel="import" href="../../iron-ajax/iron-ajax.html">
 <link rel="import" href="../../iron-icon/iron-icon.html">
+<link rel="import" href="../../d2l-ajax/d2l-ajax.html">
 <link rel="import" href="../../d2l-dropdown/d2l-dropdown.html">
 <link rel="import" href="../../d2l-offscreen/d2l-offscreen-shared-styles.html">
 <link rel="import" href="../button-highlight.html">
@@ -67,16 +67,18 @@
 			</div>
 		</button>
 		<d2l-dropdown vertical-offset="-5"></d2l-dropdown>
+		<d2l-ajax
+			auto
+			url="[[userHref]]"
+			on-error="_onError"
+			on-response="_onResponse"></d2l-ajax>
 	</template>
 </dom-module>
 <script>
 	Polymer({
 		is: 'd2l-navigation-personal-menu',
 		properties: {
-			userHref: {
-				type: String,
-				observer: '_userHrefChanged'
-			},
+			userHref: String,
 			displayName: String
 		},
 		behaviors: [window.D2L.PolymerBehaviors.Navigation.GraftDropdownBehavior],
@@ -86,7 +88,11 @@
 		_getThumbnailDefault: function() {
 			return this.$$('.d2l-navigation-personal-menu-thumbnail-default');
 		},
-		_handleUserResponse: function(res) {
+		_onError: function() {
+			this.fire('data-ready');
+		},
+		_onResponse: function(evt) {
+			var res = evt.detail.response;
 			var hasProfile = false;
 			var thumbnailHref = undefined;
 			res.entities.forEach(function(resEntity) {
@@ -119,16 +125,6 @@
 				var thumbnailDefault = this._getThumbnailDefault();
 				thumbnailDefault.style.display = 'block';
 			}
-		},
-		_userHrefChanged: function(newHref) {
-			document.createElement('iron-request')
-				.send({url: newHref, handleAs: 'json'})
-				.then(function(res) {
-					this._handleUserResponse(res.response);
-				}.bind(this))
-				.catch(function() {
-					this.fire('data-ready');
-				}.bind(this));
 		}
 	});
 </script>
