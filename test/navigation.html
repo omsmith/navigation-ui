@@ -1,0 +1,301 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>navigation tests</title>
+		<meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+		<script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+		<script src="../../web-component-tester/browser.js"></script>
+		<link rel="import" href="../navigation.html">
+	</head>
+	<body>
+
+		<test-fixture id="no-data">
+			<template>
+				<d2l-navigation href="no-data.json"></d2l-navigation>
+			</template>
+		</test-fixture>
+
+		<test-fixture id="no-theme">
+			<template>
+				<d2l-navigation href="no-theme.json"></d2l-navigation>
+			</template>
+		</test-fixture>
+
+		<test-fixture id="some-data">
+			<template>
+				<d2l-navigation href="some-data.json"></d2l-navigation>
+			</template>
+		</test-fixture>
+
+		<test-fixture id="admin-items">
+			<template>
+				<d2l-navigation href="admin-items.json"></d2l-navigation>
+			</template>
+		</test-fixture>
+
+		<test-fixture id="error">
+			<template>
+				<d2l-navigation href="error.json"></d2l-navigation>
+			</template>
+		</test-fixture>
+
+		<script>
+			var server, navigation;
+
+			function setupNav(fixtureName) {
+				return new Promise(function(resolve) {
+					navigation = fixture(fixtureName);
+					navigation.addEventListener('d2l-navigation-ready', resolve);
+				});
+			}
+
+			before(function() {
+				server = sinon.fakeServer.create();
+				server.respondImmediately = true;
+				server.respondWith(
+					'error.json',
+					[
+						500,
+						{ 'Content-Type': 'application/json' },
+						'oh no'
+					]
+				);
+				server.respondWith(
+					'no-data.json',
+					[
+						200,
+						{ 'Content-Type': 'application/json' },
+						JSON.stringify({
+							'class': ['navigation'],
+							'links': [
+								{
+									'rel': ['http://navigation.api.brightspace.com/rels/theme'],
+									'href': 'theme-no-data.json'
+								}
+							]
+						})
+					]
+				);
+				server.respondWith(
+					'theme-no-data.json',
+					[
+						200,
+						{ 'Content-Type': 'application/json' },
+						JSON.stringify({
+							'class': ['theme']
+						})
+					]
+				);
+				server.respondWith(
+					'no-theme.json',
+					[
+						200,
+						{ 'Content-Type': 'application/json' },
+						JSON.stringify({
+							'class': ['navigation']
+						})
+					]
+				);
+				server.respondWith(
+					'some-data.json',
+					[
+						200,
+						{ 'Content-Type': 'application/json' },
+						JSON.stringify({
+							'class': ['navigation'],
+							'entities': [
+								{
+									'class': ['item'],
+									'properties': {
+										'text': 'Item 1'
+									}
+								},
+								{
+									'class': ['item'],
+									'properties': {
+										'text': 'Item 2'
+									}
+								}
+							],
+							'links': [
+								{
+									'rel': ['http://navigation.api.brightspace.com/rels/theme'],
+									'href': 'theme-some-data.json'
+								},
+								{
+									'rel': ['http://navigation.api.brightspace.com/rels/my-home'],
+									'href': '/my/home'
+								}
+							]
+						})
+					]
+				);
+				server.respondWith(
+					'theme-some-data.json',
+					[
+						200,
+						{ 'Content-Type': 'application/json' },
+						JSON.stringify({
+							'class': ['theme'],
+							'properties': {
+								'BackgroundColor': '#ff0000'
+							},
+							'entities': [
+								{
+									'class': ['image'],
+									'properties': {
+										'alt': 'logo alt'
+									},
+									'links': [
+										{
+											'rel': 'alternate',
+											'href': '/components/d2l-navigation/data/assets/logo.png'
+										},
+										{
+											'rel': 'http://navigation.api.brightspace.com/rels/home',
+											'href': '/logo/my/home'
+										}
+									]
+								}
+							]
+						})
+					]
+				);
+				server.respondWith(
+					'admin-items.json',
+					[
+						200,
+						{ 'Content-Type': 'application/json' },
+						JSON.stringify({
+							'class': ['navigation'],
+							'entities': [
+								{
+									'class': ['item', 'admin'],
+									'properties': {
+										'text': 'Admin Item'
+									}
+								}
+							],
+							'links': [
+								{
+									'rel': ['http://navigation.api.brightspace.com/rels/theme'],
+									'href': 'theme-some-data.json'
+								}
+							]
+						})
+					]
+				);
+			});
+
+			after(function() {
+				server.restore();
+			});
+
+			describe('no data', function() {
+
+				beforeEach(function() {
+					return setupNav('no-data');
+				});
+
+				it('should not cause an error', function() {
+					expect(navigation.loadState).to.eql('ready');
+				});
+
+				it('should have no admin menu by default', function() {
+					expect(navigation.hasAdminMenu).to.be.false;
+				});
+
+				it('should have no items', function() {
+					expect(navigation.items.length).to.eql(0);
+				});
+
+			});
+
+			describe('no theme', function() {
+
+				beforeEach(function() {
+					return setupNav('no-theme');
+				});
+
+				it('should result in error state', function() {
+					expect(navigation.loadState).to.eql('error');
+				});
+
+			});
+
+			describe('some data', function() {
+
+				beforeEach(function() {
+					return setupNav('some-data');
+				});
+
+				it('should result in ready state', function() {
+					expect(navigation.loadState).to.eql('ready');
+				});
+
+				it('should set myHome property', function() {
+					expect(navigation.myHome).to.eql('/my/home');
+				});
+
+				it('should set themeColor property', function() {
+					expect(navigation.themeColor).to.eql('#ff0000');
+				});
+
+				it('should set logoText property to theme alt', function() {
+					expect(navigation.logoText).to.eql('logo alt');
+				});
+
+				it('should set logo property to theme alternate href', function() {
+					expect(navigation.logo).to.eql('/components/d2l-navigation/data/assets/logo.png');
+				});
+
+				it('should set logoHref property to theme home link', function() {
+					expect(navigation.logoHref).to.eql('/logo/my/home');
+				});
+
+				it('should have no admin menu when no admin links', function() {
+					expect(navigation.hasAdminMenu).to.be.false;
+				});
+
+				it('should have 2 items', function() {
+					expect(navigation.items.length).to.eql(2);
+				});
+
+			});
+
+			describe('admin items', function() {
+
+				beforeEach(function() {
+					return setupNav('admin-items');
+				});
+
+				it('should have admin menu', function() {
+					expect(navigation.hasAdminMenu).to.be.true;
+				});
+
+			});
+
+			describe('response error', function() {
+
+				beforeEach(function() {
+					return setupNav('error');
+				});
+
+				it('should result in error state', function() {
+					expect(navigation.loadState).to.eql('error');
+				});
+
+				it('should have no admin menu by default', function() {
+					expect(navigation.hasAdminMenu).to.be.false;
+				});
+
+				it('should have no items', function() {
+					expect(navigation.items.length).to.eql(0);
+				});
+
+			});
+
+		</script>
+	</body>
+</html>

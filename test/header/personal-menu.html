@@ -53,7 +53,6 @@
 
 			before(function() {
 				server = sinon.fakeServer.create();
-				server.respondWidth('profile-thumbnail.png', '');
 				server.respondWith(
 					'error.json',
 					[
@@ -141,7 +140,7 @@
 												},
 												{
 													'rel': ['preview', 'https://api.brightspace.com/rels/thumbnail#regular'],
-													'href': 'profile-thumbnail.png'
+													'href': '/components/d2l-navigation/data/assets/profile-thumbnail.png'
 												}
 											]
 										}
@@ -235,7 +234,7 @@
 
 				it('should apply medium thumbnail to image', function() {
 					expect(menu._getThumbnail().getAttribute('src'))
-						.to.eql('profile-thumbnail.png');
+						.to.eql('/components/d2l-navigation/data/assets/profile-thumbnail.png');
 				});
 
 				it('should hide default profile image', function() {

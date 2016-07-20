@@ -1,5 +1,5 @@
 <link rel="import" href="../polymer/polymer.html">
-<link rel="import" href="../iron-ajax/iron-ajax.html">
+<link rel="import" href="../d2l-ajax/d2l-ajax.html">
 <link rel="import" href="../d2l-page-load-progress/d2l-page-load-progress.html">
 <link rel="import" href="navigation-resolved.html">
 <dom-module id="d2l-navigation">
@@ -19,6 +19,17 @@
 		<d2l-page-load-progress
 			autostart
 			color="[[themeColor]]"></d2l-page-load-progress>
+		<d2l-ajax
+			auto
+			url="[[href]]"
+			on-request="_onRequest"
+			on-error="_onError"
+			on-response="_onNavResponse"></d2l-ajax>
+		<d2l-ajax
+			auto
+			id="themeRequest"
+			on-error="_onError"
+			on-response="_onThemeResponse"></d2l-ajax>
 		<d2l-navigation-resolved
 			admin-menu-location="[[adminMenuLocation]]"
 			band-color="[[themeColor]]"
@@ -46,12 +57,12 @@
 				type: Number,
 				value: 200
 			},
-			href: {
-				type: String,
-				observer: '_hrefChanged'
-			},
+			href: String,
 			userHref: String,
-			hasAdminMenu: Boolean,
+			hasAdminMenu: {
+				type: Boolean,
+				value: false
+			},
 			isOrg: {
 				reflectToAttribute: true,
 				type: Boolean,
@@ -69,107 +80,94 @@
 				type: Array,
 				value: []
 			},
+			loadState: {
+				type: String,
+				value: 'loading',
+				observer: '_onLoadStateChange'
+			},
 			myHome: String,
-			navRequest: Object,
 			notifications: Array,
 			orgUnitName: String,
 			orgUnitHome: String,
 			personalMenuLocation: String,
 			showIncomplete: Boolean,
 			themeColor: String,
-			themeRequest: Object,
 			profileDisplayName: String,
 			profileThumbnailSrc: String
 		},
-		updateLoading: function() {
-			var finish = function() {
-				var delay = Math.max(200, this.delay);
-				this.async(function() {
-					this.$$('d2l-page-load-progress').finish();
-					this.fire('d2l-navigation-ready');
-					this.loading = false;
-				}.bind(this), delay);
-			}.bind(this);
+		_onError: function() {
+			this.loadState = 'error';
+		},
+		_onLoadStateChange: function() {
 
-			if (this._checkIfDoneLoading([
-				this.navRequest,
-				this.themeRequest
-			])) {
-				finish();
-			}
-		},
-		_checkIfDoneLoading: function(requests) {
-			var result = true;
-			requests.forEach(function(request) {
-				if (!request || (request.status !== 500 && request.status !== 200) ) {
-					result = false;
-					return false;
-				}
-			});
-			return result;
-		},
-		_hrefChanged: function() {
-			this.load();
-		},
-		handleNavResponse: function(res) {
-			res.links.forEach(function(l) {
-				if (l.rel.indexOf('http://navigation.api.brightspace.com/rels/theme') > -1) {
-					this.themeRequest = document.createElement('iron-request');
-					this.themeRequest
-						.send({url: l.href, handleAs: 'json'})
-						.then(function(res) {
-							this.handleThemeResponse(res.response);
-						}.bind(this))
-						.catch(function() {
-							this.updateLoading();
-						}.bind(this));
-				} else if (l.rel.indexOf('http://navigation.api.brightspace.com/rels/my-home') > -1) {
-					this.myHome = l.href;
-				}
-			}.bind(this));
-
-			res.entities.forEach(function(e) {
-				if (e.class.indexOf('admin') > -1) {
-					this.hasAdminMenu = true;
-				} else if (e.class.indexOf('item') > -1) {
-					this.push('items', e);
-				}
-			}.bind(this));
-
-			this.updateLoading();
-		},
-		handleThemeResponse: function(res) {
-			res.entities.forEach(function(e) {
-				if (e.class.indexOf('image') > -1) {
-					this.logoText = e.properties.alt;
-					e.links.forEach(function(l) {
-						if (l.rel.indexOf('alternate') > -1) {
-							this.logo = l.href;
-						} else if (l.rel.indexOf('http://navigation.api.brightspace.com/rels/home') > -1) {
-							this.logoHref = l.href;
-						}
-					}.bind(this));
-				}
-			}.bind(this));
-			this.themeColor = res.properties.BackgroundColor;
-			this.updateLoading();
-		},
-		load: function() {
-			if (this.loading) {
+			if (this.loadState === 'loading') {
+				this.loading = true;
 				return;
 			}
-			this.themeRequest = null;
-			this.loading = true;
-			this.splice('items', 0, this.items.length);
-			this.navRequest = document.createElement('iron-request');
-			this.navRequest
-				.send({url: this.href, handleAs: 'json'})
-				.then(function(res) {
-					this.handleNavResponse(res.response);
-				}.bind(this))
-				.catch(function() {
-					this.updateLoading();
+
+			var delay = Math.max(200, this.delay);
+			this.async(function() {
+				this.$$('d2l-page-load-progress').finish();
+				this.fire('d2l-navigation-ready');
+				this.loading = false;
+			}.bind(this), delay);
+
+		},
+		_onNavResponse: function(evt) {
+
+			var res = evt.detail.response;
+
+			var hasTheme = false;
+			if (res.links) {
+				res.links.forEach(function(l) {
+					if (l.rel.indexOf('http://navigation.api.brightspace.com/rels/theme') > -1) {
+						hasTheme = true;
+						this.$.themeRequest.url = l.href;
+					} else if (l.rel.indexOf('http://navigation.api.brightspace.com/rels/my-home') > -1) {
+						this.myHome = l.href;
+					}
 				}.bind(this));
+			}
+
+			this.splice('items', 0, this.items.length);
+			if (res.entities) {
+				res.entities.forEach(function(e) {
+					if (e.class.indexOf('admin') > -1) {
+						this.hasAdminMenu = true;
+					} else if (e.class.indexOf('item') > -1) {
+						this.push('items', e);
+					}
+				}.bind(this));
+			}
+
+			if (!hasTheme) {
+				this.loadState = 'error';
+			}
+
+		},
+		_onRequest: function() {
+			this.loadState = 'loading';
+		},
+		_onThemeResponse: function(evt) {
+			var res = evt.detail.response;
+			if (res.entities) {
+				res.entities.forEach(function(e) {
+					if (e.class.indexOf('image') > -1) {
+						this.logoText = e.properties.alt;
+						e.links.forEach(function(l) {
+							if (l.rel.indexOf('alternate') > -1) {
+								this.logo = l.href;
+							} else if (l.rel.indexOf('http://navigation.api.brightspace.com/rels/home') > -1) {
+								this.logoHref = l.href;
+							}
+						}.bind(this));
+					}
+				}.bind(this));
+			}
+			if (res.properties && res.properties.BackgroundColor) {
+				this.themeColor = res.properties.BackgroundColor;
+			}
+			this.loadState = 'ready';
 		}
 	});
 </script>
