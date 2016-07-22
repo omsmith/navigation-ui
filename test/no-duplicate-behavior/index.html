@@ -1,0 +1,137 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>no-duplicate behavior tests</title>
+		<meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+		<script src="../../../webcomponentsjs/webcomponents-lite.js"></script>
+		<script src="../../../web-component-tester/browser.js"></script>
+		<link rel="import" href="../../../promise-polyfill/promise-polyfill.html">
+		<link rel="import" href="../test-elements.html">
+	</head>
+	<body>
+		<test-fixture id="child-with">
+			<template>
+				<iframe src="child-with.html"></iframe>
+			</template>
+		</test-fixture>
+		<test-fixture id="parent-with">
+			<template>
+				<iframe src="parent-with.html"></iframe>
+			</template>
+		</test-fixture>
+		<test-fixture id="parent-without">
+			<template>
+				<iframe src="parent-without.html"></iframe>
+			</template>
+		</test-fixture>
+		<test-fixture id="grandparent-with">
+			<template>
+				<iframe src="grandparent-with.html"></iframe>
+			</template>
+		</test-fixture>
+		<test-fixture id="grandparent-without">
+			<template>
+				<iframe src="grandparent-without.html"></iframe>
+			</template>
+		</test-fixture>
+		<test-fixture id="grandparent-with-parent-without">
+			<template>
+				<iframe src="grandparent-with-parent-without.html"></iframe>
+			</template>
+		</test-fixture>
+		<test-fixture id="multi-child-parent">
+			<template>
+				<iframe src="multi-child-parent.html"></iframe>
+			</template>
+		</test-fixture>
+		<script>
+			var resolves;
+			window['reportResults'] = function(key, result) {
+				if (resolves[key]) {
+					resolves[key](result);
+				}
+			};
+			function waitFor(keys) {
+				resolves = {};
+				var results = [];
+				keys.forEach(function(key) {
+					results.push(new Promise(function(resolve) {
+						resolves[key] = resolve;
+					}));
+				});
+				return Promise.all(results);
+			}
+			describe('Child (yes)', function() {
+				it('should report no duplicate for child', function(done) {
+					waitFor(['child-with']).then(function(result) {
+						expect(result[0]).to.be.false;
+						done();
+					});
+					fixture('child-with');
+				});
+			});
+			describe('Parent (yes), Child (yes)', function() {
+				it('should report duplicate for child, not for parent', function(done) {
+					waitFor(['parent-with', 'child-with']).then(function(result) {
+						expect(result[0]).to.be.false;
+						expect(result[1]).to.be.true;
+						done();
+					});
+					fixture('parent-with');
+				});
+			});
+			describe('Parent (no), Child (yes)', function() {
+				it('should report no duplicate for child', function(done) {
+					waitFor(['child-with']).then(function(result) {
+						expect(result[0]).to.be.false;
+						done();
+					});
+					fixture('parent-without');
+				});
+			});
+			describe('Grandparent (yes), Parent (yes), Child (yes)', function() {
+				it('should report duplicate for parent and child', function(done) {
+					waitFor(['grandparent-with', 'parent-with', 'child-with']).then(function(result) {
+						expect(result[0]).to.be.false;
+						expect(result[1]).to.be.true;
+						expect(result[2]).to.be.true;
+						done();
+					});
+					fixture('grandparent-with');
+				});
+			});
+			describe('Grandparent (no), Parent (yes), Child (yes)', function() {
+				it('should report duplicate for child', function(done) {
+					waitFor(['parent-with', 'child-with']).then(function(result) {
+						expect(result[0]).to.be.false;
+						expect(result[1]).to.be.true;
+						done();
+					});
+					fixture('grandparent-without');
+				});
+			});
+			describe('Grandparent (yes), Parent (no), Child (yes)', function() {
+				it('should report duplicate for child', function(done) {
+					waitFor(['grandparent-with-parent-without', 'child-with']).then(function(result) {
+						expect(result[0]).to.be.false;
+						expect(result[1]).to.be.true;
+						done();
+					});
+					fixture('grandparent-with-parent-without');
+				});
+			});
+			describe('Parent (no), Child1 (yes), Child2 (yes)', function() {
+				it('should report duplicate for children', function(done) {
+					waitFor(['multi-child-parent', 'child-with', 'child-with2']).then(function(result) {
+						expect(result[0]).to.be.false;
+						expect(result[1]).to.be.true;
+						expect(result[2]).to.be.true;
+						done();
+					});
+					fixture('multi-child-parent');
+				});
+			});
+		</script>
+	</body>
+</html>
