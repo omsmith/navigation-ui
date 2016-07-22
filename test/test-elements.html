@@ -1,5 +1,6 @@
 <link rel="import" href="../../polymer/polymer.html">
 <link rel="import" href="../localize-behavior.html">
+<link rel="import" href="../no-duplicate-behavior.html">
 <script>
 	Polymer({
 		is: 'test-localize',
@@ -10,6 +11,23 @@
 					this.localize('myHome')
 				)
 			);
+		}
+	});
+	Polymer({
+		is: 'test-duplicate',
+		behaviors: [ D2L.PolymerBehaviors.Navigation.NoDuplicateBehavior ],
+		properties: {
+			key: String
+		},
+		ready: function() {
+			var val = this.isDuplicate('test-duplicate');
+			var win = window;
+			while (win !== win.parent) {
+				win = win.parent;
+				if (win.reportResults) {
+					win.reportResults(this.key, val);
+				}
+			}
 		}
 	});
 </script>
