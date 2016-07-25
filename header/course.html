@@ -46,7 +46,7 @@
 			class="d2l-navigation-header-course-home"
 			text="{{localize('myHome')}}"></button>
 		<d2l-navigation-divider></d2l-navigation-divider>
-		<a href$="[[orgUnitHome]]" class="d2l-navigation-link">
+		<a href$="[[orgUnitHome]]" class="d2l-navigation-link" title$="[[orgUnitName]]">
 			[[orgUnitName]]
 		</a>
 		<d2l-navigation-divider small class="d2l-navigation-header-course-div2"></d2l-navigation-divider>
@@ -65,6 +65,9 @@
 			myHome: String,
 			orgUnitHome: String,
 			orgUnitName: String
+		},
+		_getLink: function() {
+			return this.$$('.d2l-navigation-link');
 		},
 		_handleMyHome: function() {
 			document.location.href = this.myHome;
