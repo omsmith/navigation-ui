@@ -1,0 +1,89 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>course tests</title>
+		<meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+		<script src="../../../webcomponentsjs/webcomponents-lite.js"></script>
+		<script src="../../../web-component-tester/browser.js"></script>
+		<link rel="import" href="../../header/course.html">
+	</head>
+	<body>
+
+		<test-fixture id="no-data">
+			<template>
+				<d2l-navigation-header-course></d2l-navigation-header-course>
+			</template>
+		</test-fixture>
+
+		<test-fixture id="typical">
+			<template>
+				<d2l-navigation-header-course
+					org-unit-name="course name"
+					org-unit-home="/org/unit/home"></d2l-navigation-header-course>
+			</template>
+		</test-fixture>
+
+		<script>
+			var course;
+
+			describe('no data', function() {
+
+				beforeEach(function() {
+					course = fixture('no-data');
+				});
+
+				it('should not set "orgUnitName" property', function() {
+					expect(course.orgUnitName).to.not.be.defined;
+				});
+
+				it('should not set "orgUnitHome" property', function() {
+					expect(course.orgUnitHome).to.not.be.defined;
+				});
+
+				it('should have an empty link text', function() {
+					var link = course._getLink();
+					expect(link.innerText).to.eql('');
+				});
+
+				it('should not set "href" attribute on link', function() {
+					var link = course._getLink();
+					expect(link.getAttribute('href')).to.be.null;
+				});
+
+			});
+
+			describe('typical data', function() {
+
+				beforeEach(function() {
+					course = fixture('typical');
+				});
+
+				it('should set "orgUnitName" property', function() {
+					expect(course.orgUnitName).to.eql('course name');
+				});
+
+				it('should set "orgUnitHome" property', function() {
+					expect(course.orgUnitHome).to.eql('/org/unit/home');
+				});
+
+				it('should apply course name to link text', function() {
+					var link = course._getLink();
+					expect(link.innerText.trim()).to.eql('course name');
+				});
+
+				it('should apply course name to link title', function() {
+					var link = course._getLink();
+					expect(link.getAttribute('title')).to.eql('course name');
+				});
+
+				it('should apply "org-unit-home" to link "href" attribute', function() {
+					var link = course._getLink();
+					expect(link.getAttribute('href')).to.eql('/org/unit/home');
+				});
+
+			});
+
+		</script>
+	</body>
+</html>
