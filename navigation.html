@@ -26,14 +26,14 @@
 		<d2l-ajax
 			auto
 			id="navRequest"
-			on-request="_onRequest"
-			on-error="_onError"
-			on-response="_onNavResponse"></d2l-ajax>
+			on-iron-ajax-request="_onRequest"
+			on-iron-ajax-error="_onError"
+			on-iron-ajax-response="_onNavResponse"></d2l-ajax>
 		<d2l-ajax
 			auto
 			id="themeRequest"
-			on-error="_onError"
-			on-response="_onThemeResponse"></d2l-ajax>
+			on-iron-ajax-error="_onError"
+			on-iron-ajax-response="_onThemeResponse"></d2l-ajax>
 		<d2l-navigation-resolved
 			admin-menu-location="[[adminMenuLocation]]"
 			band-color="[[themeColor]]"
