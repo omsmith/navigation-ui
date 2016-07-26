@@ -1,10 +1,8 @@
 <link rel="import" href="../../polymer/polymer.html">
 <link rel="import" href="../button-highlight-icon.html">
 <link rel="import" href="../divider.html">
-<link rel="import" href="../icons.html">
 <link rel="import" href="../localize-behavior.html">
 <link rel="import" href="../shared-styles.html">
-<link rel="import" href="course-menu.html">
 <dom-module id="d2l-navigation-header-course">
 	<style include="d2l-navigation-shared-styles">
 		:host {
@@ -20,8 +18,7 @@
 			padding: 0 7px;
 		}
 		.d2l-navigation-header-course-home,
-		d2l-navigation-header-course-menu,
-		.d2l-navigation-header-course-div2 {
+		d2l-navigation-header-course-menus {
 			-ms-flex: 0 0 auto;
 			-webkit-flex: 0 0 auto;
 			flex: 0 0 auto;
@@ -49,9 +46,6 @@
 		<a href$="[[orgUnitHome]]" class="d2l-navigation-link" title$="[[orgUnitName]]">
 			[[orgUnitName]]
 		</a>
-		<d2l-navigation-divider small class="d2l-navigation-header-course-div2"></d2l-navigation-divider>
-		<d2l-navigation-header-course-menu
-			graft-location="[[courseMenuLocation]]"></d2l-navigation-header-course-menu>
 	</template>
 </dom-module>
 <script>
@@ -61,7 +55,6 @@
 			window.D2L.PolymerBehaviors.Navigation.LocalizeBehavior
 		],
 		properties: {
-			courseMenuLocation: String,
 			myHome: String,
 			orgUnitHome: String,
 			orgUnitName: String
