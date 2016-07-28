@@ -18,7 +18,7 @@
   "dependencies": {
     "d2l-ajax": "^2.0.0",
     "d2l-colors": "~2.0.0",
-    "d2l-dropdown": "~0.3.2",
+    "d2l-dropdown": "~0.3.4",
     "d2l-icons": "~2.4.0",
     "d2l-offscreen": "~2.1.0",
     "d2l-page-load-progress": "~1.0.0",
