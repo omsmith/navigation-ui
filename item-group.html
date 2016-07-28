@@ -2,6 +2,7 @@
 <link rel="import" href="../d2l-dropdown/d2l-dropdown-menu.html">
 <link rel="import" href="../d2l-dropdown/d2l-menu.html">
 <link rel="import" href="../d2l-dropdown/d2l-menu-item.html">
+<link rel="import" href="../d2l-dropdown/d2l-menu-item-link.html">
 <link rel="import" href="../d2l-icons/tier1-icons.html">
 <link rel="import" href="shared-styles.html">
 <link rel="import" href="item-link-behavior.html">
@@ -23,7 +24,17 @@
 		<d2l-dropdown-menu class="d2l-navigation-item-group-menu">
 			<d2l-menu>
 				<template is="dom-repeat" items="{{links}}">
-					<d2l-menu-item text="{{getItemLinkText(item)}}" data-index$="{{index}}"></d2l-menu-item>
+					<template is="dom-if" if="{{isRegular(item)}}">
+						<d2l-menu-item-link
+							text="[[getText(item)]]"
+							href="[[getHref(item)]]"></d2l-menu-item-link>
+					</template>
+					<template is="dom-if" if="{{!isRegular(item)}}">
+						<d2l-menu-item
+							text="[[getText(item)]]"
+							item="[[item]]"
+							on-select="_handleItemSelect"></d2l-menu-item>
+					</template>
 				</template>
 			</d2l-menu>
 		</d2l-dropdown-menu>
@@ -46,9 +57,6 @@
 		},
 		hostAttributes: {
 			role: 'listitem'
-		},
-		listeners: {
-			select: '_handleLinkSelect'
 		},
 		focus: function() {
 			this.$$('button').focus();
@@ -82,9 +90,8 @@
 			var menu = this.$$('.d2l-navigation-item-group-menu');
 			menu.open(opener);
 		},
-		_handleLinkSelect: function(e) {
-			var index = Polymer.dom(e).rootTarget.getAttribute('data-index');
-			this.onItemLinkClick(this.links[index], true);
+		_handleItemSelect: function(e) {
+			this.onPopupOrActionClick(e.target.item);
 		}
 	});
 </script>
