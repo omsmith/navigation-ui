@@ -26,7 +26,7 @@
 		}
 	</style>
 	<template>
-		<button is="d2l-navigation-group" on-tap="_handleOpenerTap">{{localize('more')}}</button>
+		<button is="d2l-navigation-group" on-click="_handleOpenerClick">{{localize('more')}}</button>
 		<d2l-dropdown-menu>
 			<d2l-menu>
 				<template is="dom-repeat" items="{{items}}">
@@ -111,7 +111,7 @@
 		_getItems: function() {
 			return Polymer.dom(this.root).querySelectorAll('.d2l-navigation-more-group-item');
 		},
-		_handleOpenerTap: function() {
+		_handleOpenerClick: function() {
 			var opener = this.$$('button');
 			var menu = this.$$('d2l-dropdown-menu');
 			menu.open(opener);

@@ -20,7 +20,7 @@
 		}
 	</style>
 	<template>
-		<button is="d2l-navigation-group" on-tap="_handleOpenerTap">[[groupText]]</button>
+		<button is="d2l-navigation-group" on-click="_handleOpenerClick">[[groupText]]</button>
 		<d2l-dropdown-menu class="d2l-navigation-item-group-menu">
 			<d2l-menu>
 				<template is="dom-repeat" items="{{links}}">
@@ -85,7 +85,7 @@
 			}
 			return links;
 		},
-		_handleOpenerTap: function() {
+		_handleOpenerClick: function() {
 			var opener = this.$$('button');
 			var menu = this.$$('.d2l-navigation-item-group-menu');
 			menu.open(opener);
