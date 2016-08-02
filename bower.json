@@ -22,6 +22,7 @@
     "d2l-icons": "^2.5.0",
     "d2l-offscreen": "~2.1.0",
     "d2l-page-load-progress": "~1.0.0",
+    "d2l-polymer-behaviors": "~0.0.3",
     "polymer": "Polymer/polymer#^1.5.0",
     "iron-icon": "PolymerElements/iron-icon#^1.0.0",
     "iron-iconset-svg": "PolymerElements/iron-iconset-svg#^1.0.0",
