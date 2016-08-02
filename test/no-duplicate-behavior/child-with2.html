@@ -8,6 +8,10 @@
 		<link rel="import" href="../test-elements.html">
 	</head>
 	<body>
-		<test-duplicate key="child-with2"></test-duplicate>
+		<script>
+		var elem = document.createElement('test-duplicate');
+		elem.setAttribute('key', 'child-with2');
+		document.body.appendChild(elem);
+		</script>
 	</body>
 </html>

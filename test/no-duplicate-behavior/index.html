@@ -46,12 +46,7 @@
 			</template>
 		</test-fixture>
 		<script>
-			var resolves;
-			window['reportResults'] = function(key, result) {
-				if (resolves[key]) {
-					resolves[key](result);
-				}
-			};
+			var resolves = {};
 			function waitFor(keys) {
 				resolves = {};
 				var results = [];
