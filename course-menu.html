@@ -18,7 +18,7 @@
 		is: 'd2l-navigation-course-menu',
 
 		listeners: {
-			'partial-render': '_onPartialRender',
+			'partial-render': '_onPartialRender'
 		},
 
 		behaviors: [
@@ -59,7 +59,7 @@
 
 		},
 
-		_onAfterPartialRender: function(id) {
+		_onAfterPartialRender: function() {
 			if (!this.loaded) {
 				return;
 			}
