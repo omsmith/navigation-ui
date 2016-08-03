@@ -26,26 +26,46 @@
 		}
 	</style>
 	<template>
-		<button is="d2l-navigation-group" on-tap="_handleOpenerTap">{{localize('more')}}</button>
+		<button is="d2l-navigation-group" on-click="_handleOpenerClick">{{localize('more')}}</button>
 		<d2l-dropdown-menu>
 			<d2l-menu>
 				<template is="dom-repeat" items="{{items}}">
-					<d2l-menu-item
-						text="{{getItemLinkText(item)}}"
-						item="{{item}}"
-						class="d2l-navigation-more-group-first-level">
-						<template is="dom-if" if="{{isItemGroup(item)}}">
-							<d2l-menu label="{{getItemLinkText(item)}}">
+					<template is="dom-if" if="{{isRegular(item)}}">
+						<d2l-menu-item-link
+							text="[[getText(item)]]"
+							href="[[getHref(item)]]"
+							class="d2l-navigation-more-group-item"></d2l-menu-item-link>
+					</template>
+					<template is="dom-if" if="{{isGroup(item)}}">
+						<d2l-menu-item
+							text="[[getText(item)]]"
+							class="d2l-navigation-more-group-item">
+							<d2l-menu>
 								<template is="dom-repeat" items="{{item.entities}}">
-									<template is="dom-if" if="{{isItemLink(item)}}">
-										<d2l-menu-item
-											text="[[getItemLinkText(item)]]"
-											item="[[item]]"></d2l-menu-item>
+									<template is="dom-if" if="{{isNavItem(item)}}">
+										<template is="dom-if" if="{{isRegular(item)}}">
+											<d2l-menu-item-link
+												text="[[getText(item)]]"
+												href="[[getHref(item)]]"></d2l-menu-item-link>
+										</template>
+										<template is="dom-if" if="{{isPopupOrAction(item)}}">
+											<d2l-menu-item
+												text="[[getText(item)]]"
+												item="[[item]]"
+												on-select="_handleSelect"></d2l-menu-item>
+										</template>
 									</template>
 								</template>
 							</d2l-menu>
-						</template>
-					</d2l-menu-item>
+						</d2l-menu-item>
+					</template>
+					<template is="dom-if" if="{{isPopupOrAction(item)}}">
+						<d2l-menu-item
+							text="[[getText(item)]]"
+							class="d2l-navigation-more-group-item"
+							item="[[item]]"
+							on-select="_handleSelect"></d2l-menu-item>
+					</template>
 				</template>
 			</d2l-menu>
 		</d2l-dropdown-menu>
@@ -63,9 +83,6 @@
 		},
 		hostAttributes: {
 			role: 'listitem'
-		},
-		listeners: {
-			'select': '_handleSelect'
 		},
 		focus: function() {
 			this.$$('button').focus();
@@ -92,18 +109,15 @@
 			return -1;
 		},
 		_getItems: function() {
-			return Polymer.dom(this.root).querySelectorAll('d2l-menu-item.d2l-navigation-more-group-first-level');
+			return Polymer.dom(this.root).querySelectorAll('.d2l-navigation-more-group-item');
 		},
-		_handleOpenerTap: function() {
+		_handleOpenerClick: function() {
 			var opener = this.$$('button');
 			var menu = this.$$('d2l-dropdown-menu');
 			menu.open(opener);
 		},
-		_handleSelect: function(event) {
-			var item = Polymer.dom(event).rootTarget.item;
-			if (this.isItemLink(item)) {
-				this.onItemLinkClick(item, true);
-			}
+		_handleSelect: function(e) {
+			this.onPopupOrActionClick(e.target.item);
 		},
 		_hideItem: function(item, index) {
 			if (document.activeElement === item) {

@@ -43,19 +43,39 @@
 				</div>
 				<d2l-menu no-side-borders style="width:100%;" label="{{localize('menu')}}">
 					<template is="dom-repeat" items="{{items}}">
-						<d2l-menu-item text="{{getItemLinkText(item)}}" item="{{item}}">
-							<template is="dom-if" if="{{isItemGroup(item)}}">
-								<d2l-menu label="{{getItemLinkText(item)}}">
+						<template is="dom-if" if="{{isRegular(item)}}">
+							<d2l-menu-item-link
+								text="[[getText(item)]]"
+								href="[[getHref(item)]]"></d2l-menu-item-link>
+						</template>
+						<template is="dom-if" if="{{isGroup(item)}}">
+							<d2l-menu-item text="[[getText(item)]]">
+								<d2l-menu>
 									<template is="dom-repeat" items="{{item.entities}}">
-										<template is="dom-if" if="{{isItemLink(item)}}">
-											<d2l-menu-item
-												text="{{getItemLinkText(item)}}"
-												item="{{item}}"></d2l-menu-item>
+										<template is="dom-if" if="{{isNavItem(item)}}">
+											<template is="dom-if" if="{{isRegular(item)}}">
+												<d2l-menu-item-link
+													text="[[getText(item)]]"
+													href="[[getHref(item)]]"></d2l-menu-item-link>
+											</template>
+											<template is="dom-if" if="{{isPopupOrAction(item)}}">
+												<d2l-menu-item
+													text="[[getText(item)]]"
+													item="[[item]]"
+													on-select="_handleSelect"></d2l-menu-item>
+											</template>
 										</template>
 									</template>
 								</d2l-menu>
-							</template>
-						</d2l-menu-item>
+							</d2l-menu-item>
+						</template>
+						<template is="dom-if" if="{{isPopupOrAction(item)}}">
+							<d2l-menu-item
+								text="[[getText(item)]]"
+								class="d2l-navigation-more-group-item"
+								item="[[item]]"
+								on-select="_handleSelect"></d2l-menu-item>
+						</template>
 					</template>
 				</d2l-menu>
 			</div>
@@ -85,7 +105,6 @@
 		],
 		listeners: {
 			'd2l-navigation-close-menu': 'close',
-			'select': '_handleSelect',
 			'hide-start': '_handleHideOrShow',
 			'show-start': '_handleHideOrShow'
 		},
@@ -102,8 +121,8 @@
 		},
 		_handleSelect: function(event) {
 			var item = Polymer.dom(event).rootTarget.item;
-			if (this.isItemLink(item)) {
-				this.onItemLinkClick(item, true);
+			if (this.isNavItem(item)) {
+				this.onPopupOrActionClick(item);
 			}
 		},
 		_handleHideOrShow: function() {

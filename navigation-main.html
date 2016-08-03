@@ -33,10 +33,10 @@
 	  <d2l-navigation-centerer>
 			<div class="d2l-navigation-main-wrapper">
 				<template is="dom-repeat" items="[[items]]" on-dom-change="_handleDomChange">
-					<template is="dom-if" if="[[isItemGroup(item)]]">
+					<template is="dom-if" if="[[isGroup(item)]]">
 						<d2l-navigation-item-group item=[[item]]></d2l-navigation-item-group>
 					</template>
-					<template is="dom-if" if="[[isItemLink(item)]]">
+					<template is="dom-if" if="[[isNavItem(item)]]">
 						<d2l-navigation-item-link item="[[item]]"></d2l-navigation-item-link>
 					</template>
 				</template>

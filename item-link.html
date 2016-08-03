@@ -26,11 +26,11 @@
 			item: Object,
 			href: {
 				type: String,
-				computed: 'getItemLinkHref(item)'
+				computed: 'getHref(item)'
 			},
 			text: {
 				type: String,
-				computed: 'getItemLinkText(item)'
+				computed: 'getText(item)'
 			}
 		},
 		hostAttributes: {
@@ -43,7 +43,7 @@
 			return (document.activeElement === this.$$('a'));
 		},
 		_handleTap: function() {
-			this.onItemLinkClick(this.item);
+			this.onPopupOrActionClick(this.item);
 		}
 	});
 </script>
