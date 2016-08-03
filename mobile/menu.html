@@ -3,6 +3,7 @@
 <link rel="import" href="../../d2l-colors/d2l-colors.html">
 <link rel="import" href="../../d2l-dropdown/d2l-menu.html">
 <link rel="import" href="../../d2l-dropdown/d2l-menu-item.html">
+<link rel="import" href="../../d2l-dropdown/d2l-menu-item-link.html">
 <link rel="import" href="../localize-behavior.html">
 <link rel="import" href="../logo.html">
 <link rel="import" href="../shared-styles.html">
@@ -10,6 +11,7 @@
 <link rel="import" href="../item-link-behavior.html">
 <link rel="import" href="header.html">
 <link rel="import" href="course.html">
+
 <dom-module id="d2l-navigation-mobile-menu">
 	<style include="d2l-navigation-shared-styles">
 		:host {
@@ -85,6 +87,7 @@
 <script>
 	Polymer({
 		is: 'd2l-navigation-mobile-menu',
+
 		properties: {
 			bandColor: {
 				type: String,
@@ -99,36 +102,46 @@
 			orgUnitHome: String,
 			orgUnitName: String
 		},
+
 		behaviors: [
 			window.D2L.PolymerBehaviors.Navigation.ItemLinkBehavior,
 			window.D2L.PolymerBehaviors.Navigation.LocalizeBehavior
 		],
+
 		listeners: {
 			'd2l-navigation-close-menu': 'close',
 			'hide-start': '_handleHideOrShow',
 			'show-start': '_handleHideOrShow'
 		},
+
 		close: function() {
 			this.$$('d2l-navigation-slide-out-menu').close();
+			//this.$$('d2l-menu').show({ preventFocus: true });
 		},
+
 		open: function(opener) {
 			this.$$('d2l-navigation-slide-out-menu').open(opener);
 			this.$$('d2l-menu').resize();
+			//this.$$('d2l-menu').show({ preventFocus: true });
 		},
+
 		_handleBandColorChange: function() {
 			Polymer.dom(this.$$('.d2l-navigation-mobile-menu-wrapper'))
 				.node.style.borderTopColor = this.bandColor;
 		},
+
 		_handleSelect: function(event) {
 			var item = Polymer.dom(event).rootTarget.item;
 			if (this.isNavItem(item)) {
 				this.onPopupOrActionClick(item);
 			}
 		},
+
 		_handleHideOrShow: function() {
 			var isActive = this.$$('d2l-menu').isActive();
 			Polymer.dom(this.$$('.d2l-navigation-mobile-header-wrapper')).node.style.display =
 				(isActive) ? 'block' : 'none'; // todo: nicer transition animation
 		}
+
 	});
 </script>
