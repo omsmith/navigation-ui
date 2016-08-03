@@ -1,0 +1,75 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../d2l-polymer-behaviors/d2l-id.html">
+<link rel="import" href="find-page-object-behavior.html">
+<link rel="import" href="graft-behavior.html">
+
+<dom-module id="d2l-navigation-course-menu">
+	<template>
+		<style>
+			:host {
+				display: block;
+			}
+		</style>
+		<div class="d2l-navigation-course-menu-container"></div>
+	</template>
+</dom-module>
+<script>
+	Polymer({
+		is: 'd2l-navigation-course-menu',
+
+		listeners: {
+			'partial-render': '_onPartialRender',
+		},
+
+		behaviors: [
+			window.D2L.PolymerBehaviors.Navigation.FindPageObjectBehavior,
+			window.D2L.PolymerBehaviors.Navigation.GraftBehavior
+		],
+
+		properties: {
+			loaded: Boolean
+		},
+
+		ready: function() {
+			this._onAfterPartialRender = this._onAfterPartialRender.bind(this);
+		},
+
+		attached: function() {
+			var onAfterEvent = this.findPageObject('D2L.LP.Web.UI.Html.PartialRendering.OnAfter');
+			onAfterEvent.AddListener(this._onAfterPartialRender);
+		},
+
+		detached: function() {
+			var onAfterEvent = this.findPageObject('D2L.LP.Web.UI.Html.PartialRendering.OnAfter');
+			onAfterEvent.RemoveListener(this._onAfterPartialRender);
+		},
+
+		load: function() {
+
+			if (this.loaded) {
+				return;
+			}
+
+			var placeholderId = D2L.Id.getUniqueId();
+
+			this.$$('.d2l-navigation-course-menu-container')
+				.setAttribute('id', placeholderId);
+
+			this.graft(placeholderId);
+
+		},
+
+		_onAfterPartialRender: function(id) {
+			if (!this.loaded) {
+				return;
+			}
+			this.fire('d2l-navigation-course-menu-updated');
+		},
+
+		_onPartialRender: function() {
+			this.loaded = true;
+			this.fire('d2l-navigation-course-menu-loaded');
+		}
+
+	});
+</script>
