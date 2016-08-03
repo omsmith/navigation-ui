@@ -30,20 +30,6 @@
 			loaded: Boolean
 		},
 
-		ready: function() {
-			this._onAfterPartialRender = this._onAfterPartialRender.bind(this);
-		},
-
-		attached: function() {
-			var onAfterEvent = this.findPageObject('D2L.LP.Web.UI.Html.PartialRendering.OnAfter');
-			onAfterEvent.AddListener(this._onAfterPartialRender);
-		},
-
-		detached: function() {
-			var onAfterEvent = this.findPageObject('D2L.LP.Web.UI.Html.PartialRendering.OnAfter');
-			onAfterEvent.RemoveListener(this._onAfterPartialRender);
-		},
-
 		load: function() {
 
 			if (this.loaded) {
@@ -57,13 +43,6 @@
 
 			this.graft(placeholderId);
 
-		},
-
-		_onAfterPartialRender: function() {
-			if (!this.loaded) {
-				return;
-			}
-			this.fire('d2l-navigation-course-menu-updated');
 		},
 
 		_onPartialRender: function() {
