@@ -57,7 +57,16 @@
 				type: String,
 				reflectToAttribute: true
 			},
-			text: String
+			text: String,
+			title: {
+				type: String,
+				readOnly: true,
+				reflectToAttribute: true,
+				computed: '_computeTitle(text)'
+			}
+		},
+		_computeTitle: function(text) {
+			return text;
 		}
 	});
 </script>
