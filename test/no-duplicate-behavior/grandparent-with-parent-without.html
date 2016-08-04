@@ -8,7 +8,11 @@
 		<link rel="import" href="../test-elements.html">
 	</head>
 	<body>
-		<test-duplicate key="grandparent-with-parent-without"></test-duplicate>
+		<script>
+		var elem = document.createElement('test-duplicate');
+		elem.setAttribute('key', 'grandparent-with-parent-without');
+		document.body.appendChild(elem);
+		</script>
 		<iframe src="parent-without.html"></iframe>
 	</body>
 </html>
