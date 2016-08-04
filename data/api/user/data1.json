@@ -8,7 +8,7 @@
             "profile"
          ],
          "rel":[
-            "http://user.api.brightspace.com/rels/profile"
+            "https://api.brightspace.com/rels/user-profile"
          ],
          "entities":[]
       },
@@ -18,7 +18,7 @@
             "name"
          ],
          "rel":[
-            "http://user.api.brightspace.com/rels/display-name"
+            "https://api.brightspace.com/rels/display-name"
          ],
          "properties":{
             "name":"Cesar"

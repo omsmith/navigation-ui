@@ -141,10 +141,10 @@
 			var hasTheme = false;
 			if (res.links) {
 				res.links.forEach(function(l) {
-					if (l.rel.indexOf('http://navigation.api.brightspace.com/rels/theme') > -1) {
+					if (l.rel.indexOf('https://themes.api.brightspace.com/rels/theme') > -1) {
 						hasTheme = true;
 						this.$.themeRequest.url = l.href;
-					} else if (l.rel.indexOf('http://navigation.api.brightspace.com/rels/my-home') > -1) {
+					} else if (l.rel.indexOf('https://navigation.api.brightspace.com/rels/my-home') > -1) {
 						this.myHome = l.href;
 					}
 				}.bind(this));
@@ -178,7 +178,7 @@
 						e.links.forEach(function(l) {
 							if (l.rel.indexOf('alternate') > -1) {
 								this.logo = l.href;
-							} else if (l.rel.indexOf('http://navigation.api.brightspace.com/rels/home') > -1) {
+							} else if (l.rel.indexOf('https://themes.api.brightspace.com/rels/home') > -1) {
 								this.logoHref = l.href;
 							}
 						}.bind(this));
