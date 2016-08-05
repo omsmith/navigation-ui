@@ -46,17 +46,14 @@
 		isAction: function(item) {
 			return (item.class.indexOf('action') > -1);
 		},
-		isPopupOrAction: function(item) {
-			return (this.isAction(item) || this.isPopup(item));
-		},
-		isRegular: function(item) {
-			return (!this.isGroup(item) && !this.isPopupOrAction(item));
+		isLink: function(item) {
+			return (!this.isGroup(item) && !this.isPopup(item) && !this.isPopup(item));
 		},
 		createMenuItem: function(item) {
-			if (this.isRegular(item)) {
-				return this.createRegularLink(item);
+			if (this.isLink(item)) {
+				return this.createLinkLink(item);
 			}
-			else if (this.isPopupOrAction(item)) {
+			else if (this.isPopup(item) || this.isAction(item)) {
 				return this.createPopupOrAction(item);
 			}
 			else if (this.isGroup(item)) {
@@ -64,7 +61,7 @@
 			}
 			return;
 		},
-		createRegularLink: function(item) {
+		createLinkLink: function(item) {
 			var link = document.createElement('d2l-menu-item-link');
 			link.setAttribute('text', this.getText(item));
 			link.setAttribute('href', this.getHref(item));
@@ -164,7 +161,7 @@
 			}
 
 		},
-		_onClickRegular: function(item) {
+		_onClickLink: function(item) {
 			if (item.links[0].href) {
 				window.location = item.links[0].href;
 			}

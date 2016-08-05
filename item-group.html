@@ -24,12 +24,12 @@
 		<d2l-dropdown-menu class="d2l-navigation-item-group-menu">
 			<d2l-menu>
 				<template is="dom-repeat" items="{{links}}">
-					<template is="dom-if" if="{{isRegular(item)}}">
+					<template is="dom-if" if="{{isLink(item)}}">
 						<d2l-menu-item-link
 							text="[[getText(item)]]"
 							href="[[getHref(item)]]"></d2l-menu-item-link>
 					</template>
-					<template is="dom-if" if="{{!isRegular(item)}}">
+					<template is="dom-if" if="{{!isLink(item)}}">
 						<d2l-menu-item
 							text="[[getText(item)]]"
 							item="[[item]]"
