@@ -74,7 +74,7 @@
 			var popupOrAction = document.createElement('d2l-menu-item');
 			popupOrAction.setAttribute('text', this.getText(item));
 			popupOrAction.item = item;
-			popupOrAction.addEventListener('click',	this.onPopupOrActionClick.bind(this, item));
+			popupOrAction.addEventListener('select',	this.onPopupOrActionSelect.bind(this, item));
 			return popupOrAction;
 		},
 		createGroup: function(item) {
@@ -94,7 +94,7 @@
 			Polymer.dom(group).appendChild(menu);
 			return group;
 		},
-		onPopupOrActionClick: function(item) {
+		onPopupOrActionSelect: function(item) {
 			if (this.isPopup(item)) {
 				this._onClickPopup(item);
 			} else if (this.isAction(item)) {
