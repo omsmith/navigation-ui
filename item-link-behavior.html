@@ -51,7 +51,7 @@
 		},
 		createMenuItem: function(item) {
 			if (this.isLink(item)) {
-				return this.createLinkLink(item);
+				return this.createLink(item);
 			}
 			else if (this.isPopup(item) || this.isAction(item)) {
 				return this.createPopupOrAction(item);
@@ -61,7 +61,7 @@
 			}
 			return;
 		},
-		createLinkLink: function(item) {
+		createLink: function(item) {
 			var link = document.createElement('d2l-menu-item-link');
 			link.setAttribute('text', this.getText(item));
 			link.setAttribute('href', this.getHref(item));
