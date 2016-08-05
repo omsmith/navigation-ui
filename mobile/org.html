@@ -1,0 +1,30 @@
+<link rel="import" href="../../polymer/polymer.html">
+<link rel="import" href="../logo.html">
+
+<dom-module id="d2l-navigation-mobile-header-org">
+	<template>
+		<style>
+			:host {
+				display: block;
+			}
+			:host d2l-navigation-logo {
+				background: none;
+			}
+		</style>
+		<d2l-navigation-logo
+			href$="[[logoHref]]"
+			src="[[logo]]"
+			text="[[logoText]]">
+		</d2l-navigation-logo>
+	</template>
+</dom-module>
+<script>
+	Polymer({
+		is: 'd2l-navigation-mobile-header-org',
+		properties: {
+			logo: String,
+			logoHref: String,
+			logoText: String
+		}
+	});
+</script>

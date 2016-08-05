@@ -1,49 +1,71 @@
 <link rel="import" href="../../polymer/polymer.html">
 <link rel="import" href="../../d2l-colors/d2l-colors.html">
-<link rel="import" href="../shared-styles.html">
-<dom-module id="d2l-navigation-mobile-course">
-	<style include="d2l-colors d2l-navigation-shared-styles">
-		:host {
-			background: linear-gradient(to bottom, var(--d2l-color-regolith) 0%, var(--d2l-color-white) 100%);
-			display: block;
-			line-height: normal;
-			padding: 0 1rem;
-		}
-		a {
-			-webkit-align-items: center;
-			-ms-flex-align: center;
-			align-items: center;
-			display: -ms-flexbox;
-			display: -webkit-flex;
-			display: flex;
-			font-size: 1.5rem;
-			height: var(--d2l-navigation-header-height);
-		}
-		@media(max-width: 615px) {
-			a {
-				font-size: 1rem;
-				height: var(--d2l-navigation-header-height-mobile);
-			}
-		}
-		a div {
-			overflow: hidden;
-			text-overflow: ellipsis;
-			width: 100%;
-			white-space: nowrap;
-		}
-	</style>
+<link rel="import" href="../localize-behavior.html">
+<link rel="import" href="../button.html">
+<link rel="import" href="../divider.html">
+<link rel="import" href="../icons.html">
+
+<dom-module id="d2l-navigation-mobile-header-course">
 	<template>
-		<a class="d2l-navigation-link" href$="[[orgUnitHome]]">
-			<div>[[orgUnitName]]</div>
-		</a>
+		<style include="d2l-colors">
+			:host {
+				display: block;
+			}
+			:host .d2l-navigation-mobile-course-container {
+				display: flex;
+			}
+			:host .d2l-navigation-mobile-course-name {
+				display: inline-block;
+				flex: auto;
+			}
+			:host d2l-navigation-divider {
+				flex: none;
+			}
+			:host button {
+				flex: none;
+			}
+			:host a {
+				color: var(--d2l-color-ferrite);
+				font-size: 0.7rem;
+				font-weight: 700;
+			}
+			:host a:hover,
+			:host a:focus {
+				color: var(--d2l-color-celestine);
+				text-decoration: underline;
+			}
+		</style>
+		<div class="d2l-navigation-mobile-course-container">
+			<button
+				is="d2l-navigation-button"
+				icon="navigation-t3:home"
+				on-tap="_handleMyHome"
+				text="{{localize('myHome')}}">
+			</button>
+			<d2l-navigation-divider></d2l-navigation-divider>
+			<div class="d2l-navigation-mobile-course-name">
+				<a href$="[[orgUnitHome]]">[[orgUnitName]]</a>
+			</div>
+		</div>
 	</template>
 </dom-module>
 <script>
 	Polymer({
-		is: 'd2l-navigation-mobile-course',
+		is: 'd2l-navigation-mobile-header-course',
+
+		behaviors: [
+			window.D2L.PolymerBehaviors.Navigation.LocalizeBehavior
+		],
+
 		properties: {
+			myHome: String,
 			orgUnitHome: String,
 			orgUnitName: String
+		},
+
+		_handleMyHome: function() {
+			document.location.href = this.myHome;
 		}
+
 	});
 </script>

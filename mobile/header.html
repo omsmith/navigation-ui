@@ -3,81 +3,101 @@
 <link rel="import" href="../button.html">
 <link rel="import" href="../icons.html">
 <link rel="import" href="../localize-behavior.html">
+<link rel="import" href="org.html">
+<link rel="import" href="course.html">
+
 <dom-module id="d2l-navigation-mobile-header">
-	<style include="d2l-colors">
-		:host {
-			-webkit-align-items: center;
-			-ms-flex-align: center;
-			align-items: center;
-			border-bottom: 1px solid var(--d2l-color-gypsum);
-			display: -ms-flexbox;
-			display: -webkit-flex;
-			display: flex;
-			height: var(--d2l-navigation-header-height);
-			padding: 0 1rem;
-		}
-		@media(max-width: 615px) {
-			:host {
-				height: var(--d2l-navigation-header-height-mobile);
-			}
-		}
-		.d2l-navigation-mobile-menu-org-text,
-		.d2l-navigation-mobile-menu-home {
-			-ms-flex: 0 1 auto;
-			-webkit-flex: 0 1 auto;
-			flex: 0 1 auto; /* IE10 defaults to 0 0 auto */
-			text-transform: uppercase;
-			width: 100%;
-		}
-		.d2l-navigation-mobile-menu-org-text,
-		.d2l-navigation-mobile-menu-home > button {
-			font-size: 0.7rem;
-			font-weight: bold;
-		}
-		.d2l-navigation-mobile-menu-close {
-			-ms-flex: 0 0 auto;
-			-webkit-flex: 0 0 auto;
-			flex: 0 0 auto;
-		}
-		.d2l-navigation-mobile-menu-org-text,
-		:host-context([is-org]) .d2l-navigation-mobile-menu-home {
-			display: none;
-		}
-		:host-context([is-org]) .d2l-navigation-mobile-menu-org-text {
-			display: block;
-		}
-	</style>
 	<template>
-		<div class="d2l-navigation-mobile-menu-org-text">{{localize('menu')}}</div>
-		<div class="d2l-navigation-mobile-menu-home">
-			<button
-				is="d2l-navigation-button"
-				icon="navigation-t3:home"
-				on-tap="handleMyHome">{{localize('home')}}</button>
-		</div>
+		<style include="d2l-colors">
+			:host {
+				-webkit-align-items: center;
+				-ms-flex-align: center;
+				align-items: center;
+				border-bottom: 1px solid var(--d2l-color-gypsum);
+				display: -ms-flexbox;
+				display: -webkit-flex;
+				display: flex;
+				height: var(--d2l-navigation-header-height);
+				padding: 0 1rem;
+			}
+			:host d2l-navigation-mobile-header-org {
+				display: none;
+			}
+			:host-context([is-org]) d2l-navigation-mobile-header-org {
+				display: block;
+			}
+			:host d2l-navigation-mobile-header-course {
+				display: block;
+			}
+			:host-context([is-org]) d2l-navigation-mobile-header-course {
+				display: none;
+			}
+			:host d2l-navigation-mobile-header-org,
+			:host d2l-navigation-mobile-header-course {
+				-ms-flex: 0 1 auto;
+				-webkit-flex: 0 1 auto;
+				flex: 0 1 auto; /* IE10 defaults to 0 0 auto */
+				flex: auto;
+			}
+			:host .d2l-navigation-mobile-menu-action {
+				flex: none;
+			}
+			@media(max-width: 615px) {
+				:host {
+					height: var(--d2l-navigation-header-height-mobile);
+				}
+			}
+		</style>
+		<d2l-navigation-mobile-header-org
+			logo="[[logo]]"
+			logo-href="[[logoHref]]"
+			logo-text="[[logoText]]">
+		</d2l-navigation-mobile-header-org>
+		<d2l-navigation-mobile-header-course
+			my-home="[[myHome]]"
+			org-unit-name="[[orgUnitName]]"
+			org-unit-home="[[orgUnitHome]]">
+		</d2l-navigation-mobile-header-course>
 		<button
 			is="d2l-navigation-button"
 			hide-text
 			has-outline
-			class="d2l-navigation-mobile-menu-close"
+			class="d2l-navigation-mobile-menu-action"
+			icon="d2l-tier3:classes"
+			on-tap="_handleShowCourseMenu">{{localize('selectCourse')}}</button>
+		<button
+			is="d2l-navigation-button"
+			hide-text
+			has-outline
+			class="d2l-navigation-mobile-menu-action"
 			icon="navigation-t3:close"
-			on-tap="close">{{localize('close')}}</button>
+			on-tap="_handleClose">{{localize('close')}}</button>
 	</template>
 </dom-module>
 <script>
 	Polymer({
 		is: 'd2l-navigation-mobile-header',
+
 		behaviors: [
 			window.D2L.PolymerBehaviors.Navigation.LocalizeBehavior
 		],
+
 		properties: {
-			myHome: String
+			logo: String,
+			logoHref: String,
+			logoText: String,
+			myHome: String,
+			orgUnitHome: String,
+			orgUnitName: String
 		},
-		close: function() {
-			this.fire('d2l-navigation-close-menu');
+
+		_handleClose: function() {
+			this.fire('d2l-navigation-mobile-close');
 		},
-		handleMyHome: function() {
-			document.location.href = this.myHome;
+
+		_handleShowCourseMenu: function() {
+			this.fire('d2l-navigation-mobile-show-course-menu');
 		}
+
 	});
 </script>
