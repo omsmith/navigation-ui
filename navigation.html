@@ -152,13 +152,15 @@
 
 			this.splice('items', 0, this.items.length);
 			if (res.entities) {
+				var newItems = [];
 				res.entities.forEach(function(e) {
 					if (e.class.indexOf('admin') > -1) {
 						this.hasAdminMenu = true;
 					} else if (e.class.indexOf('item') > -1) {
-						this.push('items', e);
+						newItems.push(e);
 					}
 				}.bind(this));
+				this.items = newItems;
 			}
 
 			if (!hasTheme) {

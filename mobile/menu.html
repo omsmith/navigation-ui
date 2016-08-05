@@ -79,43 +79,7 @@
 						<iron-icon icon="d2l-tier1:chevron-right"></iron-icon>
 					</a>
 					<d2l-navigation-course-menu graft-location="[[courseMenuLocation]]"></d2l-navigation-course-menu>
-					<d2l-menu no-side-borders no-return-item style="width:100%;" label="{{localize('menu')}}">
-						<template is="dom-repeat" items="{{items}}">
-							<template is="dom-if" if="{{isRegular(item)}}">
-								<d2l-menu-item-link
-									text="[[getText(item)]]"
-									href="[[getHref(item)]]"></d2l-menu-item-link>
-							</template>
-							<template is="dom-if" if="{{isGroup(item)}}">
-								<d2l-menu-item text="[[getText(item)]]">
-									<d2l-menu>
-										<template is="dom-repeat" items="{{item.entities}}">
-											<template is="dom-if" if="{{isNavItem(item)}}">
-												<template is="dom-if" if="{{isRegular(item)}}">
-													<d2l-menu-item-link
-														text="[[getText(item)]]"
-														href="[[getHref(item)]]"></d2l-menu-item-link>
-												</template>
-												<template is="dom-if" if="{{isPopupOrAction(item)}}">
-													<d2l-menu-item
-														text="[[getText(item)]]"
-														item="[[item]]"
-														on-select="_handleSelect"></d2l-menu-item>
-												</template>
-											</template>
-										</template>
-									</d2l-menu>
-								</d2l-menu-item>
-							</template>
-							<template is="dom-if" if="{{isPopupOrAction(item)}}">
-								<d2l-menu-item
-									text="[[getText(item)]]"
-									class="d2l-navigation-more-group-item"
-									item="[[item]]"
-									on-select="_handleSelect"></d2l-menu-item>
-							</template>
-						</template>
-					</d2l-menu>
+					<d2l-menu no-side-borders no-return-item style="width:100%;" label="{{localize('menu')}}"></d2l-menu>
 				</d2l-hierarchical-view>
 			</div>
 		</d2l-navigation-slide-out-menu>
@@ -132,7 +96,10 @@
 				observer: '_handleBandColorChange'
 			},
 			courseMenuLocation: String,
-			items: Object,
+			items: {
+				type: Array,
+				observer: '_itemsChanged'
+			},
 			logo: String,
 			logoHref: String,
 			logoText: String,
@@ -196,17 +163,24 @@
 				.node.style.borderTopColor = this.bandColor;
 		},
 
-		_handleSelect: function(event) {
-			var item = Polymer.dom(event).rootTarget.item;
-			if (this.isNavItem(item)) {
-				this.onPopupOrActionClick(item);
-			}
-		},
-
 		_handleHideOrShow: function() {
 			var isActive = this.$$('d2l-menu').isActive();
 			Polymer.dom(this.$$('.d2l-navigation-mobile-header-wrapper')).node.style.display =
 				(isActive) ? 'block' : 'none'; // todo: nicer transition animation
+		},
+
+		_itemsChanged: function() {
+			var menuItems = document.createDocumentFragment();
+
+			this.items.forEach(function(item) {
+				var newItem = this.createMenuItem(item);
+				if (newItem) {
+					newItem.classList.add('d2l-navigation-more-group-item');
+					Polymer.dom(menuItems).appendChild(newItem);
+				}
+			}.bind(this));
+
+			Polymer.dom(this.$$('d2l-menu')).appendChild(menuItems);
 		}
 
 	});
