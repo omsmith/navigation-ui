@@ -52,6 +52,48 @@
 		isRegular: function(item) {
 			return (!this.isGroup(item) && !this.isPopupOrAction(item));
 		},
+		createMenuItem: function(item) {
+			if (this.isRegular(item)) {
+				return this.createRegularLink(item);
+			}
+			else if (this.isPopupOrAction(item)) {
+				return this.createPopupOrAction(item);
+			}
+			else if (this.isGroup(item)) {
+				return this.createGroup(item);
+			}
+			return;
+		},
+		createRegularLink: function(item) {
+			var link = document.createElement('d2l-menu-item-link');
+			link.setAttribute('text', this.getText(item));
+			link.setAttribute('href', this.getHref(item));
+			return link;
+		},
+		createPopupOrAction: function(item) {
+			var popupOrAction = document.createElement('d2l-menu-item');
+			popupOrAction.setAttribute('text', this.getText(item));
+			popupOrAction.item = item;
+			popupOrAction.addEventListener('click',	this.onPopupOrActionClick.bind(this, item));
+			return popupOrAction;
+		},
+		createGroup: function(item) {
+			var group = document.createElement('d2l-menu-item');
+			group.setAttribute('text', this.getText(item));
+
+			var menu = document.createElement('d2l-menu');
+			item.entities.forEach(function(entity) {
+				if (this.isNavItem(entity)) {
+					var newItem = this.createMenuItem(entity);
+					if (newItem) {
+						Polymer.dom(menu).appendChild(newItem);
+					}
+				}
+			}.bind(this));
+
+			Polymer.dom(group).appendChild(menu);
+			return group;
+		},
 		onPopupOrActionClick: function(item) {
 			if (this.isPopup(item)) {
 				this._onClickPopup(item);
