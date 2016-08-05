@@ -98,11 +98,11 @@
 			var popupOrAction = document.createElement('d2l-menu-item');
 			popupOrAction.setAttribute('text', this.getText(item));
 			popupOrAction.item = item;
-			popupOrAction.addEventListener('select',	this._onPopupOrActionSelect.bind(this, item));
+			popupOrAction.addEventListener('select', this._onPopupOrActionSelect.bind(this, item));
 			return popupOrAction;
 		},
 
-		_onClickAction: function(item) {
+		_onActionSelect: function(item) {
 			var frm = document.createElement('form');
 			frm.setAttribute('target', '_top');
 			frm.setAttribute('action', item.href);
@@ -133,7 +133,7 @@
 
 		},
 
-		_onClickPopup: function(item) {
+		_onPopupSelect: function(item) {
 			var features = '';
 			if ( item.properties.Width > 0 ) {
 				features += 'width=' + item.properties.Width + ',';
@@ -167,9 +167,9 @@
 
 		_onPopupOrActionSelect: function(item) {
 			if (this.isPopup(item)) {
-				this._onClickPopup(item);
+				this._onPopupSelect(item);
 			} else if (this.isAction(item)) {
-				this._onClickAction(item);
+				this._onActionSelect(item);
 			}
 			return true;
 		}
