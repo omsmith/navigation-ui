@@ -17,11 +17,14 @@
 			:host .d2l-navigation-mobile-course-name {
 				display: inline-block;
 				flex: auto;
+				flex: 1; /* IE10 defaults to 0 0 auto */
+				min-width: 0;
+				overflow-x: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
 			}
+			:host button,
 			:host d2l-navigation-divider {
-				flex: none;
-			}
-			:host button {
 				flex: none;
 			}
 			:host a {
