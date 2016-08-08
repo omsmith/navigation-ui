@@ -10,12 +10,8 @@
 	<template>
 		<style include="d2l-colors">
 			:host {
-				-webkit-align-items: center;
-				-ms-flex-align: center;
 				align-items: center;
 				border-bottom: 1px solid var(--d2l-color-gypsum);
-				display: -ms-flexbox;
-				display: -webkit-flex;
 				display: flex;
 				height: var(--d2l-navigation-header-height);
 				padding: 0 1rem;
@@ -34,10 +30,9 @@
 			}
 			:host d2l-navigation-mobile-header-org,
 			:host d2l-navigation-mobile-header-course {
-				-ms-flex: 0 1 auto;
-				-webkit-flex: 0 1 auto;
 				flex: 0 1 auto; /* IE10 defaults to 0 0 auto */
 				flex: auto;
+				min-width: 0;
 			}
 			:host .d2l-navigation-mobile-menu-action {
 				flex: none;
