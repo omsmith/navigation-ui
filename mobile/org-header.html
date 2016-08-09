@@ -1,30 +1,59 @@
 <link rel="import" href="../../polymer/polymer.html">
+<link rel="import" href="../button.html">
+<link rel="import" href="../icons.html">
+<link rel="import" href="../localize-behavior.html">
 <link rel="import" href="../logo.html">
 
 <dom-module id="d2l-navigation-mobile-org-header">
 	<template>
 		<style>
 			:host {
-				display: block;
+				display: inline-block;
+			}
+			:host .d2l-navigation-mobile-org-header-container {
+				align-items: center;
+				display: flex;
 			}
 			:host d2l-navigation-logo {
 				background: none;
+				display: inline-block;
+				flex: auto;
+				min-width: 0;
+			}
+			:host button {
+				flex: none;
 			}
 		</style>
-		<d2l-navigation-logo
-			href$="[[logoHref]]"
-			src="[[logo]]"
-			text="[[logoText]]">
-		</d2l-navigation-logo>
+		<div class="d2l-navigation-mobile-org-header-container">
+			<d2l-navigation-logo
+				href$="[[logoHref]]"
+				src="[[logo]]"
+				text="[[logoText]]">
+			</d2l-navigation-logo>
+			<button
+				is="d2l-navigation-button"
+				hide-text
+				has-outline
+				class="d2l-navigation-mobile-menu-action"
+				icon="d2l-tier3:classes"
+				on-tap="_handleShowCourseMenu">{{localize('selectCourse')}}
+			</button>
+		</div>
 	</template>
 </dom-module>
 <script>
 	Polymer({
 		is: 'd2l-navigation-mobile-org-header',
+
 		properties: {
 			logo: String,
 			logoHref: String,
 			logoText: String
+		},
+
+		_handleShowCourseMenu: function() {
+			this.fire('d2l-navigation-mobile-show-course-menu');
 		}
+
 	});
 </script>

@@ -13,6 +13,8 @@
 <link rel="import" href="../shared-styles.html">
 <link rel="import" href="../slide-out-menu.html">
 <link rel="import" href="header.html">
+<link rel="import" href="course-header.html">
+<link rel="import" href="org-header.html">
 
 <dom-module id="d2l-navigation-mobile-menu">
 	<style include="d2l-colors d2l-navigation-shared-styles">
@@ -22,6 +24,25 @@
 		.d2l-navigation-mobile-menu-wrapper {
 			border-top: 4px solid var(--d2l-color-pressicus);
 		}
+		:host d2l-navigation-mobile-org-header {
+			display: none;
+		}
+		:host-context([is-org]) d2l-navigation-mobile-org-header {
+			display: block;
+		}
+		:host d2l-navigation-mobile-course-header {
+			display: block;
+		}
+		:host-context([is-org]) d2l-navigation-mobile-course-header {
+			display: none;
+		}
+		:host d2l-navigation-mobile-org-header,
+		:host d2l-navigation-mobile-course-header {
+			flex: 0 1 auto; /* IE10 defaults to 0 0 auto */
+			flex: auto;
+			min-width: 0;
+		}
+
 		:host .d2l-navigation-mobile-course-menu-return {
 			border-bottom: 2px solid var(--d2l-color-gypsum);
 			color: var(--d2l-color-ferrite);
@@ -54,13 +75,17 @@
 		<d2l-navigation-slide-out-menu>
 			<div class="d2l-navigation-mobile-menu-wrapper">
 				<div class="d2l-navigation-mobile-header-wrapper">
-					<d2l-navigation-mobile-header
-						my-home="[[myHome]]"
-						logo="[[logo]]"
-						logo-href="[[logoHref]]"
-						logo-text="[[logoText]]"
-						org-unit-name="[[orgUnitName]]"
-						org-unit-home="[[orgUnitHome]]">
+					<d2l-navigation-mobile-header>
+						<d2l-navigation-mobile-org-header
+							logo="[[logo]]"
+							logo-href="[[logoHref]]"
+							logo-text="[[logoText]]">
+						</d2l-navigation-mobile-org-header>
+						<d2l-navigation-mobile-course-header
+							my-home="[[myHome]]"
+							org-unit-name="[[orgUnitName]]"
+							org-unit-home="[[orgUnitHome]]">
+						</d2l-navigation-mobile-course-header>
 					</d2l-navigation-mobile-header>
 				</div>
 				<d2l-hierarchical-view>
