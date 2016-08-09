@@ -14,6 +14,7 @@
 <link rel="import" href="../slide-out-menu.html">
 <link rel="import" href="header.html">
 <link rel="import" href="course-header.html">
+<link rel="import" href="course-menu-header.html">
 <link rel="import" href="org-header.html">
 
 <dom-module id="d2l-navigation-mobile-menu">
@@ -36,39 +37,22 @@
 		:host-context([is-org]) d2l-navigation-mobile-course-header {
 			display: none;
 		}
+		:host d2l-navigation-mobile-course-menu-header {
+			display: none;
+		}
+		:host([header='course-menu']) d2l-navigation-mobile-org-header,
+		:host([header='course-menu']) d2l-navigation-mobile-course-header {
+			display: none;
+		}
+		:host([header='course-menu']) d2l-navigation-mobile-course-menu-header {
+			display: block;
+		}
 		:host d2l-navigation-mobile-org-header,
-		:host d2l-navigation-mobile-course-header {
+		:host d2l-navigation-mobile-course-header,
+		:host d2l-navigation-mobile-course-menu-header {
 			flex: 0 1 auto; /* IE10 defaults to 0 0 auto */
 			flex: auto;
 			min-width: 0;
-		}
-
-		:host .d2l-navigation-mobile-course-menu-return {
-			border-bottom: 2px solid var(--d2l-color-gypsum);
-			color: var(--d2l-color-ferrite);
-			display: flex;
-			padding: 0.9rem 1rem;
-		}
-		:host .d2l-navigation-mobile-course-menu-return:hover,
-		:host .d2l-navigation-mobile-course-menu-return:focus {
-			color: var(--d2l-color-celestine);
-		}
-		:host .d2l-navigation-mobile-course-menu-return > span {
-			flex: auto;
-			line-height: 1.2rem;
-			overflow-x: hidden;
-			text-decoration: none;
-			text-overflow: ellipsis;
-			white-space: nowrap;
-		}
-		:host .d2l-navigation-mobile-course-menu-return > iron-icon {
-			flex: none;
-			height: 18px;
-			margin-top: 0.2rem;
-			width: 18px;
-		}
-		:host-context([dir="rtl"]) .d2l-navigation-mobile-course-menu-return > iron-icon {
-			transform: scaleX(-1);
 		}
 	</style>
 	<template>
@@ -86,13 +70,12 @@
 							org-unit-name="[[orgUnitName]]"
 							org-unit-home="[[orgUnitHome]]">
 						</d2l-navigation-mobile-course-header>
+						<d2l-navigation-mobile-course-menu-header
+							org-unit-name="[[orgUnitName]]">
+						</d2l-navigation-mobile-course-menu-header>
 					</d2l-navigation-mobile-header>
 				</div>
 				<d2l-hierarchical-view>
-					<a href="javascript:void(0);" on-tap="_handleShowNav" tabindex="0" class="d2l-navigation-mobile-course-menu-return">
-						<span>[[orgUnitName]]</span>
-						<iron-icon icon="d2l-tier1:chevron-right"></iron-icon>
-					</a>
 					<d2l-navigation-course-menu graft-location="[[courseMenuLocation]]"></d2l-navigation-course-menu>
 					<d2l-menu no-side-borders no-return-item style="width:100%;" label="{{localize('menu')}}"></d2l-menu>
 				</d2l-hierarchical-view>
@@ -120,7 +103,11 @@
 			logoText: String,
 			myHome: String,
 			orgUnitHome: String,
-			orgUnitName: String
+			orgUnitName: String,
+			header: {
+				type: String,
+				reflectToAttribute: true
+			}
 		},
 
 		behaviors: [
@@ -131,6 +118,7 @@
 		listeners: {
 			'd2l-navigation-mobile-close': 'close',
 			'd2l-navigation-mobile-show-course-menu': '_handleShowCourseMenu',
+			'd2l-navigation-mobile-show-course-nav': '_handleShowCourseNav',
 			'hide-start': '_handleHideOrShow',
 			'show-start': '_handleHideOrShow',
 			'hide-complete': '_handleLoadCourseMenu'
@@ -141,16 +129,19 @@
 		},
 
 		open: function(opener) {
+			this.header = 'nav';
 			this.$$('d2l-navigation-slide-out-menu').open(opener);
 			this.$$('d2l-menu').resize();
 			this.$$('d2l-menu').show();
 		},
 
-		_handleShowNav: function() {
+		_handleShowCourseNav: function() {
+			this.header = 'nav';
 			this.$$('d2l-menu').show();
 		},
 
 		_handleShowCourseMenu: function() {
+			this.header = 'course-menu';
 			this.$$('d2l-hierarchical-view').show();
 		},
 
@@ -161,7 +152,7 @@
 				return;
 			}
 
-			this.$$('.d2l-navigation-mobile-course-menu-return').focus();
+			this.$$('d2l-navigation-mobile-course-menu-header').focus();
 
 			var courseMenu = this.$$('d2l-navigation-course-menu');
 			if (courseMenu.loaded) {

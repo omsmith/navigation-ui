@@ -1,0 +1,64 @@
+<link rel="import" href="../../polymer/polymer.html">
+<link rel="import" href="../../d2l-colors/d2l-colors.html">
+<link rel="import" href="../icons.html">
+
+<dom-module id="d2l-navigation-mobile-course-menu-header">
+	<template>
+		<style include="d2l-colors">
+			:host {
+				display: block;
+			}
+			:host a {
+				align-items: center;
+				color: var(--d2l-color-ferrite);
+				display: flex;
+				font-size: 0.7rem;
+				font-weight: 700;
+			}
+			:host a:focus,
+			:host a:hover {
+				color: var(--d2l-color-celestine);
+			}
+			:host span {
+				flex: auto;
+				flex: 1; /* IE10 defaults to 0 0 auto */
+				overflow-x: hidden;
+				text-decoration: none;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+			}
+			:host iron-icon {
+				flex: none;
+				height: 18px;
+				width: 18px;
+			}
+			:host-context([dir="rtl"]) iron-icon {
+				transform: scaleX(-1);
+			}
+		</style>
+		<div>
+			<a href="javascript:void(0);" on-tap="_handleShowNav" tabindex="0">
+				<iron-icon icon="d2l-tier1:chevron-left"></iron-icon>
+				<span>[[orgUnitName]]</span>
+			</a>
+		</div>
+	</template>
+</dom-module>
+<script>
+	Polymer({
+		is: 'd2l-navigation-mobile-course-menu-header',
+
+		properties: {
+			orgUnitName: String
+		},
+
+		focus: function() {
+			this.$$('a').focus();
+		},
+
+		_handleShowNav: function() {
+			this.fire('d2l-navigation-mobile-show-course-nav');
+		}
+
+	});
+</script>
