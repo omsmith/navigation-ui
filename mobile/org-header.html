@@ -45,6 +45,10 @@
 	Polymer({
 		is: 'd2l-navigation-mobile-org-header',
 
+		behaviors: [
+			window.D2L.PolymerBehaviors.Navigation.LocalizeBehavior
+		],
+
 		properties: {
 			logo: String,
 			logoHref: String,
