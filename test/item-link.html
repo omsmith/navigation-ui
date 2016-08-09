@@ -28,20 +28,15 @@
 						JSON.stringify({
 							'class': ['item', 'link'],
 							'properties': {
-								'text': 'Hello World'
-							},
-							'links': [
-								{
-									'rel': ['self'],
-									'href': 'http://www.google.ca'
-								}
-							]
+								'text': 'Hello World',
+								'relativePath': '/relative/path'
+							}
 						})
 					);
 				});
 
 				it('should set "href" property when attribute is set', function() {
-					expect(item.href).to.eql('http://www.google.ca');
+					expect(item.href).to.eql('/relative/path');
 				});
 
 				it('should set "text" property when attribute is set', function() {
