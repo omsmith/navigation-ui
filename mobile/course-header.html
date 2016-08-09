@@ -1,17 +1,18 @@
 <link rel="import" href="../../polymer/polymer.html">
 <link rel="import" href="../../d2l-colors/d2l-colors.html">
-<link rel="import" href="../localize-behavior.html">
 <link rel="import" href="../button.html">
 <link rel="import" href="../divider.html">
 <link rel="import" href="../icons.html">
+<link rel="import" href="../localize-behavior.html">
 
-<dom-module id="d2l-navigation-mobile-header-course">
+<dom-module id="d2l-navigation-mobile-course-header">
 	<template>
 		<style include="d2l-colors">
 			:host {
 				display: block;
 			}
-			:host .d2l-navigation-mobile-course-container {
+			:host .d2l-navigation-mobile-course-header-container {
+				align-items: center;
 				display: flex;
 			}
 			:host .d2l-navigation-mobile-course-name {
@@ -38,7 +39,7 @@
 				text-decoration: underline;
 			}
 		</style>
-		<div class="d2l-navigation-mobile-course-container">
+		<div class="d2l-navigation-mobile-course-header-container">
 			<button
 				is="d2l-navigation-button"
 				icon="navigation-t3:home"
@@ -49,12 +50,20 @@
 			<div class="d2l-navigation-mobile-course-name">
 				<a href$="[[orgUnitHome]]">[[orgUnitName]]</a>
 			</div>
+			<button
+				is="d2l-navigation-button"
+				hide-text
+				has-outline
+				class="d2l-navigation-mobile-menu-action"
+				icon="d2l-tier3:classes"
+				on-tap="_handleShowCourseMenu">{{localize('selectCourse')}}
+			</button>
 		</div>
 	</template>
 </dom-module>
 <script>
 	Polymer({
-		is: 'd2l-navigation-mobile-header-course',
+		is: 'd2l-navigation-mobile-course-header',
 
 		behaviors: [
 			window.D2L.PolymerBehaviors.Navigation.LocalizeBehavior
@@ -68,6 +77,10 @@
 
 		_handleMyHome: function() {
 			document.location.href = this.myHome;
+		},
+
+		_handleShowCourseMenu: function() {
+			this.fire('d2l-navigation-mobile-show-course-menu');
 		}
 
 	});
