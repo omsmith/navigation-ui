@@ -1,68 +1,44 @@
 {
 	"class": ["navigation"],
 	"properties": {
-		"text": "College University"
+		"text": "College University",
+		"myHomeRelativePath": "/d2l/lp/ouHome/defaultHome.d2l"
 	},
 	"entities": [
 		{
 			"class": ["item", "link"],
 			"properties": {
-				"text": "Calendar"
-			},
-			"links": [
-				{
-					"rel": ["self"],
-					"href": "/d2l/le/calendar/6606"
-				}
-			]
+				"text": "Calendar",
+				"relativePath": "/d2l/le/calendar/6606"
+			}
 		},
 		{
 			"class": ["item", "link"],
 			"properties": {
-				"text": "Checklist"
-			},
-			"links": [
-				{
-					"rel": ["self"],
-					"href": "/d2l/lms/checklist/checklists.d2l?ou=6606"
-				}
-			]
+				"text": "Checklist",
+				"relativePath": "/d2l/lms/checklist/checklists.d2l?ou=6606"
+			}
 		},
 		{
 			"class": ["item", "link"],
 			"properties": {
-				"text": "Content"
-			},
-			"links": [
-				{
-					"rel": ["self"],
-					"href": "/d2l/le/content/6609/Home"
-				}
-			]
+				"text": "Content",
+				"relativePath": "/d2l/le/content/6609/Home"
+			}
 		},
 		{
 			"class": ["item", "link"],
 			"properties": {
-				"text": "Discussions"
-			},
-			"links": [
-				{
-					"rel": ["self"],
-					"href": "/d2l/le/6606/discussions/List"
-				}
-			]
+				"text": "Discussions",
+				"relativePath": "/d2l/le/6606/discussions/List"
+			}
 		},
 		{
 			"class": ["item", "link"],
 			"properties": {
-				"text": "Assignments"
-			},
-			"links": [
-				{
-					"rel": ["self"],
-					"href": "/d2l/lms/dropbox/dropbox.d2l?ou=6606"
-				}
-			]
+				"text": "Assignments",
+				"relativePath": "/d2l/lms/dropbox/dropbox.d2l?ou=6606"
+			}
 		},
 		{
 			"class": ["item", "group"],
@@ -73,26 +49,16 @@
 				{
 					"class": ["item", "link"],
 					"properties": {
-						"text": "Announcements"
-					},
-					"links": [
-						{
-							"rel": ["self"],
-							"href": "/d2l/lms/news/main.d2l?ou=6606"
-						}
-					]
+						"text": "Announcements",
+						"relativePath": "/d2l/lms/news/main.d2l?ou=6606"
+					}
 				},
 				{
 					"class": ["item", "link"],
 					"properties": {
-						"text": "Quizzes"
-					},
-					"links": [
-						{
-							"rel": ["self"],
-							"href": "/d2l/lms/quizzing/admin/quizzes_manage.d2l?ou=6606"
-						}
-					]
+						"text": "Quizzes",
+						"relativePath": "/d2l/lms/quizzing/admin/quizzes_manage.d2l?ou=6606"
+					}
 				}
 			]
 		},
@@ -106,14 +72,9 @@
 					"class": ["item", "link", "admin"],
 					"rel": ["https://navigation.api.brightspace.com/rels/admin-link"],
 					"properties": {
-						"text": "Admin Tool 1"
-					},
-					"links": [
-						{
-							"rel": ["self"],
-							"href": "/d2l/admin/tool/1"
-						}
-					]
+						"text": "Admin Tool 1",
+						"relativePath": "/d2l/admin/tool/1"
+					}
 				}
 			]
 		}

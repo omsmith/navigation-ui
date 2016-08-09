@@ -13,22 +13,10 @@
 				"file"
 			],
 			"properties": {
-				"alt": "My Home"
-			},
-			"links": [
-				{
-					"rel": [
-						"alternate"
-					],
-					"href": "/components/d2l-navigation/data/assets/logo.png"
-				},
-				{
-					"rel": [
-						"https://themes.api.brightspace.com/rels/home"
-					],
-					"href": "/home/"
-				}
-			]
+				"alt": "My Home",
+				"imageRelativePath": "/components/d2l-navigation/data/assets/logo.png",
+				"homeRelativePath": "/home/"
+			}
 		}
 	]
 }

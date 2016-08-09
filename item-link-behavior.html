@@ -24,14 +24,8 @@
 
 		getHref: function(item) {
 			var href = undefined;
-			if (item.class.indexOf('item') > -1) {
-				if (item.class.indexOf('link') > -1) {
-					item.links.forEach(function(l) {
-						if (l.rel.indexOf('self') > -1) {
-							href = l.href;
-						}
-					});
-				}
+			if (item.properties && item.properties.relativePath) {
+				href = item.properties.relativePath;
 			}
 			return href;
 		},

@@ -101,12 +101,13 @@
 					resEntity.entities.forEach(function(profileEntity) {
 						if (profileEntity.class.indexOf('file') > -1 && profileEntity.class.indexOf('image') > -1) {
 							profileEntity.links.forEach(function(link) {
-								if ((link.rel.indexOf('preview') > -1) && link.rel.indexOf('https://api.brightspace.com/rels/thumbnail#regular') > -1) {
-									thumbnailHref = link.href;
-								} else if (link.rel.indexOf('alternate') > -1) {
+								if (link.rel.indexOf('alternate') > -1) {
 									hasProfile = true;
 								}
 							}.bind(this));
+							if (profileEntity.properties && profileEntity.properties.regularRelativePath) {
+								thumbnailHref = profileEntity.properties.regularRelativePath;
+							}
 						}
 					}.bind(this));
 				} else if (resEntity.class.indexOf('display') > -1) {

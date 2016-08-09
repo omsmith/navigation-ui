@@ -104,6 +104,9 @@
 						{ 'Content-Type': 'application/json' },
 						JSON.stringify({
 							'class': ['navigation'],
+							'properties': {
+								'myHomeRelativePath': '/my/home'
+							},
 							'entities': [
 								{
 									'class': ['item'],
@@ -122,10 +125,6 @@
 								{
 									'rel': ['https://themes.api.brightspace.com/rels/theme'],
 									'href': 'theme-some-data.json'
-								},
-								{
-									'rel': ['https://navigation.api.brightspace.com/rels/my-home'],
-									'href': '/my/home'
 								}
 							]
 						})
@@ -145,18 +144,10 @@
 								{
 									'class': ['image'],
 									'properties': {
-										'alt': 'logo alt'
-									},
-									'links': [
-										{
-											'rel': 'alternate',
-											'href': '/components/d2l-navigation/data/assets/logo.png'
-										},
-										{
-											'rel': 'https://themes.api.brightspace.com/rels/home',
-											'href': '/logo/my/home'
-										}
-									]
+										'alt': 'logo alt',
+										'imageRelativePath': '/components/d2l-navigation/data/assets/logo.png',
+										'homeRelativePath': '/logo/my/home'
+									}
 								}
 							]
 						})

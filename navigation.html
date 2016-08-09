@@ -138,14 +138,16 @@
 
 			var res = evt.detail.response;
 
+			if (res.properties && res.properties.myHomeRelativePath) {
+				this.myHome = res.properties.myHomeRelativePath;
+			}
+
 			var hasTheme = false;
 			if (res.links) {
 				res.links.forEach(function(l) {
 					if (l.rel.indexOf('https://themes.api.brightspace.com/rels/theme') > -1) {
 						hasTheme = true;
 						this.$.themeRequest.url = l.href;
-					} else if (l.rel.indexOf('https://navigation.api.brightspace.com/rels/my-home') > -1) {
-						this.myHome = l.href;
 					}
 				}.bind(this));
 			}
@@ -177,13 +179,14 @@
 				res.entities.forEach(function(e) {
 					if (e.class.indexOf('image') > -1) {
 						this.logoText = e.properties.alt;
-						e.links.forEach(function(l) {
-							if (l.rel.indexOf('alternate') > -1) {
-								this.logo = l.href;
-							} else if (l.rel.indexOf('https://themes.api.brightspace.com/rels/home') > -1) {
-								this.logoHref = l.href;
+						if (e.properties) {
+							if (e.properties.homeRelativePath) {
+								this.logoHref = e.properties.homeRelativePath;
 							}
-						}.bind(this));
+							if (e.properties.imageRelativePath) {
+								this.logo = e.properties.imageRelativePath;
+							}
+						}
 					}
 				}.bind(this));
 			}
