@@ -13,32 +13,4 @@
 			);
 		}
 	});
-	Polymer({
-		is: 'test-duplicate',
-		behaviors: [ D2L.PolymerBehaviors.Navigation.NoDuplicateBehavior ],
-		properties: {
-			key: {
-				type: String,
-				observer: '_keyChanged'
-			}
-		},
-		_keyChanged: function() {
-			this._report();
-		},
-		_report: function() {
-			var val = this.isDuplicate('test-duplicate');
-			var win = window;
-			var found = false;
-			while (win !== win.parent) {
-				win = win.parent;
-				if (win.resolves && win.resolves[this.key]) {
-					found = true;
-					win.resolves[this.key](val);
-				}
-			}
-			if (!found) {
-				this.async(this._report.bind(this), 100);
-			}
-		}
-	});
 </script>
