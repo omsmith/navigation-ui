@@ -42,11 +42,12 @@
 		<div class="d2l-navigation-mobile-course-header-container">
 			<button
 				is="d2l-navigation-button"
+				hide-text
 				icon="navigation-t3:home"
 				on-tap="_handleMyHome"
 				text="{{localize('myHome')}}">
 			</button>
-			<d2l-navigation-divider></d2l-navigation-divider>
+			<d2l-navigation-divider no-margin></d2l-navigation-divider>
 			<div class="d2l-navigation-mobile-course-name">
 				<a href$="[[orgUnitHome]]">[[orgUnitName]]</a>
 			</div>
