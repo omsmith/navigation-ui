@@ -1,12 +1,11 @@
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../d2l-colors/d2l-colors.html">
-<link rel="import" href="../d2l-offscreen/d2l-offscreen-shared-styles.html">
 <link rel="import" href="button.html">
 <link rel="import" href="icons.html">
 <link rel="import" href="localize-behavior.html">
 
 <dom-module id="d2l-navigation-slide-out-menu">
-	<style include="d2l-colors d2l-offscreen-shared-styles">
+	<style include="d2l-colors">
 		:host {
 			display: block;
 		}
@@ -52,16 +51,15 @@
 			width: 84%;
 		}
 		.d2l-navigation-slide-out-menu-mask-close > button {
-			margin-left: calc(100% + 10px);
-			margin-top: 10px;
-			@apply(--d2l-offscreen);
+			position: relative;
+			top: 10px;
 		}
 		.d2l-navigation-slide-out-menu-mask-close > button:focus {
-			position: static !important;
-			height: auto;
-			overflow: visible;
-			white-space: normal;
-			width: auto;
+			left: calc(100% + 10px);
+		}
+		:host-context([dir="rtl"]) .d2l-navigation-slide-out-menu-mask-close > button:focus {
+			left: auto;
+			right: calc(100% + 10px);
 		}
 		:host([state='opened']) .d2l-navigation-slide-out-menu-mask {
 			height: 100vh;
