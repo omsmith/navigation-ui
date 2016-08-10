@@ -135,6 +135,7 @@
 			this.$$('d2l-navigation-slide-out-menu').open(opener);
 			this.$$('d2l-menu').resize();
 			this.$$('d2l-menu').show();
+			this._handleLoadCourseMenu();
 		},
 
 		_handleShowCourseNav: function() {
@@ -147,12 +148,7 @@
 			this.$$('d2l-hierarchical-view').show();
 		},
 
-		_handleLoadCourseMenu: function(e) {
-
-			var rootView = this.$$('d2l-hierarchical-view');
-			if (e.detail.activeView !== rootView) {
-				return;
-			}
+		_handleLoadCourseMenu: function() {
 
 			this.$$('d2l-navigation-mobile-course-menu-header').focus();
 
@@ -161,6 +157,7 @@
 				return;
 			}
 
+			var rootView = this.$$('d2l-hierarchical-view');
 			var onLoad = function() {
 				courseMenu.removeEventListener('d2l-navigation-course-menu-loaded', onLoad);
 				rootView.resize();

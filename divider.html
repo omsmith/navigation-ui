@@ -19,6 +19,9 @@
 			margin: 0 9px;
 			width: 24px;
 		}
+		:host([no-margin]) iron-icon {
+			margin: 0;
+		}
 	</style>
 	<template>
 		<iron-icon icon="{{computeIcon(small)}}"></iron-icon>

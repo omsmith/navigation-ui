@@ -1,6 +1,6 @@
 <link rel="import" href="../../polymer/polymer.html">
 <link rel="import" href="../../d2l-colors/d2l-colors.html">
-<link rel="import" href="../button.html">
+<link rel="import" href="../button-highlight-icon.html">
 <link rel="import" href="../divider.html">
 <link rel="import" href="../icons.html">
 <link rel="import" href="../localize-behavior.html">
@@ -10,10 +10,12 @@
 		<style include="d2l-colors">
 			:host {
 				display: block;
+				height: 100%;
 			}
 			:host .d2l-navigation-mobile-course-header-container {
 				align-items: center;
 				display: flex;
+				height: 100%;
 			}
 			:host .d2l-navigation-mobile-course-name {
 				display: inline-block;
@@ -24,14 +26,15 @@
 				text-overflow: ellipsis;
 				white-space: nowrap;
 			}
+			:host button {
+				height: 100%;
+			}
 			:host button,
 			:host d2l-navigation-divider {
 				flex: none;
 			}
 			:host a {
 				color: var(--d2l-color-ferrite);
-				font-size: 0.7rem;
-				font-weight: 700;
 			}
 			:host a:hover,
 			:host a:focus {
@@ -41,23 +44,19 @@
 		</style>
 		<div class="d2l-navigation-mobile-course-header-container">
 			<button
-				is="d2l-navigation-button"
+				is="d2l-navigation-button-highlight-icon"
 				icon="navigation-t3:home"
-				on-tap="_handleMyHome"
-				text="{{localize('myHome')}}">
-			</button>
-			<d2l-navigation-divider></d2l-navigation-divider>
+				text="{{localize('myHome')}}"
+				on-tap="_handleMyHome"></button>
+			<d2l-navigation-divider no-margin></d2l-navigation-divider>
 			<div class="d2l-navigation-mobile-course-name">
 				<a href$="[[orgUnitHome]]">[[orgUnitName]]</a>
 			</div>
 			<button
-				is="d2l-navigation-button"
-				hide-text
-				has-outline
-				class="d2l-navigation-mobile-menu-action"
+				is="d2l-navigation-button-highlight-icon"
 				icon="d2l-tier3:classes"
-				on-tap="_handleShowCourseMenu">{{localize('selectCourse')}}
-			</button>
+				text="{{localize('selectCourse')}}"
+				on-tap="_handleShowCourseMenu"></button>
 		</div>
 	</template>
 </dom-module>

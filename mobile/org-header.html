@@ -1,5 +1,5 @@
 <link rel="import" href="../../polymer/polymer.html">
-<link rel="import" href="../button.html">
+<link rel="import" href="../button-highlight-icon.html">
 <link rel="import" href="../icons.html">
 <link rel="import" href="../localize-behavior.html">
 <link rel="import" href="../logo.html">
@@ -9,10 +9,12 @@
 		<style>
 			:host {
 				display: inline-block;
+				height: 100%;
 			}
 			:host .d2l-navigation-mobile-org-header-container {
 				align-items: center;
 				display: flex;
+				height: 100%;
 			}
 			:host d2l-navigation-logo {
 				background: none;
@@ -22,6 +24,7 @@
 			}
 			:host button {
 				flex: none;
+				height: 100%;
 			}
 		</style>
 		<div class="d2l-navigation-mobile-org-header-container">
@@ -31,13 +34,10 @@
 				text="[[logoText]]">
 			</d2l-navigation-logo>
 			<button
-				is="d2l-navigation-button"
-				hide-text
-				has-outline
-				class="d2l-navigation-mobile-menu-action"
+				is="d2l-navigation-button-highlight-icon"
 				icon="d2l-tier3:classes"
-				on-tap="_handleShowCourseMenu">{{localize('selectCourse')}}
-			</button>
+				text="{{localize('selectCourse')}}"
+				on-tap="_handleShowCourseMenu"></button>
 		</div>
 	</template>
 </dom-module>
