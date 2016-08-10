@@ -1,5 +1,6 @@
 <link rel="import" href="../../polymer/polymer.html">
 <link rel="import" href="../../d2l-colors/d2l-colors.html">
+<link rel="import" href="../button.html">
 <link rel="import" href="../icons.html">
 
 <dom-module id="d2l-navigation-mobile-course-menu-header">
@@ -8,37 +9,36 @@
 			:host {
 				display: block;
 			}
-			:host a {
+			:host .d2l-navigation-mobile-course-menu-header-container {
 				align-items: center;
-				color: var(--d2l-color-ferrite);
 				display: flex;
 			}
-			:host a:focus,
-			:host a:hover {
-				color: var(--d2l-color-celestine);
+			:host button {
+				flex: none;
 			}
 			:host span {
+				display: inline-block;
 				flex: auto;
 				flex: 1; /* IE10 defaults to 0 0 auto */
+				margin-right: 50px;
 				overflow-x: hidden;
+				text-align: center;
 				text-decoration: none;
 				text-overflow: ellipsis;
 				white-space: nowrap;
 			}
-			:host iron-icon {
-				flex: none;
-				height: 18px;
-				width: 18px;
-			}
-			:host-context([dir="rtl"]) iron-icon {
+			:host-context([dir="rtl"]) button {
 				transform: scaleX(-1);
 			}
 		</style>
-		<div>
-			<a href="javascript:void(0);" on-tap="_handleShowNav" tabindex="0">
-				<iron-icon icon="d2l-tier1:chevron-left"></iron-icon>
-				<span>[[orgUnitName]]</span>
-			</a>
+		<div class="d2l-navigation-mobile-course-menu-header-container">
+			<button
+				is="d2l-navigation-button"
+				hide-text
+				has-outline
+				icon="d2l-tier1:chevron-left"
+				on-tap="_handleShowNav">[[orgUnitName]]</button>
+			<span>[[orgUnitName]]</span>
 		</div>
 	</template>
 </dom-module>
@@ -51,7 +51,7 @@
 		},
 
 		focus: function() {
-			this.$$('a').focus();
+		//	this.$$('a').focus();
 		},
 
 		_handleShowNav: function() {
