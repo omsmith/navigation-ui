@@ -1,8 +1,5 @@
 <link rel="import" href="../../polymer/polymer.html">
 <link rel="import" href="../../d2l-colors/d2l-colors.html">
-<link rel="import" href="../button.html">
-<link rel="import" href="../icons.html">
-<link rel="import" href="../localize-behavior.html">
 
 <dom-module id="d2l-navigation-mobile-header">
 	<template>
@@ -14,9 +11,6 @@
 				height: var(--d2l-navigation-header-height);
 				padding: 0 1rem;
 			}
-			:host button {
-				flex: none;
-			}
 			@media(max-width: 615px) {
 				:host {
 					height: var(--d2l-navigation-header-height-mobile);
@@ -24,26 +18,10 @@
 			}
 		</style>
 		<content></content>
-		<button
-			is="d2l-navigation-button"
-			hide-text
-			has-outline
-			icon="navigation-t3:close"
-			on-tap="_handleClose">{{localize('close')}}
-		</button>
 	</template>
 </dom-module>
 <script>
 	Polymer({
-		is: 'd2l-navigation-mobile-header',
-
-		behaviors: [
-			window.D2L.PolymerBehaviors.Navigation.LocalizeBehavior
-		],
-
-		_handleClose: function() {
-			this.fire('d2l-navigation-mobile-close');
-		}
-
+		is: 'd2l-navigation-mobile-header'
 	});
 </script>
