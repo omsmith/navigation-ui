@@ -27,6 +27,10 @@
 				text-overflow: ellipsis;
 				white-space: nowrap;
 			}
+			:host-context([dir="rtl"]) span {
+				margin-left: 62px;
+				margin-right: 0;
+			}
 			:host-context([dir="rtl"]) button {
 				transform: scaleX(-1);
 			}
