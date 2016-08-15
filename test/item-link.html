@@ -17,30 +17,38 @@
 		</test-fixture>
 
 		<script>
-			describe('Default', function() {
+			describe('d2l-navigation-item-link', function() {
 
-				var item;
+				describe('Default', function() {
 
-				beforeEach(function() {
-					item = fixture('Default');
-					item.setAttribute(
-						'item',
-						JSON.stringify({
-							'class': ['item', 'link'],
-							'properties': {
-								'text': 'Hello World',
-								'relativePath': '/relative/path'
-							}
-						})
-					);
-				});
+					var item;
 
-				it('should set "href" property when attribute is set', function() {
-					expect(item.href).to.eql('/relative/path');
-				});
+					beforeEach(function() {
+						item = fixture('Default');
+						item.setAttribute(
+							'item',
+							JSON.stringify({
+								'class': ['item', 'link'],
+								'properties': {
+									'text': 'Hello World',
+									'relativePath': '/relative/path'
+								}
+							})
+						);
+					});
 
-				it('should set "text" property when attribute is set', function() {
-					expect(item.text).to.eql('Hello World');
+					it('should set "href" property when attribute is set', function() {
+						expect(item.href).to.eql('/relative/path');
+					});
+
+					it('should set "text" property when attribute is set', function() {
+						expect(item.text).to.eql('Hello World');
+					});
+
+					it('defines a _onPopupOrActionSelect method to handle popup or action select', function() {
+						expect(item._onPopupOrActionSelect).to.exist;
+					});
+
 				});
 
 			});
