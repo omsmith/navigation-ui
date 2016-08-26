@@ -9,79 +9,79 @@
 	/** @polymerBehavior D2L.PolymerBehaviors.Navigation.GraftDropdownBehavior */
 	var GraftDropdownBehavior = {
 
-		_dropdown: null,
-		_opener: null,
-		_placeholderId: null,
+		__dropdown: null,
+		__opener: null,
+		__placeholderId: null,
 
 		listeners: {
 			'partial-render': '__handlePartialRender'
 		},
 
 		ready: function() {
-			this._placeholderId = D2L.Id.getUniqueId();
+			this.__placeholderId = D2L.Id.getUniqueId();
 		},
 
 		attached: function() {
 
-			this._opener = this.$$('[is="d2l-navigation-button-highlight-icon"]') ||
+			this.__opener = this.$$('[is="d2l-navigation-button-highlight-icon"]') ||
 				this.$$('[is="d2l-navigation-button-highlight"]');
 
-			if (this._opener) {
-				this.listen(this._opener, 'click', '__onClick');
+			if (this.__opener) {
+				this.listen(this.__opener, 'click', '__onClick');
 			}
 
-			this._dropdown = this.$$('d2l-dropdown-content');
-			if (this._dropdown) {
+			this.__dropdown = this.$$('d2l-dropdown-content');
+			if (this.__dropdown) {
 
 				var placeholder = document.createElement('div');
-				placeholder.id = this._placeholderId;
+				placeholder.id = this.__placeholderId;
 				placeholder.style.minHeight = '60px';
-				Polymer.dom(this._dropdown).appendChild(placeholder);
+				Polymer.dom(this.__dropdown).appendChild(placeholder);
 
-				this.listen(this._dropdown, 'd2l-dropdown-open', '__onOpen');
-				this.listen(this._dropdown, 'd2l-dropdown-close', '__onClose');
+				this.listen(this.__dropdown, 'd2l-dropdown-open', '__onOpen');
+				this.listen(this.__dropdown, 'd2l-dropdown-close', '__onClose');
 
 			}
 
 		},
 
 		detached: function() {
-			if (this._opener) {
-				this.unlisten(this._opener, 'click', '__onClick');
+			if (this.__opener) {
+				this.unlisten(this.__opener, 'click', '__onClick');
 			}
-			if (this._dropdown) {
-				this.unlisten(this._dropdown, 'open', '__onOpen');
-				this.unlisten(this._dropdown, 'close', '__onClose');
+			if (this.__dropdown) {
+				this.unlisten(this.__dropdown, 'open', '__onOpen');
+				this.unlisten(this.__dropdown, 'close', '__onClose');
 			}
 		},
 
 		__handlePartialRender: function() {
-			if (!this._dropdown) {
+			if (!this.__dropdown) {
 				return;
 			}
-			this._dropdown.toggleOpen();
+			this.__dropdown.toggleOpen();
 		},
 
 		__onClick: function() {
-			if (!this._dropdown) {
+			if (!this.__dropdown) {
 				return;
 			}
 			if (this._partialled) {
-				this._dropdown.toggleOpen();
+				this.__dropdown.toggleOpen();
 			} else {
-				this.graft(this._placeholderId);
+				this.graft(this.__placeholderId);
 			}
 		},
 
 		__onClose: function() {
-			if (this._opener) {
-				Polymer.dom(this._opener).removeAttribute('active');
+			if (this.__opener) {
+				Polymer.dom(this.__opener).removeAttribute('active');
 			}
 		},
 
 		__onOpen: function() {
-			if (this._opener) {
-				Polymer.dom(this._opener).setAttribute('active', 'active');
+			if (this.__opener) {
+				Polymer.dom(this.__opener).setAttribute('active', 'active');
 			}
 		}
 
