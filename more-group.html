@@ -1,4 +1,5 @@
 <link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../d2l-dropdown/d2l-dropdown.html">
 <link rel="import" href="../d2l-dropdown/d2l-dropdown-menu.html">
 <link rel="import" href="../d2l-dropdown/d2l-menu.html">
 <link rel="import" href="../d2l-dropdown/d2l-menu-item.html">
@@ -6,6 +7,7 @@
 <link rel="import" href="shared-styles.html">
 <link rel="import" href="item-link-behavior.html">
 <link rel="import" href="group-button.html">
+
 <dom-module id="d2l-navigation-more-group">
 	<style include="d2l-navigation-shared-styles">
 		:host {
@@ -18,18 +20,14 @@
 			margin-left: 0;
 			margin-right: 0;
 		}
-		.d2l-navigation-item-group-menu {
-			@apply(--d2l-navigation-item-dropdown);
-		}
-		d2l-dropdown-menu {
-			width: 12.5rem;
-		}
 	</style>
 	<template>
-		<button is="d2l-navigation-group" on-click="_handleOpenerClick">{{localize('more')}}</button>
-		<d2l-dropdown-menu>
-			<d2l-menu></d2l-menu>
-		</d2l-dropdown-menu>
+		<d2l-dropdown>
+			<button is="d2l-navigation-group" class="d2l-dropdown-opener">{{localize('more')}}</button>
+			<d2l-dropdown-menu>
+				<d2l-menu></d2l-menu>
+			</d2l-dropdown-menu>
+		</d2l-dropdown>
 	</template>
 </dom-module>
 <script>
@@ -87,11 +85,6 @@
 		},
 		_getItems: function() {
 			return Polymer.dom(this.root).querySelectorAll('.d2l-navigation-more-group-item');
-		},
-		_handleOpenerClick: function() {
-			var opener = this.$$('button');
-			var menu = this.$$('d2l-dropdown-menu');
-			menu.open(opener);
 		},
 		_hideItem: function(item, index) {
 			if (document.activeElement === item) {

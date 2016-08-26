@@ -1,5 +1,6 @@
 <link rel="import" href="../../polymer/polymer.html">
 <link rel="import" href="../../d2l-dropdown/d2l-dropdown.html">
+<link rel="import" href="../../d2l-dropdown/d2l-dropdown-content.html">
 <link rel="import" href="../button-highlight-icon.html">
 <link rel="import" href="../course-menu.html">
 <link rel="import" href="../divider.html">
@@ -15,17 +16,20 @@
  		:host button {
 			margin: 0 5px;
 		}
-		:host d2l-dropdown {
-			min-width: 450px;
+		d2l-dropdown {
+			height: 100%;
 		}
 	</style>
 	<template>
-		<button
-			is="d2l-navigation-button-highlight-icon"
-			icon="d2l-tier3:classes"
-			text="{{localize('selectCourse')}}"></button>
-		<d2l-dropdown vertical-offset="-5" horizontal-offset="-27">
-			<d2l-navigation-course-menu graft-location="[[courseMenuLocation]]"></d2l-navigation-course-menu>
+		<d2l-dropdown no-auto-open>
+			<button
+				is="d2l-navigation-button-highlight-icon"
+				class="d2l-dropdown-opener"
+				icon="d2l-tier3:classes"
+				text="{{localize('selectCourse')}}"></button>
+			<d2l-dropdown-content min-width="450" max-width="800" no-padding>
+				<d2l-navigation-course-menu graft-location="[[courseMenuLocation]]"></d2l-navigation-course-menu>
+			</d2l-dropdown-content>
 		</d2l-dropdown>
 		<d2l-navigation-divider></d2l-navigation-divider>
 	</template>
@@ -51,16 +55,16 @@
 			this.listen(this._opener, 'click', '_onClick');
 
 			this._dropdown = this.$$('d2l-dropdown');
-			this.listen(this._dropdown, 'open', '_onOpen');
-			this.listen(this._dropdown, 'close', '_onClose');
+			this.listen(this._dropdown, 'd2l-dropdown-open', '_onOpen');
+			this.listen(this._dropdown, 'd2l-dropdown-close', '_onClose');
 
 			this._menu = this.$$('d2l-navigation-course-menu');
 		},
 
 		detached: function() {
 			this.unlisten(this._opener, 'click', '_onClick');
-			this.unlisten(this._dropdown, 'open', '_onOpen');
-			this.unlisten(this._dropdown, 'close', '_onClose');
+			this.unlisten(this._dropdown, 'd2l-dropdown-open', '_onOpen');
+			this.unlisten(this._dropdown, 'd2l-dropdown-close', '_onClose');
 		},
 
 		_onClose: function() {
@@ -75,13 +79,13 @@
 
 			if (this._menu.loaded) {
 
-				this._dropdown.open(this._opener);
+				this._dropdown.toggleOpen();
 
 			} else {
 
 				var onLoad = function() {
 					this._menu.removeEventListener('d2l-navigation-course-menu-loaded', onLoad);
-					this._dropdown.open(this._opener);
+					this._dropdown.toggleOpen();
 				}.bind(this);
 
 				this._menu.addEventListener('d2l-navigation-course-menu-loaded', onLoad);
