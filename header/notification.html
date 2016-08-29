@@ -1,10 +1,12 @@
 <link rel="import" href="../../polymer/polymer.html">
 <link rel="import" href="../../d2l-dropdown/d2l-dropdown.html">
+<link rel="import" href="../../d2l-dropdown/d2l-dropdown-content.html">
 <link rel="import" href="../button-highlight-icon.html">
 <link rel="import" href="../find-page-object-behavior.html">
 <link rel="import" href="../graft-dropdown-behavior.html">
 <link rel="import" href="../icons.html">
 <link rel="import" href="notification-indicator.html">
+
 <dom-module id="d2l-navigation-notification">
 	<style>
 	:host {
@@ -12,20 +14,27 @@
 		height: 100%;
 	}
 	d2l-dropdown {
+		height: 100%;
+	}
+	d2l-dropdown-content {
 		line-height: 1.5rem;
-		width: 350px;
 	}
 	</style>
 	<template>
-		<button
-			is="d2l-navigation-button-highlight-icon"
-			icon="{{icon}}"
-			text="{{text}}">
-			<d2l-navigation-notification-indicator
-				text="{{text}}"
-				visible="[[updates]]"></d2l-navigation-notification-indicator>
-		</button>
-		<d2l-dropdown on-open="_onDropdownOpen" vertical-offset="-5" horizontal-offset="-24"></d2l-dropdown>
+		<d2l-dropdown no-auto-open>
+			<button
+				is="d2l-navigation-button-highlight-icon"
+				class="d2l-dropdown-opener"
+				icon="{{icon}}"
+				text="{{text}}">
+				<d2l-navigation-notification-indicator
+					text="{{text}}"
+					visible="[[updates]]"></d2l-navigation-notification-indicator>
+			</button>
+			<d2l-dropdown-content
+				no-padding
+				on-d2l-dropdown-open="_onDropdownOpen"></d2l-dropdown-content>
+		</d2l-dropdown>
 	</template>
 </dom-module>
 <script>
