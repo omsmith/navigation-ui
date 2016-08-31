@@ -109,7 +109,7 @@
 		_isOnFirstRow: function(navItem) {
 			var baseOffsetTop = Polymer.dom(this._navItems[0]).node.offsetTop,
 				itemOffsetTop = Polymer.dom(navItem).node.offsetTop,
-				OFFSET_TOLERANCE =  10;
+				OFFSET_TOLERANCE =  15;
 			return (Math.abs(baseOffsetTop - itemOffsetTop) < OFFSET_TOLERANCE);
 		},
 		_showAllItems: function() {
