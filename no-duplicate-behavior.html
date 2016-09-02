@@ -14,8 +14,12 @@
 				while (win !== win.parent) {
 					win = win.parent;
 					var elems = win.document.getElementsByTagName(this.is);
-					if (elems.length > 0) {
-						return true;
+					for (var i = 0; i < elems.length; i++) {
+						// if offsetParent is null, the navbar is hidden so we
+						// pretend we didn't see it
+						if (elems[i].offsetParent) {
+							return true;
+						}
 					}
 					if (win === win.parent) {
 						break;
