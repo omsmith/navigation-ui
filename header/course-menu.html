@@ -10,8 +10,11 @@
 <dom-module id="d2l-navigation-header-course-menu">
 	<style>
 		:host {
-			display: inline-block;
+			display: none;
 			height: 100%;
+		}
+		:host([course-menu-location]) {
+			display: inline-block;
 		}
  		:host button {
 			margin: 0 5px;
