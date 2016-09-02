@@ -11,8 +11,11 @@
 <dom-module id="d2l-navigation-personal-menu">
 	<style include="d2l-offscreen-shared-styles">
 	:host {
-		display: inline-block;
+		display: none;
 		height: 100%;
+	}
+	:host([user-href]) {
+		display: inline-block;
 	}
 	.d2l-navigation-personal-menu-wrapper {
 		-webkit-align-items: center;
@@ -85,7 +88,10 @@
 	Polymer({
 		is: 'd2l-navigation-personal-menu',
 		properties: {
-			userHref: String,
+			userHref: {
+				type: String,
+				reflectToAttribute: true
+			},
 			displayName: String
 		},
 		behaviors: [window.D2L.PolymerBehaviors.Navigation.GraftDropdownBehavior],

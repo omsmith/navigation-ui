@@ -16,6 +16,12 @@
 			</template>
 		</test-fixture>
 
+		<test-fixture id="no-data-attribute">
+			<template>
+				<d2l-navigation-personal-menu></d2l-navigation-personal-menu>
+			</template>
+		</test-fixture>
+
 		<test-fixture id="display-name">
 			<template>
 				<d2l-navigation-personal-menu user-href="display-name.json"></d2l-navigation-personal-menu>
@@ -182,6 +188,11 @@
 					return setupMenu('display-name');
 				});
 
+				it('should not be hidden', function() {
+					var offsetParentIsNull = (menu.offsetParent === null);
+					expect(offsetParentIsNull).to.be.false;
+				});
+
 				it('should set "displayName" property', function() {
 					expect(menu.displayName).to.eql('Jim Smith');
 				});
@@ -250,6 +261,19 @@
 				it('should just render nothing', function() {
 					var elem = menu.$$('.d2l-navigation-personal-menu-text');
 					expect(elem.innerText.trim()).to.eql('');
+				});
+
+			});
+
+			describe('no user-href attribute', function() {
+
+				beforeEach(function() {
+					menu = fixture('no-data-attribute');
+				});
+
+				it('should be hidden', function() {
+					var offsetParentIsNull = (menu.offsetParent === null);
+					expect(offsetParentIsNull).to.be.true;
 				});
 
 			});
