@@ -28,7 +28,13 @@
 			</template>
 		</test-fixture>
 
-		<test-fixture id="admin-items">
+		<test-fixture id="admin-items-with-menu">
+			<template>
+				<d2l-navigation href="admin-items.json" admin-menu-location="foo"></d2l-navigation>
+			</template>
+		</test-fixture>
+
+		<test-fixture id="admin-items-without-menu">
 			<template>
 				<d2l-navigation href="admin-items.json"></d2l-navigation>
 			</template>
@@ -255,14 +261,26 @@
 
 			});
 
-			describe('admin items', function() {
+			describe('admin items with menu location', function() {
 
 				beforeEach(function() {
-					return setupNav('admin-items');
+					return setupNav('admin-items-with-menu');
 				});
 
 				it('should have admin menu', function() {
 					expect(navigation.hasAdminMenu).to.be.true;
+				});
+
+			});
+
+			describe('admin items without menu location', function() {
+
+				beforeEach(function() {
+					return setupNav('admin-items-without-menu');
+				});
+
+				it('should not have admin menu', function() {
+					expect(navigation.hasAdminMenu).to.be.false;
 				});
 
 			});

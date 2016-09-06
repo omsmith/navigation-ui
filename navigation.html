@@ -157,7 +157,9 @@
 				var newItems = [];
 				res.entities.forEach(function(e) {
 					if (e.class.indexOf('admin') > -1) {
-						this.hasAdminMenu = true;
+						if (this.adminMenuLocation !== undefined) {
+							this.hasAdminMenu = true;
+						}
 					} else if (e.class.indexOf('item') > -1) {
 						newItems.push(e);
 					}
