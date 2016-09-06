@@ -26,6 +26,12 @@
 				text-overflow: ellipsis;
 				white-space: nowrap;
 			}
+			:host .d2l-navigation-mobile-course-header-menu {
+				display: none;
+			}
+			:host([has-course-menu]) .d2l-navigation-mobile-course-header-menu {
+				display: inline-block;
+			}
 			:host button {
 				height: 100%;
 			}
@@ -54,6 +60,7 @@
 			</div>
 			<button
 				is="d2l-navigation-button-highlight-icon"
+				class="d2l-navigation-mobile-course-header-menu"
 				icon="d2l-tier3:classes"
 				text="{{localize('selectCourse')}}"
 				on-tap="_handleShowCourseMenu"></button>
@@ -69,6 +76,11 @@
 		],
 
 		properties: {
+			hasCourseMenu: {
+				type: Boolean,
+				reflectToAttribute: true,
+				value: false
+			},
 			myHome: String,
 			orgUnitHome: String,
 			orgUnitName: String

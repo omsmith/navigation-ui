@@ -56,11 +56,13 @@
 				<div class="d2l-navigation-mobile-header-wrapper">
 					<d2l-navigation-mobile-header>
 						<d2l-navigation-mobile-org-header
+							has-course-menu="[[hasCourseMenu]]"
 							logo="[[logo]]"
 							logo-href="[[logoHref]]"
 							logo-text="[[logoText]]">
 						</d2l-navigation-mobile-org-header>
 						<d2l-navigation-mobile-course-header
+							has-course-menu="[[hasCourseMenu]]"
 							my-home="[[myHome]]"
 							org-unit-name="[[orgUnitName]]"
 							org-unit-home="[[orgUnitHome]]">
@@ -96,6 +98,10 @@
 				observer: '_handleBandColorChange'
 			},
 			courseMenuLocation: String,
+			hasCourseMenu: {
+				type: Boolean,
+				computed: '_hasCourseMenu(courseMenuLocation)'
+			},
 			items: {
 				type: Array,
 				observer: '_itemsChanged'
@@ -138,6 +144,10 @@
 			this._handleLoadCourseMenu();
 		},
 
+		_hasCourseMenu: function(courseMenuLocation) {
+			return courseMenuLocation !== undefined;
+		},
+
 		_handleShowCourseNav: function() {
 			this.header = 'nav';
 			this.$$('d2l-menu').show();
@@ -153,7 +163,7 @@
 			this.$$('d2l-navigation-mobile-course-menu-header').focus();
 
 			var courseMenu = this.$$('d2l-navigation-course-menu');
-			if (courseMenu.loaded) {
+			if (this.courseMenuLocation === undefined || courseMenu.loaded) {
 				return;
 			}
 
