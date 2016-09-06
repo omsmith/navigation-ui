@@ -189,8 +189,8 @@
 				});
 
 				it('should not be hidden', function() {
-					var offsetParentIsNull = (menu.offsetParent === null);
-					expect(offsetParentIsNull).to.be.false;
+					var style  = window.getComputedStyle(menu);
+					expect(style.display).to.be.eql('inline-block');
 				});
 
 				it('should set "displayName" property', function() {
@@ -272,8 +272,8 @@
 				});
 
 				it('should be hidden', function() {
-					var offsetParentIsNull = (menu.offsetParent === null);
-					expect(offsetParentIsNull).to.be.true;
+					var style  = window.getComputedStyle(menu);
+					expect(style.display).to.eql('none');
 				});
 
 			});
