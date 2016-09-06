@@ -46,7 +46,10 @@
 		],
 
 		properties: {
-			courseMenuLocation: String
+			courseMenuLocation: {
+				type: String,
+				reflectToAttribute: true
+			}
 		},
 
 		_dropdown: null,
