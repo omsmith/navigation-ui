@@ -9,8 +9,11 @@
 	<style include="d2l-colors">
 		:host {
 			border-bottom: 1px solid var(--d2l-color-gypsum);
-			display: block;
+			display: none;
 			height: calc(1rem + 40px);
+		}
+		:host([has-items]) {
+			display: block;
 		}
 		:host([justify-content]) .d2l-navigation-main-wrapper {
 			-webkit-align-items: center;
@@ -27,9 +30,14 @@
 			-ms-flex-wrap: nowrap;
 			flex-wrap: nowrap;
 		}
+		@media(max-width: 992px) {
+			:host, :host([has-items]) {
+				display: none;
+			}
+		}
 	</style>
 	<template>
-	  <d2l-navigation-centerer>
+		<d2l-navigation-centerer>
 			<div class="d2l-navigation-main-wrapper">
 				<template is="dom-repeat" items="[[items]]" on-dom-change="_handleDomChange">
 					<template is="dom-if" if="[[isGroup(item)]]">
@@ -41,7 +49,7 @@
 				</template>
 				<d2l-navigation-more-group items="[[items]]"></d2l-navigation-more-group>
 			</div>
-	  </d2l-navigation-centerer>
+		</d2l-navigation-centerer>
 	</template>
 </dom-module>
 <script>
@@ -49,6 +57,12 @@
 		is: 'd2l-navigation-main',
 		properties: {
 			items: Array,
+			hasItems: {
+				type: Boolean,
+				reflectToAttribute: true,
+				computed: '_hasItems(items)',
+				value: false
+			},
 			_navItems: Array,
 			_moreGroup: Object,
 			_onResize: Function
@@ -102,6 +116,9 @@
 		},
 		_showMainGroup: function() {
 			Polymer.dom(this._moreGroup).node.style.display = 'inline-block';
+		},
+		_hasItems: function(items) {
+			return items && items.length > 0;
 		},
 		_hideMainGroup: function() {
 			Polymer.dom(this._moreGroup).node.style.display = 'none';

@@ -1,0 +1,54 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>navigation-main tests</title>
+		<meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+		<script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+		<script src="../../web-component-tester/browser.js"></script>
+		<link rel="import" href="../navigation-main.html">
+	</head>
+	<body>
+
+		<test-fixture id="no-items">
+			<template>
+				<d2l-navigation-main></d2l-navigation-main>
+			</template>
+		</test-fixture>
+
+		<test-fixture id="one-item">
+			<template>
+				<d2l-navigation-main items='[{"class":["item","link"],"properties":{"text":"link","relativePath":"path"}}]'></d2l-navigation-main>
+			</template>
+		</test-fixture>
+
+		<script>
+			var main;
+
+			describe('no items', function() {
+
+				beforeEach(function() {
+					main = fixture('no-items');
+				});
+
+				it('should not have items', function() {
+					expect(main.hasItems).to.be.false;
+				});
+
+			});
+
+			describe('one item', function() {
+
+				beforeEach(function() {
+					main = fixture('one-item');
+				});
+
+				it('should have items', function() {
+					expect(main.hasItems).to.be.true;
+				});
+
+			});
+
+		</script>
+	</body>
+</html>
