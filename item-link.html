@@ -43,7 +43,7 @@
 			return (document.activeElement === this.$$('a'));
 		},
 		_handleClick: function(e) {
-			if(this.isPopup(this.item)) {
+			if (this.isPopup(this.item)) {
 				e.preventDefault();
 			}
 			this._onPopupOrActionSelect(this.item);
