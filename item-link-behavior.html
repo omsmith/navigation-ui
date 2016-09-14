@@ -13,8 +13,11 @@
 			if (this.isLink(item)) {
 				return this._createLink(item);
 			}
-			else if (this.isPopup(item) || this.isAction(item)) {
-				return this._createPopupOrAction(item);
+			else if (this.isPopup(item)) {
+				return this._createPopup(item);
+			}
+			else if (this.isAction(item)) {
+				return this._createAction(item);
 			}
 			else if (this.isGroup(item)) {
 				return this._createGroup(item);
@@ -24,8 +27,18 @@
 
 		getHref: function(item) {
 			var href = undefined;
-			if (item.properties && item.properties.relativePath) {
-				href = item.properties.relativePath;
+			if (this.isLink(item)) {
+				if (item.properties && item.properties.relativePath) {
+					href = item.properties.relativePath;
+				} else if (this.isPopup(item)) {
+					href = this.getHref(item);
+				}
+			} else if (this.isPopup(item)) {
+				item.links.forEach(function(l) {
+					if (l.rel.indexOf('self') > -1) {
+						href = l.href;
+					}
+				});
 			}
 			return href;
 		},
@@ -67,6 +80,13 @@
 			return (item.class.indexOf('popup') > -1);
 		},
 
+		_createAction: function(item) {
+			var action = document.createElement('d2l-menu-item');
+			action.setAttribute('text', this.getText(item));
+			action.addEventListener('select', this._onPopupOrActionSelect.bind(this, item));
+			return action;
+		},
+
 		_createGroup: function(item) {
 			var group = document.createElement('d2l-menu-item');
 			group.setAttribute('text', this.getText(item));
@@ -92,12 +112,13 @@
 			return link;
 		},
 
-		_createPopupOrAction: function(item) {
-			var popupOrAction = document.createElement('d2l-menu-item');
-			popupOrAction.setAttribute('text', this.getText(item));
-			popupOrAction.item = item;
-			popupOrAction.addEventListener('select', this._onPopupOrActionSelect.bind(this, item));
-			return popupOrAction;
+		_createPopup: function(item) {
+			var popup = document.createElement('d2l-menu-item-link');
+			popup.setAttribute('text', this.getText(item));
+			popup.setAttribute('href', this.getHref(item));
+			popup.setAttribute('prevent-default', 'prevent-default');
+			popup.addEventListener('select', this._onPopupOrActionSelect.bind(this, item));
+			return popup;
 		},
 
 		_onActionSelect: function(item) {
@@ -147,12 +168,7 @@
 				'scrollbars=1,' +
 				'toolbar=' + ( this.properties.HasToolbar ? '1' : '0' );
 
-			var href = null;
-			item.links.forEach(function(l) {
-				if (l.rel.indexOf('self') > -1) {
-					href = l.href;
-				}
-			});
+			var href = this.getHref(item);
 
 			// name can't contain non-alphanumerics
 			var windowName = href.replace(/[^a-zA-Z0-9]+/g, '_');

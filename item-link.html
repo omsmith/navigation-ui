@@ -14,7 +14,7 @@
 	<template>
 		<a class="d2l-navigation-link"
 			href$="{{href}}"
-			on-tap="_handleTap"
+			on-click="_handleClick"
 			tabindex="0">{{text}}</a>
 	</template>
 </dom-module>
@@ -42,7 +42,10 @@
 		isFocused: function() {
 			return (document.activeElement === this.$$('a'));
 		},
-		_handleTap: function() {
+		_handleClick: function(e) {
+			if (this.isPopup(this.item)) {
+				e.preventDefault();
+			}
 			this._onPopupOrActionSelect(this.item);
 		}
 	});
