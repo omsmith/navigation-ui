@@ -1,0 +1,73 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../iron-icon/iron-icon.html">
+<link rel="import" href="../d2l-offscreen/d2l-offscreen.html">
+<link rel="import" href="button-highlight-styles.html">
+<dom-module id="d2l-navigation-link-highlight-icon">
+	<style include="d2l-navigation-button-highlight-styles">
+		:host([is="d2l-navigation-link-highlight-icon"]) {
+			@apply(--d2l-navigation-button-highlight);
+			display: inline-flex;
+			flex-direction: column;
+		}
+		:host([is="d2l-navigation-link-highlight-icon"]:hover),
+		:host([is="d2l-navigation-link-highlight-icon"]:focus) {
+			@apply(--d2l-navigation-button-highlight-hover);
+		}
+		:host([is="d2l-navigation-link-highlight-icon"]:active) {
+			@apply(--d2l-navigation-button-highlight-active);
+		}
+		.d2l-navigation-link-highlight-icn {
+			flex: 1;
+		}
+		:host([icon*='navigation-t1']) .d2l-navigation-link-highlight-icn {
+			height: 18px;
+			width: 18px;
+		}
+		:host([icon*='navigation-t2']) .d2l-navigation-link-highlight-icn {
+			height: 24px;
+			width: 24px;
+		}
+		:host([icon*='navigation-t3']) .d2l-navigation-link-highlight-icn {
+			height: 30px;
+			width: 30px;
+		}
+		.d2l-navigation-link-highlight-bar {
+			@apply(--d2l-navigation-button-highlight-bar);
+		}
+		:host(:hover) .d2l-navigation-link-highlight-bar,
+		:host(:focus) .d2l-navigation-link-highlight-bar {
+			@apply(--d2l-navigation-button-highlight-bar-hover);
+		}
+		:host(:active) .d2l-navigation-link-highlight-bar {
+			@apply(--d2l-navigation-button-highlight-bar-active);
+		}
+	</style>
+	<template>
+		<span class="d2l-navigation-link-highlight-bar"></span>
+		<iron-icon icon="[[icon]]" class="d2l-navigation-link-highlight-icn"></iron-icon>
+		<d2l-offscreen>[[text]]</d2l-offscreen>
+		<content></content>
+	</template>
+</dom-module>
+<script>
+	Polymer({
+		is: 'd2l-navigation-link-highlight-icon',
+		extends: 'a',
+		properties: {
+			icon: {
+				type: String,
+				reflectToAttribute: true
+			},
+			text: String,
+			title: {
+				type: String,
+				readOnly: true,
+				reflectToAttribute: true,
+				computed: '_computeTitle(text)'
+			}
+		},
+		_computeTitle: function(text) {
+			return text;
+		}
+	});
+</script>

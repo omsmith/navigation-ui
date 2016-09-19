@@ -1,6 +1,6 @@
 <link rel="import" href="../../polymer/polymer.html">
-<link rel="import" href="../button-highlight-icon.html">
 <link rel="import" href="../divider.html">
+<link rel="import" href="../link-highlight-icon.html">
 <link rel="import" href="../localize-behavior.html">
 <link rel="import" href="../shared-styles.html">
 <dom-module id="d2l-navigation-header-course">
@@ -17,7 +17,6 @@
 			overflow: hidden;
 			padding: 0 7px;
 		}
-		.d2l-navigation-header-course-home,
 		d2l-navigation-header-course-menus {
 			-ms-flex: 0 0 auto;
 			-webkit-flex: 0 0 auto;
@@ -36,12 +35,12 @@
 		}
 	</style>
 	<template>
-		<button
-			is="d2l-navigation-button-highlight-icon"
+		<a
+			is="d2l-navigation-link-highlight-icon"
 			icon="navigation-t3:home"
-			on-tap="_handleMyHome"
+			href$="[[myHome]]"
 			class="d2l-navigation-header-course-home"
-			text="{{localize('myHome')}}"></button>
+			text="{{localize('myHome')}}"></a>
 		<d2l-navigation-divider></d2l-navigation-divider>
 		<a href$="[[orgUnitHome]]" class="d2l-navigation-link" title$="[[orgUnitName]]">
 			[[orgUnitName]]
@@ -61,9 +60,6 @@
 		},
 		_getLink: function() {
 			return this.$$('.d2l-navigation-link');
-		},
-		_handleMyHome: function() {
-			document.location.href = this.myHome;
 		}
 	});
 </script>
